@@ -9,8 +9,8 @@ interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
 const Input: React.FC<InputProps> = ({ label, ...rest }) => {
   return (
     <>
-      {label ? <S.LabelText>{label}</S.LabelText> : null}
       <S.Container>
+      {label ? <S.LabelText>{label}</S.LabelText> : null}
         <S.TextInput {...rest} />
       </S.Container>
     </>
