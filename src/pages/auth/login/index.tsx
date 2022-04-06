@@ -5,10 +5,13 @@ import Logo from '../../../assets/logo.svg';
 import * as S from './styles';
 import SocialConnectionActionButton from '../../../components/SocialConnectionActionButton';
 import Button from '../../../components/Button';
+import SEO from '../../../components/SEO'
+
 
 const login: React.FC = () => {
   return (
     <S.Container>
+      <SEO title='teste'/>
       <S.Form>
         <S.LogoContainer>
           <Image src={Logo} alt="Logotipo da Dombarber" />
