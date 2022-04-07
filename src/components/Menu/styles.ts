@@ -1,10 +1,18 @@
 import styled, { css } from 'styled-components';
 
-export const Container = styled.div`
+interface ContainerProps {
+  openSidebar?: boolean
+}
+
+export const Container = styled.div<ContainerProps>`
   height: 56px;
   display: flex;
   justify-content: space-around;
   background-color: #272727;
+  ${props => props.openSidebar && css `
+    filter: blur(8px);
+    -webkit-filter: blur(8px);
+  `}
 `;
 
 export const UserInfos = styled.div`
@@ -53,4 +61,5 @@ export const Logo = styled.div`
 export const Sidebar = styled.div`
   display: flex;
   align-items: center;
+  cursor: pointer;
 `;
