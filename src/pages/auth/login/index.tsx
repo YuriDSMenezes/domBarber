@@ -1,20 +1,22 @@
 import React from 'react';
-import Image from 'next/image';
-import Input from '../../../components/Input';
-import Logo from '../../../assets/logo.svg';
 import * as S from './styles';
-import SocialConnectionActionButton from '../../../components/SocialConnectionActionButton';
-import Button from '../../../components/Button';
-import SEO from '../../../components/SEO'
+import Image from 'next/image';
+import { NextPage } from 'next'
+
+import Input from 'components/Input';
+import { LogoIcon } from 'assets';
+import SocialConnectionActionButton from 'components/SocialConnectionActionButton';
+import Button from 'components/Button';
+import SEO from 'components/SEO'
 
 
-const login: React.FC = () => {
+const login: NextPage = () => {
   return (
     <S.Container>
       <SEO title='teste'/>
       <S.Form>
         <S.LogoContainer>
-          <Image src={Logo} alt="Logotipo da Dombarber" />
+          <Image src={LogoIcon} alt="Logotipo da Dombarber" />
         </S.LogoContainer>
         <S.FormTitle>Cadastre-se</S.FormTitle>
         <Input label="E-mail" />
@@ -24,10 +26,10 @@ const login: React.FC = () => {
           <SocialConnectionActionButton socialConnectionType='facebook' />
         </S.ActionsSocialButtons>
         <Button text="Continuar" />
-        <S.RegisterSugestionContainer>
-          <S.RegisterSugestionText>Não tem Cadastro?</S.RegisterSugestionText>
-          <S.RegisterSugestionLink href='#'>Cadastre-se</S.RegisterSugestionLink>
-        </S.RegisterSugestionContainer>
+        <S.RegisterSuggestionContainer>
+          <S.RegisterSuggestionText>Não tem Cadastro?</S.RegisterSuggestionText>
+          <S.RegisterSuggestionLink href='#'>Cadastre-se</S.RegisterSuggestionLink>
+        </S.RegisterSuggestionContainer>
       </S.Form>
     </S.Container>
   );

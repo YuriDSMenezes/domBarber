@@ -1,16 +1,14 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
-  pageExtensions: ['page.tsx']
 }
 const withPlugins = require('next-compose-plugins')
 const withPwa = require('next-pwa')
 
 module.exports = withPlugins([
   {
-    ...nextConfig,
     images: {
-      domains: ['dominio.image']
+      domains: ['avataaars.io']
     },
     distDir: 'build',
     future: {webpack5:true},
@@ -29,5 +27,6 @@ module.exports = withPlugins([
       register: true,
       sw: '/sw.js'
     }
-  }]
+  }],
+  [nextConfig]
 ])
