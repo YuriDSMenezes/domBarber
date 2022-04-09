@@ -47,7 +47,7 @@ export const ActionsSocialButtons = styled.div`
   margin-bottom: 48px;
 `;
 
-export const RegisterSugestionContainer = styled.div`
+export const RegisterSuggestionContainer = styled.div`
   width: 100%;
   display: flex;
   justify-content: center;
@@ -56,12 +56,12 @@ export const RegisterSugestionContainer = styled.div`
   gap: 5px;
 `;
 
-export const RegisterSugestionText = styled.span`
+export const RegisterSuggestionText = styled.span`
   font-size: 12px;
   font-weight: 400;
   line-height: 14px;
 `;
-export const RegisterSugestionLink = styled.a`
+export const RegisterSuggestionLink = styled.a`
   font-size: 12px;
   font-weight: 500;
   line-height: 14px;
