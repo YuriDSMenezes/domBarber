@@ -7,9 +7,7 @@ const Container = styled.div`
 `;
 
 const MainLayout: React.FC = ({ children, ...rest }) => (
-    <Container {...rest}>
-      {children}
-    </Container>
+  <Container {...rest}>{children}</Container>
 );
 
 export default MainLayout;
