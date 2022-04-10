@@ -5,11 +5,13 @@ export const Container = styled.div`
 width: 100%;
 background: #1C1C1C;
 height: 100%;
+padding-top: 50px;
 `
 
 export const TitleContainer = styled.div`
 color: #fff;
 width: 220px;
+margin: 0 auto;
 text-align: center;
 `
 

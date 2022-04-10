@@ -4,7 +4,7 @@ import * as S from './styles';
 export const Carousel = () => (
   <S.Container>
     <S.Item>
-      <img
+      <Image
         src="https://www.montarumnegocio.com/wp-content/uploads/2020/05/lista-de-material-para-cabeleireiro.jpg"
         alt="teste"
         layout="responsive"
@@ -13,7 +13,7 @@ export const Carousel = () => (
       />
     </S.Item>
     <S.Item>
-      <img
+      <Image
         src="https://www.montarumnegocio.com/wp-content/uploads/2020/05/lista-de-material-para-cabeleireiro.jpg"
         alt="teste"
         layout="responsive"
@@ -22,7 +22,7 @@ export const Carousel = () => (
       />
     </S.Item>
     <S.Item>
-      <img
+      <Image
         src="https://www.montarumnegocio.com/wp-content/uploads/2020/05/lista-de-material-para-cabeleireiro.jpg"
         alt="teste"
         layout="responsive"
