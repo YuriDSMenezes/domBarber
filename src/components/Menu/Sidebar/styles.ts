@@ -1,27 +1,42 @@
 import styled, { css } from 'styled-components';
 
 interface ContainerProps {
-  openSidebar?: boolean
+  openSidebar?: boolean;
 }
 
 interface LogoTextProps {
-  hasNotification?: boolean
+  hasNotification?: boolean;
 }
 
 export const Container = styled.div<ContainerProps>`
   width: 0px;
   height: 100%;
   overflow-y: auto;
-  padding:24px;
+  padding: 24px;
   position: fixed;
   right: 0;
-  z-index: 999;
+  top: 0;
+  z-index: 1001;
   transition: 3s ease-in-out;
   background: #272727;
 
-  ${props => props.openSidebar && css`
-    width: 220px;
-  `}
+  ${props =>
+    props.openSidebar &&
+    css`
+      width: 220px;
+    `}
+`;
+
+export const BackgroundBlur = styled.div<ContainerProps>`
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  z-index: 1000;
+  filter: blur(8px);
+  -webkit-filter: blur(8px);
+  backdrop-filter: blur(8px);
 `;
 
 export const Header = styled.div`
@@ -36,7 +51,7 @@ export const ArrowBack = styled.div`
 `;
 
 export const Logo = styled.div`
-margin-top: 20px;
+  margin-top: 20px;
 `;
 
 export const Content = styled.div`
@@ -59,17 +74,18 @@ export const LogoItem = styled.div`
 
 export const LogoText = styled.div<LogoTextProps>`
   position: relative;
-  ${props => props.hasNotification && css`
+  ${props =>
+    props.hasNotification &&
+    css`
       &::after {
-      content: '';
-      width: 18px;
-      height: 18px;
-      background: #FF9933;
-      border-radius: 50%;
-      position: absolute;
-      top: 0px;
-      right: -50px;
-    }
-  `}
+        content: '';
+        width: 18px;
+        height: 18px;
+        background: #ff9933;
+        border-radius: 50%;
+        position: absolute;
+        top: 0px;
+        right: -50px;
+      }
+    `}
 `;
-
