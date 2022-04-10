@@ -13,12 +13,12 @@ export const Container = styled.div<ContainerProps>`
   z-index: 999;
   top: 0;
   width: 100%;
-  ${props =>
+  /* ${props =>
     props.openSidebar &&
     css`
       filter: blur(8px);
       -webkit-filter: blur(8px);
-    `}
+    `} */
 `;
 
 export const UserInfos = styled.div`
