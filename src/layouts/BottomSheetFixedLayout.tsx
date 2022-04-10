@@ -11,7 +11,7 @@ interface StyleProps {
 
 const Container = styled.div<StyleProps>`
   width: 100%;
-  height: 100vh;
+  height: calc(100vh - 56px);
   background: #1c1c1c;
   position: relative;
   padding-top: 40%;
