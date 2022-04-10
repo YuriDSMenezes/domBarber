@@ -2,12 +2,14 @@ import { RightIcon } from 'assets'
 import { Carousel } from 'components/Carousel'
 import { HorizontalList } from 'components/HorizontalList'
 import Input from 'components/Input'
+import MainLayout from 'layouts/MainLayout'
 import { NextPage } from 'next'
 import  Image from 'next/image'
 import * as S from './styles'
 
 
 const Home: NextPage = () => (
+  <MainLayout>
     <S.Container>
       <S.TitleContainer>
         <S.Title>
@@ -51,6 +53,7 @@ const Home: NextPage = () => (
        </S.SeeMore>
       </S.Professional>
     </S.Container>
+  </MainLayout>
 )
 
 export default Home

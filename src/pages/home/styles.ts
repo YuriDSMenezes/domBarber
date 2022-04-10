@@ -10,7 +10,6 @@ height: 100%;
 export const TitleContainer = styled.div`
 color: #fff;
 width: 220px;
-margin: 56px auto;
 text-align: center;
 `
 

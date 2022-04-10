@@ -20,6 +20,6 @@ const Input: React.FC<InputProps> = ({ label, search, secondary, ...rest }) => {
       </S.Container>
     </>
   );
-}
+};
 
 export default Input;
