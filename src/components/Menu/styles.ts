@@ -9,6 +9,9 @@ export const Container = styled.div<ContainerProps>`
   display: flex;
   justify-content: space-around;
   background-color: #272727;
+  position: fixed;
+  top: 0;
+  width: 100%;
   ${props => props.openSidebar && css `
     filter: blur(8px);
     -webkit-filter: blur(8px);
