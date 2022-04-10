@@ -1,6 +1,7 @@
 import type { AppProps } from 'next/app'
 import GlobalStyle from '../styles/global'
 import { Helmet } from 'react-helmet';
+
 function MyApp({ Component, pageProps }: AppProps) {
   return (
     <>
@@ -11,7 +12,7 @@ function MyApp({ Component, pageProps }: AppProps) {
         <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       </Helmet>
-      <Component {...pageProps} />
+        <Component {...pageProps} />
       <GlobalStyle />
     </>
   );

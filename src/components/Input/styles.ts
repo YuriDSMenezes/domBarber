@@ -1,11 +1,15 @@
 import styled from 'styled-components';
 
-export const Container = styled.div`
+interface ContainerProps {
+ secondary?: boolean
+}
+
+export const Container = styled.div<ContainerProps>`
   width: 100%;
-  background-color: #E0E0E0;
+  background-color: ${props => props.secondary ? '#535353' : '#E0E0E0'};
   height: 36px;
   min-height: 36px;
-  border-radius: 10px;
+  border-radius: ${props => props.secondary ? '35px' : '10px'};
   display: flex;
   flex-direction: column;
   margin-top: 20px;
@@ -24,9 +28,16 @@ export const LabelText = styled.span`
   position: absolute;
 `;
 
-export const TextInput = styled.input`
+export const TextInput = styled.input<ContainerProps>`
   width: 100%;
   border: 0;
   background: transparent;
   outline: none;
+  padding-left: ${props => props.secondary && '35px'};
 `;
+
+export const SearchInput = styled.div`
+  position: absolute;
+  left: 10px;
+  top: 8px
+`

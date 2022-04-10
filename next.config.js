@@ -8,7 +8,7 @@ const withPwa = require('next-pwa')
 module.exports = withPlugins([
   {
     images: {
-      domains: ['avataaars.io']
+      domains: ['www.montarumnegocio.com']
     },
     distDir: 'build',
     future: {webpack5:true},
