@@ -2,7 +2,13 @@ import React from 'react';
 
 import * as S from './styles';
 
-const ServiceCard: React.FC = () => {
+interface ServiceCardProps {
+  title?: string;
+}
+
+const ServiceCard: React.FC<ServiceCardProps> = ({
+  title = 'Corte Simples',
+}) => {
   return (
     <S.Container>
       <S.ImgContainer>
@@ -13,7 +19,7 @@ const ServiceCard: React.FC = () => {
       </S.ImgContainer>
       <S.InformationContainer>
         <S.TitleAndPriceText>
-          <S.ServiceTitle>Corte Simples</S.ServiceTitle>
+          <S.ServiceTitle>{title}</S.ServiceTitle>
           <S.ServicePrice>19,90</S.ServicePrice>
         </S.TitleAndPriceText>
         <S.AddressText>

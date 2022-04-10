@@ -27,11 +27,11 @@ export const BranchsOfficeListContainer = styled.div`
   width: 100%;
   height: 100%;
   margin-top: 40px;
+  overflow-y: auto;
   /* margin-bottom: 40px; */
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   grid-template-rows: repeat(2, 1fr);
   grid-column-gap: 20px;
   grid-row-gap: 20px;
-  overflow-y: auto;
 `;
