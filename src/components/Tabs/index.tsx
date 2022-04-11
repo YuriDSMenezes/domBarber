@@ -1,21 +1,11 @@
-import React, { ReactNode, useState } from 'react';
+import React from 'react';
 
 import * as S from './styles';
-import { useTabsController } from './tabs.controller';
-
-interface Tab {
-  key: string;
-  description: string;
-  renderComponent: ReactNode;
-}
-
-interface TabsProps {
-  tabConfig: Array<Tab>;
-  defaultSelectedTab: string;
-}
+import { TabsProps, useTabsController } from './tabs.controller';
 
 const Tabs: React.FC<TabsProps> = ({ tabConfig, defaultSelectedTab }) => {
   const { states, actions } = useTabsController({ defaultSelectedTab });
+
   return (
     <S.Container>
       <S.TabsContainer>

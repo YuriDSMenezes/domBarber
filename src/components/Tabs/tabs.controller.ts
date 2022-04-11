@@ -1,4 +1,15 @@
-import { useState } from 'react';
+import { ReactNode, useState } from 'react';
+
+export interface Tab {
+  key: string;
+  description: string;
+  renderComponent: ReactNode;
+}
+
+export interface TabsProps {
+  tabConfig: Array<Tab>;
+  defaultSelectedTab: string;
+}
 
 interface TabControllerProps {
   defaultSelectedTab: string;
@@ -8,7 +19,6 @@ export const useTabsController = ({
   defaultSelectedTab,
 }: TabControllerProps) => {
   const [selectedTab, setSelectedTab] = useState(defaultSelectedTab);
-
   const handleSwitchTab = (key: string) => setSelectedTab(key);
 
   return {
