@@ -6,7 +6,7 @@ interface ServiceCardProps {
   title?: string;
 }
 
-const ServiceCard: React.FC<ServiceCardProps> = ({
+const ProductOrServiceCard: React.FC<ServiceCardProps> = ({
   title = 'Corte Simples',
 }) => {
   return (
@@ -31,4 +31,4 @@ const ServiceCard: React.FC<ServiceCardProps> = ({
   );
 };
 
-export default ServiceCard;
+export default ProductOrServiceCard;

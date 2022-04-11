@@ -1,5 +1,5 @@
 import React from 'react';
-import ServiceCard from '../ServiceCard';
+import ProsuctOrServiceCard from '../../../components/ProsuctOrServiceCard';
 
 import * as S from './styles';
 
@@ -7,13 +7,13 @@ const BeardTabOption: React.FC = () => {
   return (
     <S.Container>
       <S.ServicesContainer>
-        <ServiceCard title="Barba Simples" />
-        <ServiceCard title="Barba Desenhada" />
-        <ServiceCard title="Aparar Barba" />
-        <ServiceCard title="Hidratar Barba" />
-        <ServiceCard title="Lavar Barba" />
-        <ServiceCard title="Lavar Barba" />
-        <ServiceCard title="Lavar Barba" />
+        <ProsuctOrServiceCard title="Barba Simples" />
+        <ProsuctOrServiceCard title="Barba Desenhada" />
+        <ProsuctOrServiceCard title="Aparar Barba" />
+        <ProsuctOrServiceCard title="Hidratar Barba" />
+        <ProsuctOrServiceCard title="Lavar Barba" />
+        <ProsuctOrServiceCard title="Lavar Barba" />
+        <ProsuctOrServiceCard title="Lavar Barba" />
       </S.ServicesContainer>
     </S.Container>
   );
