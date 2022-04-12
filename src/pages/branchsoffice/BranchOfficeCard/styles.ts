@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 export const Container = styled.div`
   position: relative;
-  min-height: 206px;
+  min-height: 196px;
   width: 100%;
   height: 100%;
   border-radius: 10px;
