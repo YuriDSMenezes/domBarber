@@ -48,6 +48,8 @@ export const Header = styled.div`
 export const ArrowBack = styled.div`
   margin-right: 17px;
   cursor: pointer;
+  transform: rotate(180deg);
+  transition-duration: 5s;
 `;
 
 export const Logo = styled.div`

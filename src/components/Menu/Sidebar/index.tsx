@@ -1,9 +1,11 @@
-import Image from 'next/image';
-import { ArrowLeftIcon, LogoWhiteIcon } from 'assets';
+import { ArrowLeftIcon, LogoWhiteIcon } from '../../../../public/assets';
 import * as S from './styles';
 
+interface IconProps {
+  src: string
+}
 interface itemProps {
-  icon: string;
+  icon: IconProps
   text: string;
 }
 
@@ -23,11 +25,11 @@ export const Sidebar = ({
     <S.Container openSidebar={openSidebar}>
       <S.Header>
         <S.ArrowBack onClick={handleClickSidebar}>
-          <Image src={ArrowLeftIcon} alt="Voltar para a página anterior" />
+          <img src={ArrowLeftIcon.src} alt="Voltar para a página anterior"  width='100%' height='100%'/>
         </S.ArrowBack>
 
         <S.Logo>
-          <Image src={LogoWhiteIcon} alt="Logo Dom Barber" />
+          <img src={LogoWhiteIcon.src} alt="Logo Dom Barber"  width='100%' height='100%'/>
         </S.Logo>
       </S.Header>
 
@@ -36,7 +38,7 @@ export const Sidebar = ({
           <>
             <S.Item>
               <S.LogoItem>
-                <Image src={item.icon} alt="Ícone" />
+                <img src={item.icon.src} alt="Ícone"  width='100%' height='100%'/>
               </S.LogoItem>
               <S.LogoText>{item.text}</S.LogoText>
             </S.Item>

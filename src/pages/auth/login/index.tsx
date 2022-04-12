@@ -1,10 +1,9 @@
 import React from 'react';
 import * as S from './styles';
-import Image from 'next/image';
 import { NextPage } from 'next'
 
 import Input from 'components/Input';
-import { LogoIcon } from 'assets';
+import { LogoWhiteIcon } from '../../../../public/assets';
 import SocialConnectionActionButton from 'components/SocialConnectionActionButton';
 import Button from 'components/Button';
 import SEO from 'components/SEO'
@@ -16,7 +15,7 @@ const login: NextPage = () => {
       <SEO title='teste'/>
       <S.Form>
         <S.LogoContainer>
-          <Image src={LogoIcon} alt="Logotipo da Dombarber" />
+          <img src={LogoWhiteIcon.src} alt="Logotipo da Dombarber" width='100%' height='100%'/>
         </S.LogoContainer>
         <S.FormTitle>Cadastre-se</S.FormTitle>
         <Input label="E-mail" />
