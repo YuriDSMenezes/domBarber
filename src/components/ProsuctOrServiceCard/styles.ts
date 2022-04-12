@@ -65,7 +65,7 @@ export const AddressText = styled.div`
   font-size: 12px;
   line-height: 14px;
   color: #ffffff;
-  width: 60%;
+  width: 70%;
   margin-bottom: 10px;
 `;
 
