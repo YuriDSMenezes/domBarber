@@ -7,6 +7,7 @@ export const Content = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  overflow-y: hidden;
 `;
 
 export const Title = styled.h1`

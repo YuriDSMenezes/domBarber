@@ -1,5 +1,4 @@
-import { SearchIcon } from 'assets';
-import Image from 'next/image'
+import { SearchIcon } from '../../../public/assets';
 import React, {InputHTMLAttributes} from 'react';
 
 import * as S from './styles';
@@ -15,7 +14,7 @@ const Input: React.FC<InputProps> = ({ label, search, secondary, ...rest }) => {
     <>
       <S.Container secondary={secondary}>
       {label ? <S.LabelText>{label}</S.LabelText> : null}
-      {search ? <S.SearchInput> <Image src={SearchIcon} alt='Ícone de pesquisa'/> </S.SearchInput> : null}
+      {search ? <S.SearchInput> <img src={SearchIcon.src} alt='Ícone de pesquisa' width='100%' height='100%'/> </S.SearchInput> : null}
         <S.TextInput secondary={secondary} {...rest} />
       </S.Container>
     </>

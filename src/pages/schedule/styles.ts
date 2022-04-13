@@ -13,6 +13,7 @@ export const Container = styled.div`
     width: 855px;
     margin: 0 auto;
     border-radius: 22px;
+    padding-top: 0px;
   }
 
   .react-calendar {
@@ -34,8 +35,8 @@ export const Container = styled.div`
       background: transparent;
       abbr {
         background-color: #ff9933;
-        border-radius: 50%;
         padding: 10px 15px;
+        border-radius: 50%;
       }
     }
     .react-calendar__tile {
@@ -81,14 +82,31 @@ export const CalendarContainer = styled.div`
   margin: 30px 0 40px 0;
 `;
 
-export const Title = styled.div`
+interface TitleProps {
+  mobile?: boolean;
+}
+
+export const Title = styled.div<TitleProps>`
   font-size: ${ConvertToRem(18)};
   margin: 12px 0 50px 0;
+  display: ${props => props.mobile && 'none'};
+  @media (min-width: 768px) {
+    width: 100%;
+    text-align: center;
+    color: #fff;
+    font-weight: 500;
+    font-size: ${ConvertToRem(36)};
+  }
 `;
 
 export const Description = styled.div`
   font-size: ${ConvertToRem(14)};
   margin: 30px 0 20px 0;
+  @media (min-width: 768px) {
+    padding: 50px 0 20px 0;
+    font-weight: 500;
+    font-size: ${ConvertToRem(24)};
+  }
 `;
 
 export const HoursContainer = styled.div`
@@ -96,6 +114,9 @@ export const HoursContainer = styled.div`
   grid-template-columns: repeat(5, 1fr);
   grid-template-rows: repeat(4, 1fr);
   gap: 10px;
+  @media (min-width: 768px) {
+    margin-bottom: 30px;
+  }
 `;
 
 export const Hour = styled.div`
@@ -103,6 +124,7 @@ export const Hour = styled.div`
   margin: 0 auto;
   height: 100%;
   padding: 5px 0px;
+  cursor: pointer;
   p {
     margin: 0;
   }
@@ -110,6 +132,9 @@ export const Hour = styled.div`
     background: #ff9933;
     border-radius: 4px;
     color: #000;
+  }
+  @media (min-width: 768px) {
+    width: 30%;
   }
 `;
 
@@ -119,6 +144,11 @@ export const ServiceContainer = styled.div`
   align-items: center;
   justify-content: space-between;
   padding: 0 20px;
+
+  @media (min-width: 768px) {
+    margin: 0;
+    width: 50%;
+  }
 `;
 
 export const Service = styled.div`
@@ -126,6 +156,9 @@ export const Service = styled.div`
   align-items: flex-start;
   height: 55px;
   width: 135px;
+  @media (min-width: 768px) {
+    width: 100%;
+  }
 `;
 
 export const Image = styled.div`
@@ -173,9 +206,19 @@ export const NextContainer = styled.div`
   justify-content: space-between;
   padding: 0 20px;
   margin-top: 20px;
+  @media (min-width: 768px) {
+    background: #272727;
+    margin: 0;
+    flex-direction: column;
+    justify-content: center;
+  }
 `;
 
-export const Date = styled.div``;
+export const Date = styled.div`
+  @media (min-width: 768px) {
+    margin-bottom: 7px;
+  }
+`;
 
 export const NextButton = styled.div`
   background: #ff9933;
@@ -185,4 +228,16 @@ export const NextButton = styled.div`
   display: grid;
   place-items: center;
   color: #1c1c1c;
+`;
+
+export const Row = styled.div`
+  display: block;
+  @media (min-width: 768px) {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #272727;
+    border-radius: 0 0 10px 10px;
+    height: 105px;
+  }
 `;

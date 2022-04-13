@@ -11,13 +11,17 @@ overflow-x: auto;
 width: 100%;
 display: flex;
 align-items: center;
-justify-content: center;
+margin: 30px 0 40px 0;
+@media (min-width: 768px) {
+  margin-top: 50px;
+}
 &::-webkit-scrollbar {
   display: none;
 }
 `
 
 export const Item = styled.div<ItemProps>`
+cursor: pointer;
 width: fit-content;
 height: 24px;
 color: ${props => props.active ? '#1C1C1C' : '#fff'};
@@ -29,4 +33,10 @@ align-items: center;
 padding: 6px;
 font-size: ${ConvertToRem(12)};
 margin: 0 10px;
+&:nth-child(1) {
+  margin: 0;
+}
+@media (min-width: 768px) {
+  font-size: ${ConvertToRem(18)};
+}
 `

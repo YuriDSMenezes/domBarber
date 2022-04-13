@@ -5,8 +5,14 @@ import styled from 'styled-components';
 const Container = styled.div`
   width: 100%;
   height: 100%;
-  padding-top: 56px;
-  background: #272727 ;
+  padding: 56px 20px;
+  background: #272727;
+  @media (min-width: 768px) {
+    padding: 100px 60px;
+    width: 100%;
+    height: 100%;
+    background: #1c1c1c;
+  }
 `;
 
 const MainLayout: React.FC = ({ children, ...rest }) => (
