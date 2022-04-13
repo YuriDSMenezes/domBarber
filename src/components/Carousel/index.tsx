@@ -1,34 +1,26 @@
-import Image from 'next/image';
+import { useState } from 'react';
+import { useEffect } from 'react';
 import * as S from './styles';
 
-export const Carousel = () => (
+interface CarouselProps {
+  src: Array<string>
+  size: 'lg' | 'md' | 'sm'
+}
+
+export const Carousel = ({ src, size} : CarouselProps) => {
+
+  return (
   <S.Container>
-    <S.Item>
-      <Image
-        src="https://www.montarumnegocio.com/wp-content/uploads/2020/05/lista-de-material-para-cabeleireiro.jpg"
-        alt="teste"
-        layout="responsive"
-        width="100%"
-        height="100%"
-      />
-    </S.Item>
-    <S.Item>
-      <Image
-        src="https://www.montarumnegocio.com/wp-content/uploads/2020/05/lista-de-material-para-cabeleireiro.jpg"
-        alt="teste"
-        layout="responsive"
-        width="100%"
-        height="100%"
-      />
-    </S.Item>
-    <S.Item>
-      <Image
-        src="https://www.montarumnegocio.com/wp-content/uploads/2020/05/lista-de-material-para-cabeleireiro.jpg"
-        alt="teste"
-        layout="responsive"
-        width="100%"
-        height="100%"
-      />
-    </S.Item>
+    {src.map((srcImage,index) => (
+      <S.Item size={size}  key={index}>
+        <img
+          src={srcImage}
+          alt="teste"
+          width="100%"
+          height="100%"
+        />
+      </S.Item>
+    ))}
   </S.Container>
-);
+  )
+}

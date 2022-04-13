@@ -1,4 +1,4 @@
-import { ArrowLeftIcon, UserIcon, HouseIcon, CalendarIcon, ProductsIcon, PeopleIcon, SmileIcon, NotificationIcon } from 'assets'
+import { ArrowLeftIcon, UserIcon, HouseIcon, CalendarIcon, ProductsIcon, PeopleIcon, SmileIcon, NotificationIcon } from '../../../public/assets'
 import { useState } from 'react'
 
 export const MenuController = () => {
@@ -41,7 +41,7 @@ export const MenuController = () => {
   ]
 
   return {
-    state: {
+    states: {
       openSidebar,
       menuItemsList
     },
