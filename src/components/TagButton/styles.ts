@@ -22,7 +22,7 @@ export const Container = styled.button<StyleProps>`
   ${props =>
     props.size === 'small' &&
     css`
-      height: 25px;
+      height: 20px;
     `}
 
   &:hover {
