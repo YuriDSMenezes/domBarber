@@ -9,7 +9,7 @@ export const Container = styled.div<ContainerProps>`
   height: 56px;
   display: flex;
   justify-content: space-between;
-  background-color: #272727;
+  background-color: #1c1c1c;
   position: fixed;
   z-index: 999;
   top: 0;
@@ -19,17 +19,15 @@ export const Container = styled.div<ContainerProps>`
 
   @media (min-width: 768px) {
     height: 81px;
-    background-color:#1C1C1C;
     border-bottom: 1px solid #000;
   }
-
 `;
 
 export const UserInfos = styled.div`
   @media (max-width: 768px) {
     display: flex;
     align-items: center;
-  };
+  }
   display: none;
 `;
 
@@ -83,40 +81,40 @@ export const Logo = styled.div`
 `;
 
 export const ItemsMenuDesktop = styled.div`
-display: none;
-@media (min-width: 768px) {
+  display: none;
+  @media (min-width: 768px) {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 75%;
+    p {
+      color: #fff;
+      font-weight: 400;
+      font-size: ${ConvertToRem(18)};
+      margin: 0 30px;
+    }
+  }
+`;
+
+export const ItemsListMenuDesktop = styled.div`
+  display: flex;
+  align-items: center;
+`;
+
+export const UserLoginDesktop = styled.div`
+  width: 170px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  width: 75%;
-  p {
-    color: #fff;
-    font-weight: 400;
-    font-size: ${ConvertToRem(18)};
-    margin: 0 30px;
+  color: #fff;
+
+  p:nth-child(2) {
+    color: black;
+    background-color: #ff9933;
+    border-radius: 13px;
+    padding: 9px 10px;
   }
-}
-`
-
-export const ItemsListMenuDesktop = styled.div`
-display: flex;
-align-items: center;
-`
-
-export const UserLoginDesktop = styled.div`
-width: 170px;
-display: flex;
-align-items: center;
-justify-content: space-between;
-color: #fff;
-
-p:nth-child(2) {
-  color: black;
-  background-color: #FF9933;
-  border-radius: 13px;
-  padding: 9px 10px;
-}
-`
+`;
 
 export const Sidebar = styled.div`
   display: flex;

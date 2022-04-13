@@ -1,1 +1,1 @@
-export { ConvertToRem } from './convertToRem'
+export { ConvertToRem } from './convertToRem';
