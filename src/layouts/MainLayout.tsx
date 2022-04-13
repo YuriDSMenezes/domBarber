@@ -6,6 +6,7 @@ const Container = styled.div`
   width: 100%;
   height: 100%;
   padding-top: 56px;
+  background: #272727 ;
 `;
 
 const MainLayout: React.FC = ({ children, ...rest }) => (

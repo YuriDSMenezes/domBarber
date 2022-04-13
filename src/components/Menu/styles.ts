@@ -13,12 +13,10 @@ export const Container = styled.div<ContainerProps>`
   z-index: 999;
   top: 0;
   width: 100%;
-  /* ${props =>
-    props.openSidebar &&
-    css`
-      filter: blur(8px);
-      -webkit-filter: blur(8px);
-    `} */
+  @media (min-width: 768px) {
+    background: #1c1c1c;
+    border-bottom: 1px solid #000000;
+  }
 `;
 
 export const UserInfos = styled.div`
