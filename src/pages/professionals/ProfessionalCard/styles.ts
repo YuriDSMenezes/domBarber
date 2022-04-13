@@ -16,7 +16,7 @@ export const Container = styled.div`
   }
 `;
 
-export const BrachInformationContainer = styled.div`
+export const ProfessionalInformationContainer = styled.div`
   position: absolute;
   bottom: 0;
   height: 30%;
@@ -28,17 +28,10 @@ export const BrachInformationContainer = styled.div`
   padding: 10px;
 `;
 
-export const BranchOfficeName = styled.span`
+export const ProfessionalName = styled.span`
   font-weight: 500;
   font-size: 14px;
   line-height: 14px;
   color: #ffffff;
 `;
-export const BranchOfficeAddress = styled.div`
-  font-weight: 400;
-  font-size: 12px;
-  line-height: 12px;
-  color: #ffffff;
-  width: 80%;
-  margin-top: 5px;
-`;
+export const ProfessionalRatingContainer = styled.div``;

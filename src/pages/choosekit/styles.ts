@@ -13,25 +13,21 @@ export const Title = styled.h1`
   font-size: 18px;
   line-height: 21px;
   color: #ffffff;
+  margin-bottom: 5px;
 `;
 
-export const SubTitle = styled.h2`
+export const Description = styled.p`
   font-weight: 400;
   font-size: 14px;
   line-height: 16px;
   text-align: center;
   color: #ffffff;
+  width: 60%;
 `;
 
-export const BranchsOfficeListContainer = styled.div`
+export const KitsContainer = styled.div`
   width: 100%;
-  height: 100%;
-  margin-top: 40px;
+  height: 50%;
+  margin-bottom: 40px;
   overflow-y: auto;
-  /* margin-bottom: 40px; */
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  grid-template-rows: repeat(2, 1fr);
-  grid-column-gap: 20px;
-  grid-row-gap: 20px;
 `;

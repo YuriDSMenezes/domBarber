@@ -18,7 +18,7 @@ const MainLayout: React.FC = ({ children, ...rest }) => (
   <Container {...rest}>
     <Menu />
     {children}
-    </Container>
+  </Container>
 );
 
 export default MainLayout;

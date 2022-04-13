@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 
 export const Content = styled.div`
+  position: relative;
   width: 100%;
   height: 100%;
   display: flex;
@@ -15,15 +16,7 @@ export const Title = styled.h1`
   color: #ffffff;
 `;
 
-export const SubTitle = styled.h2`
-  font-weight: 400;
-  font-size: 14px;
-  line-height: 16px;
-  text-align: center;
-  color: #ffffff;
-`;
-
-export const BranchsOfficeListContainer = styled.div`
+export const ProfissionalsContainer = styled.div`
   width: 100%;
   height: 100%;
   margin-top: 40px;

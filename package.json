@@ -20,12 +20,14 @@
     "react-dom": "18.0.0",
     "react-helmet": "^6.1.0",
     "react-icons": "^4.3.1",
+    "react-star-rating-component": "^1.4.1",
     "styled-components": "^5.3.5"
   },
   "devDependencies": {
     "@types/node": "17.0.23",
     "@types/react": "17.0.43",
     "@types/react-dom": "17.0.14",
+    "@types/react-star-rating-component": "^1.4.1",
     "@types/styled-components": "^5.1.24",
     "@typescript-eslint/eslint-plugin": "^5.18.0",
     "@typescript-eslint/parser": "^5.18.0",
