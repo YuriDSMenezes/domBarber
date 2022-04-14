@@ -37,6 +37,7 @@ export const AppointmentsContainer = styled.div`
   width: 100%;
   height: 40%;
   overflow-y: auto;
+  margin-bottom: 10px;
 `;
 
 export const TotalAppointmentContainer = styled.div`
