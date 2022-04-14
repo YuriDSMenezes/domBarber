@@ -16,5 +16,7 @@ export { default as SearchIcon } from './search.svg';
 export { default as RightIcon } from './right.svg';
 export { default as MediumPapperIcon } from './medium-papper.svg';
 export { default as OutlinedCheckIcon } from './outlined-check.svg';
+export { default as SecureOrderLogo } from './secureOrder.svg';
+export { default as PagSeguroLogo } from './pagsegurologo.svg';
 
 export { default as ImgAboutApp } from './about.png';

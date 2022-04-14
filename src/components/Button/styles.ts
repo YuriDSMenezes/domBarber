@@ -2,6 +2,7 @@ import styled, { css } from 'styled-components';
 
 interface StyleProps {
   smallSize?: boolean;
+  green?: boolean;
 }
 
 export const Container = styled.button<StyleProps>`
@@ -17,6 +18,12 @@ export const Container = styled.button<StyleProps>`
   font-size: 12px;
   font-weight: 500;
   line-height: 14px;
+
+  ${props =>
+    props.green &&
+    css`
+      background: #34ed91;
+    `}
 
   ${props =>
     props.smallSize &&
