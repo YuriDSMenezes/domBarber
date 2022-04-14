@@ -1,3 +1,4 @@
+export { default as DomBarberLogo } from './dombarberlogo.svg';
 export { default as LogoWhiteIcon } from './logo-white.svg';
 export { default as LogoBlackIcon } from './logo-black.svg';
 export { default as NotificationIcon } from './notification.svg';
@@ -15,3 +16,5 @@ export { default as SearchIcon } from './search.svg';
 export { default as RightIcon } from './right.svg';
 export { default as MediumPapperIcon } from './medium-papper.svg';
 export { default as OutlinedCheckIcon } from './outlined-check.svg';
+
+export { default as ImgAboutApp } from './about.png';

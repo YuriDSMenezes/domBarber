@@ -4,7 +4,7 @@ import BottomSheetFixedLayout from 'layouts/BottomSheetFixedLayout';
 import Button from 'components/Button';
 import MainLayout from 'layouts/MainLayout';
 import * as S from './styles';
-import AppointmentCard from './AppointmentCard';
+import AppointmentCard from '../../components/AppointmentCard';
 
 import { appointments as mockAppointments } from '../../../_mocks/appointments';
 
