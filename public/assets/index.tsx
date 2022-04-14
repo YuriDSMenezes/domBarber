@@ -14,3 +14,4 @@ export { default as ProductsIcon } from './products.svg';
 export { default as SearchIcon } from './search.svg';
 export { default as RightIcon } from './right.svg';
 export { default as MediumPapperIcon } from './medium-papper.svg';
+export { default as OutlinedCheckIcon } from './outlined-check.svg';
