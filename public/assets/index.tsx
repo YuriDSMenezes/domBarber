@@ -18,5 +18,8 @@ export { default as MediumPapperIcon } from './medium-papper.svg';
 export { default as OutlinedCheckIcon } from './outlined-check.svg';
 export { default as SecureOrderLogo } from './secureOrder.svg';
 export { default as PagSeguroLogo } from './pagsegurologo.svg';
+export { default as PixLogo } from './pix.svg';
+export { default as MastercardLogo } from './mastercard.svg';
+export { default as MoreOptionsIcon } from './moreoptions.svg';
 
 export { default as ImgAboutApp } from './about.png';
