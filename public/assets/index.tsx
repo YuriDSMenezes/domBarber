@@ -14,6 +14,7 @@ export { default as SmileIcon } from './smile.svg';
 export { default as ProductsIcon } from './products.svg';
 export { default as SearchIcon } from './search.svg';
 export { default as RightIcon } from './right.svg';
+export { default as ArrowDownIcon } from './arrow-down.svg';
 export { default as MediumPapperIcon } from './medium-papper.svg';
 export { default as OutlinedCheckIcon } from './outlined-check.svg';
 export { default as SecureOrderLogo } from './secureOrder.svg';

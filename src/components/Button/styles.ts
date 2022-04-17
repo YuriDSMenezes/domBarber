@@ -2,11 +2,12 @@ import styled, { css } from 'styled-components';
 
 interface StyleProps {
   smallSize?: boolean;
+  white?: boolean;
   green?: boolean;
 }
 
 export const Container = styled.button<StyleProps>`
-  background: #ff9933;
+  background: ${props => (props.white ? '#fff' : '#ff9933')};
   border-radius: 10px;
   border: none;
   width: 100%;
