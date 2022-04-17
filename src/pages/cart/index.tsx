@@ -1,4 +1,6 @@
 import Button from 'components/Button';
+import { Modal } from 'components/Modal';
+import { TextArea } from 'components/TextArea/styles';
 import BottomSheetFixedLayout from 'layouts/BottomSheetFixedLayout';
 import MainLayout from 'layouts/MainLayout';
 import { useState } from 'react';
@@ -8,13 +10,26 @@ import * as S from './styles';
 
 const Cart = () => {
   const [openCollapse, setOpenCollapse] = useState(false);
+  const [openModal, setOpenModal] = useState<boolean>(false);
 
   const handleOpenCollapse = () => setOpenCollapse(!openCollapse);
+  const handleOpenModal = () => setOpenModal(!openModal);
+  const handleCloseModal = () => setOpenModal(false);
 
   return (
     <MainLayout>
+      <Modal show={openModal}>
+        <S.Title>Atenção</S.Title>
+        <S.MediumText>Confirmar o cancelamento do agendamento ?</S.MediumText>
+        <S.MediumText>Qual o motivo ?</S.MediumText>
+        <TextArea />
+        <S.Row>
+          <Button white text="Voltar" onClick={handleCloseModal} />
+          <Button text="Confirmar" />
+        </S.Row>
+      </Modal>
       <BottomSheetFixedLayout theme="dark">
-        <S.Title>Carrinho</S.Title>
+        <S.Title onClick={handleOpenModal}>Carrinho</S.Title>
         <S.ItemContainer>
           <S.ItemDescription>
             <S.OrangeTitle>Kit barba total</S.OrangeTitle>
