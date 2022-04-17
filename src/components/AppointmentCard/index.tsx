@@ -4,6 +4,7 @@ import * as S from './styles';
 
 interface AppointmentCardProps {
   appointment?: any;
+  theme?: 'light' | 'dark';
 }
 
 export interface iCurrencyFormat {
@@ -43,40 +44,49 @@ const currencyFormat = ({ value, currencyPrefix = '$' }: iCurrencyFormat) => {
     .replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.')}`;
 };
 
-const AppointmentCard: React.FC<AppointmentCardProps> = ({ appointment }) => {
+const AppointmentCard: React.FC<AppointmentCardProps> = ({
+  appointment,
+  theme,
+}) => {
   return (
     <S.Container>
       <S.ContainerDateTime>
-        <S.DayText>{`${stringDays[getDay(appointment.date)]},`}</S.DayText>
-        <S.MonthText>{stringMonths[getMonth(appointment.date)]}</S.MonthText>
-        <S.DayNumber>{getDate(appointment.date)}</S.DayNumber>
-        <S.Time>
+        <S.DayText theme={theme}>{`${
+          stringDays[getDay(appointment.date)]
+        },`}</S.DayText>
+        <S.MonthText theme={theme}>
+          {stringMonths[getMonth(appointment.date)]}
+        </S.MonthText>
+        <S.DayNumber theme={theme}>{getDate(appointment.date)}</S.DayNumber>
+        <S.Time theme={theme}>
           {`${getHours(appointment.date)}:${getMinutes(appointment.date)}`}
         </S.Time>
       </S.ContainerDateTime>
       <S.ContentAppointmentDescription>
         <S.ContentAppointmentDescriptionInformationContainer>
-          <S.AppointmentDescription>
+          <S.AppointmentDescription theme={theme}>
             {appointment.description}
           </S.AppointmentDescription>
-          <S.AppointmentValue>
+          <S.AppointmentValue theme={theme}>
             {currencyFormat({ value: appointment.value, currencyPrefix: 'R$' })}
           </S.AppointmentValue>
-          <S.AppointmentPoints>
+          <S.AppointmentPoints theme={theme}>
             {`${appointment.points} Pontos`}
           </S.AppointmentPoints>
-          <S.AppointmentPaymentStatus>
+          <S.AppointmentPaymentStatus theme={theme}>
             {appointment.paymentStatus}
           </S.AppointmentPaymentStatus>
         </S.ContentAppointmentDescriptionInformationContainer>
         <S.ContentAppointmentDescriptionImageContainer>
-          <S.DescriptionImageProfessional>
+          <S.DescriptionImageProfessional theme={theme}>
             Profissional
           </S.DescriptionImageProfessional>
           <S.ProfessionalImage>
             <img src={appointment.avatar} alt={appointment.professional} />
           </S.ProfessionalImage>
-          <S.ProfessionalName>{appointment.professional}</S.ProfessionalName>
+          <S.ProfessionalName theme={theme}>
+            {appointment.professional}
+          </S.ProfessionalName>
         </S.ContentAppointmentDescriptionImageContainer>
       </S.ContentAppointmentDescription>
     </S.Container>

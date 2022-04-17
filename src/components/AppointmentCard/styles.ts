@@ -1,5 +1,9 @@
 import styled from 'styled-components';
 
+interface AppointmentProps {
+  theme?: 'dark' | 'light';
+}
+
 export const Container = styled.div`
   width: 100%;
   display: flex;
@@ -19,35 +23,35 @@ export const ContainerDateTime = styled.div`
   padding: 10px 15px;
 `;
 
-export const DayText = styled.span`
+export const DayText = styled.span<AppointmentProps>`
   font-weight: 400;
   font-size: 12px;
   line-height: 14px;
   text-align: center;
-  color: #ffffff;
+  color: ${props => (props.theme === 'light' ? '#1c1c1c' : '#fff')};
 `;
 
-export const MonthText = styled.span`
+export const MonthText = styled.span<AppointmentProps>`
   font-weight: 400;
   font-size: 12px;
   line-height: 14px;
   text-align: center;
-  color: #ffffff;
+  color: ${props => (props.theme === 'light' ? '#1c1c1c' : '#fff')};
 `;
 
-export const DayNumber = styled.span`
+export const DayNumber = styled.span<AppointmentProps>`
   font-weight: 500;
   font-size: 20px;
   line-height: 23px;
   text-align: center;
-  color: #ffffff;
+  color: ${props => (props.theme === 'light' ? '#1c1c1c' : '#fff')};
 `;
 
-export const Time = styled.span`
+export const Time = styled.span<AppointmentProps>`
   font-weight: 400;
   font-size: 14px;
   line-height: 16px;
-  color: #ffffff;
+  color: ${props => (props.theme === 'light' ? '#1c1c1c' : '#fff')};
   text-align: center;
 `;
 
@@ -72,42 +76,42 @@ export const ContentAppointmentDescriptionImageContainer = styled.div`
   gap: 4px;
 `;
 
-export const AppointmentDescription = styled.span`
+export const AppointmentDescription = styled.span<AppointmentProps>`
   font-weight: 500;
   font-size: 14px;
   line-height: 16px;
-  color: #ffffff;
+  color: ${props => (props.theme === 'light' ? '#1c1c1c' : '#fff')};
   margin-bottom: 5px;
 `;
 
-export const AppointmentValue = styled.span`
+export const AppointmentValue = styled.span<AppointmentProps>`
   font-weight: 400;
   font-size: 12px;
   line-height: 14px;
-  color: #ffffff;
+  color: ${props => (props.theme === 'light' ? '#1c1c1c' : '#fff')};
 `;
 
-export const AppointmentPoints = styled.span`
+export const AppointmentPoints = styled.span<AppointmentProps>`
   font-weight: 400;
   font-size: 12px;
   line-height: 14px;
-  color: #ffffff;
+  color: ${props => (props.theme === 'light' ? '#1c1c1c' : '#fff')};
 `;
 
-export const AppointmentPaymentStatus = styled.span`
+export const AppointmentPaymentStatus = styled.span<AppointmentProps>`
   font-weight: 400;
   font-size: 12px;
   line-height: 14px;
-  color: #ffffff;
+  color: ${props => (props.theme === 'light' ? '#1c1c1c' : '#fff')};
   margin-top: 5px;
 `;
 
-export const DescriptionImageProfessional = styled.span`
+export const DescriptionImageProfessional = styled.span<AppointmentProps>`
   font-weight: 500;
   font-size: 10px;
   line-height: 12px;
   text-align: center;
-  color: #ffffff;
+  color: ${props => (props.theme === 'light' ? '#1c1c1c' : '#fff')};
 `;
 
 export const ProfessionalImage = styled.div`
@@ -122,9 +126,9 @@ export const ProfessionalImage = styled.div`
   }
 `;
 
-export const ProfessionalName = styled.span`
+export const ProfessionalName = styled.span<AppointmentProps>`
   font-weight: 400;
   font-size: 10px;
   line-height: 12px;
-  color: #ffffff;
+  color: ${props => (props.theme === 'light' ? '#1c1c1c' : '#fff')};
 `;
