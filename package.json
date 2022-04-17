@@ -19,6 +19,7 @@
     "next-pwa": "^5.4.7",
     "react": "18.0.0",
     "react-calendar": "^3.7.0",
+    "react-credit-cards": "^0.8.3",
     "react-dom": "18.0.0",
     "react-helmet": "^6.1.0",
     "react-icons": "^4.3.1",
@@ -28,6 +29,7 @@
   "devDependencies": {
     "@types/node": "17.0.23",
     "@types/react": "17.0.43",
+    "@types/react-credit-cards": "^0.8.1",
     "@types/react-dom": "17.0.14",
     "@types/react-star-rating-component": "^1.4.1",
     "@types/styled-components": "^5.1.24",

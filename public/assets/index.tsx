@@ -1,3 +1,4 @@
+export { default as DomBarberLogo } from './dombarberlogo.svg';
 export { default as LogoWhiteIcon } from './logo-white.svg';
 export { default as LogoBlackIcon } from './logo-black.svg';
 export { default as NotificationIcon } from './notification.svg';
@@ -14,3 +15,12 @@ export { default as ProductsIcon } from './products.svg';
 export { default as SearchIcon } from './search.svg';
 export { default as RightIcon } from './right.svg';
 export { default as ArrowDownIcon } from './arrow-down.svg';
+export { default as MediumPapperIcon } from './medium-papper.svg';
+export { default as OutlinedCheckIcon } from './outlined-check.svg';
+export { default as SecureOrderLogo } from './secureOrder.svg';
+export { default as PagSeguroLogo } from './pagsegurologo.svg';
+export { default as PixLogo } from './pix.svg';
+export { default as MastercardLogo } from './mastercard.svg';
+export { default as MoreOptionsIcon } from './moreoptions.svg';
+
+export { default as ImgAboutApp } from './about.png';

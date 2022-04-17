@@ -5,7 +5,7 @@ import styled from 'styled-components';
 const Container = styled.div`
   width: 100%;
   height: 100%;
-  padding: 56px 20px 0 20px;
+  padding: 56px 0 0;
   background: #272727;
   @media (min-width: 768px) {
     padding: 100px 60px 0 60px;
