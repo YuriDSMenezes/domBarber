@@ -1,14 +1,18 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import type { NextPage } from 'next';
 import BottomSheetFixedLayout from 'layouts/BottomSheetFixedLayout';
 import Button from 'components/Button';
 import MainLayout from 'layouts/MainLayout';
+import { getSchedules } from 'cases/schedule';
 import * as S from './styles';
 import AppointmentCard from '../../components/AppointmentCard';
 
 import { appointments as mockAppointments } from '../../../_mocks/appointments';
 
 const appointments: NextPage = () => {
+  useEffect(() => {
+    getSchedules();
+  }, []);
   return (
     <MainLayout>
       <BottomSheetFixedLayout theme="dark">

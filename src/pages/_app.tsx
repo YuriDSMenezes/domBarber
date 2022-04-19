@@ -2,6 +2,7 @@ import type { AppProps } from 'next/app';
 import { Helmet } from 'react-helmet';
 import GlobalStyle from '../styles/global';
 import 'react-credit-cards/es/styles-compiled.css';
+import '../services/firebase';
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (

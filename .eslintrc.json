@@ -23,6 +23,8 @@
     "no-use-before-define": "off",
     "import/prefer-default-export": "off",
     "class-methods-use-this": "off",
+    "no-return-assign": "off",
+    "no-unused-expressions":"off",
     "import/extensions": [
       "error",
       "ignorePackages",

@@ -1,16 +1,22 @@
 /* eslint-disable @typescript-eslint/no-empty-function */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/ban-types */
-import 'firebase/firestore';
-import firebase from 'firebase/app';
+import 'firebase/compat/firestore';
+import firebase from 'firebase/compat/app';
+import { scheduleModel } from '../models/schedule';
 
 interface getSyncProps {
   status: number;
   data: {};
 }
 
+interface DocAndIdProps {
+  id: string;
+  doc: {};
+}
+
 const FirestoreDBService = (model: any, collection: string) => ({
-  add: async ({ doc }) => {
+  add: async (doc: {}) => {
     const response = await firebase
       .firestore()
       .collection(collection)
@@ -22,25 +28,25 @@ const FirestoreDBService = (model: any, collection: string) => ({
       },
     };
   },
-  set: async ({ id, doc }) => {
+  set: async ({ id, doc }: DocAndIdProps) => {
     await firebase.firestore().collection(collection).doc(id).set(model(doc));
     return {
       status: 200,
     };
   },
-  update: async ({ id, doc }) => {
+  update: async ({ id, doc }: DocAndIdProps) => {
     await firebase.firestore().collection(collection).doc(id).update(doc);
     return {
       status: 200,
     };
   },
-  delete: async ({ id }) => {
+  delete: async (id: string) => {
     await firebase.firestore().collection(collection).doc(id).delete();
     return {
       status: 204,
     };
   },
-  get: async ({ id }) => {
+  get: async (id: string) => {
     const response = await firebase
       .firestore()
       .collection(collection)
@@ -69,7 +75,7 @@ const FirestoreDBService = (model: any, collection: string) => ({
     };
   },
 
-  getSync: ({ id, callback = ({ status, data }: getSyncProps) => {} }) => {
+  getSync: ({ id = '', callback = ({ status, data }: getSyncProps) => {} }) => {
     firebase
       .firestore()
       .collection(collection)
@@ -104,6 +110,7 @@ const FirestoreDBService = (model: any, collection: string) => ({
   },
 });
 export const firestoreDb = {
+  companySchedules: FirestoreDBService(scheduleModel, 'company-schedules'),
   // user: FirestoreDBService(modelUser, 'users'),
   // pitch: FirestoreDBService(modelPitch, 'pitches'),
   // match: FirestoreDBService(modelMatch, 'matches'),

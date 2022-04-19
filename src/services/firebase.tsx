@@ -1,7 +1,7 @@
 /* eslint-disable no-return-assign */
 import firebase from 'firebase/compat/app';
 import cookie from 'js-cookie';
-import { firebaseConfig } from 'environments/environments';
+import Router from 'next/router';
 import 'firebase/compat/auth';
 import {
   getAuth,
@@ -10,9 +10,11 @@ import {
   FacebookAuthProvider,
 } from 'firebase/auth';
 import 'firebase/compat/firestore';
-import Router from 'next/router';
+import { environment } from '../environments/environment';
 
-firebase.initializeApp(firebaseConfig);
+!firebase.apps.length
+  ? firebase.initializeApp(environment.firebase)
+  : firebase.app();
 
 export const fireAuth = firebase.auth();
 
