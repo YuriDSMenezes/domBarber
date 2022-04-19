@@ -3,20 +3,43 @@ import styled from 'styled-components';
 export const Container = styled.div`
   width: 100%;
   height: 100%;
-  background: #1C1C1C;
+  background: #1c1c1c;
   position: relative;
   padding-top: 20%;
+  @media (min-width: 768px) {
+    padding-top: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
 `;
 
-export const Form = styled.div`
-  background-color: #FFF;
-  width: 100%;
-  height: 80%;
+export const Form = styled.form`
+  background-color: #fff;
   border-radius: 46px 46px 0px 0px;
   padding: 39px 44px 0px;
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 600px;
+  @media (min-width: 768px) {
+    position: relative;
+    justify-content: center;
+    width: 700px;
+    margin: 0 auto;
+    border-radius: 22px;
+  }
+`;
+
+export const Content = styled.div`
+  width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
+  @media (min-width: 768px) {
+    width: 65%;
+    margin: 0 auto;
+  }
 `;
 
 export const LogoContainer = styled.div`
@@ -42,7 +65,7 @@ export const IndicativeTextOptionsLogin = styled.span`
 export const ActionsSocialButtons = styled.div`
   width: 100%;
   display: flex;
-  flex-direction:column;
+  flex-direction: column;
   gap: 25px;
   margin-bottom: 48px;
 `;
@@ -65,5 +88,5 @@ export const RegisterSuggestionLink = styled.a`
   font-size: 12px;
   font-weight: 500;
   line-height: 14px;
-  color: #FF9933;
+  color: #ff9933;
 `;
