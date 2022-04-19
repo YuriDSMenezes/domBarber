@@ -40,7 +40,8 @@ export const ImageUser = styled.div`
   img {
     width: 100%;
     height: 100%;
-    background-size: contain;
+    background-size: cover;
+    border-radius: 50%;
   }
 `;
 
@@ -49,6 +50,9 @@ interface NotificationProps {
 }
 export const Notifications = styled.div<NotificationProps>`
   position: relative;
+  @media (max-width: 768px) {
+    display: none;
+  }
   ${props =>
     props.hasNotification &&
     css`
@@ -108,11 +112,23 @@ export const UserLoginDesktop = styled.div`
   justify-content: space-between;
   color: #fff;
 
-  p:nth-child(2) {
+  a:nth-child(2) {
     color: black;
     background-color: #ff9933;
     border-radius: 13px;
-    padding: 9px 10px;
+    padding: 2px 5px;
+  }
+  @media (max-width: 768px) {
+    display: none;
+  }
+`;
+
+export const SidebarImage = styled.div`
+  width: 25px;
+  margin-left: 50px;
+
+  @media (max-width: 768px) {
+    margin-left: 10px;
   }
 `;
 

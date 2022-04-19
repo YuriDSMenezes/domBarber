@@ -36,7 +36,7 @@ const Content = styled.div<StyleProps>`
   width: 100%;
   height: 80%;
   border-radius: 46px 46px 0px 0px;
-  padding: 20px 24px 0px;
+  padding: 20px 15px 0px;
   bottom: 0;
 
   ${porps =>

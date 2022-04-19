@@ -23,7 +23,7 @@ export const CreditCardContainer = styled.div`
 
 export const CreditCardInputsContainer = styled.div`
   width: 100%;
-  padding: 0px 60px;
+  padding: 0px;
 `;
 
 export const CreditCardInputContainer = styled.div`
