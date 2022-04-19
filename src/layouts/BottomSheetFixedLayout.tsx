@@ -34,16 +34,12 @@ const Content = styled.div<StyleProps>`
   position: absolute;
   background-color: #fff;
   width: 100%;
-  height: 80%;
+  height: 90vh;
   border-radius: 46px 46px 0px 0px;
   padding: 20px 15px 0px;
-  bottom: 0;
+  bottom: -170px;
 
-  ${porps =>
-    porps.mediumSize &&
-    css`
-      height: 60%;
-    `}
+  ${porps => porps.mediumSize && css``}
 
   ${props =>
     props.theme === 'dark' &&

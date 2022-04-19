@@ -12,7 +12,6 @@ const confirmprofessional: React.FC = () => {
     <MainLayout>
       <BottomSheetFixedLayout
         theme="dark"
-        mediumSize
         imgSrc="https://img.freepik.com/free-photo/young-handsome-man-with-beard-isolated-keeping-arms-crossed-frontal-position_1368-132662.jpg?w=2000"
       >
         <S.Content>
