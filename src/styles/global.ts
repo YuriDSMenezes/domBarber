@@ -24,4 +24,9 @@ button {
   box-sizing: border-box;
   font-family: 'Roboto', sans-serif;
 }
+
+div#__next,
+  div#__next > div {
+    min-height: 100vh;
+}
 `;
