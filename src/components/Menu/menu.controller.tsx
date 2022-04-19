@@ -1,52 +1,61 @@
-import { ArrowLeftIcon, UserIcon, HouseIcon, CalendarIcon, ProductsIcon, PeopleIcon, SmileIcon, NotificationIcon } from '../../../public/assets'
-import { useState } from 'react'
+import { useState } from 'react';
+import {
+  ArrowLeftIcon,
+  UserIcon,
+  HouseIcon,
+  CalendarIcon,
+  ProductsIcon,
+  PeopleIcon,
+  SmileIcon,
+  NotificationIcon,
+} from '../../../public/assets';
 
 export const MenuController = () => {
-  const [ openSidebar,setOpenSidebar ] = useState(false)
-  const handleClickSidebar = () => setOpenSidebar(!openSidebar)
+  const [openSidebar, setOpenSidebar] = useState(false);
+  const handleClickSidebar = () => setOpenSidebar(!openSidebar);
 
   const menuItemsList = [
     {
       icon: UserIcon,
-      text: 'Minha Conta'
+      text: 'Minha Conta',
     },
     {
       icon: HouseIcon,
-      text: 'Inicio'
+      text: 'Inicio',
     },
     {
       icon: CalendarIcon,
-      text: 'Agenda'
+      text: 'Agenda',
     },
     {
       icon: ArrowLeftIcon,
-      text: 'Serviços'
+      text: 'Serviços',
     },
     {
       icon: ProductsIcon,
-      text: 'Produtos'
+      text: 'Produtos',
     },
     {
       icon: PeopleIcon,
-      text: 'Profissionais'
+      text: 'Profissionais',
     },
     {
       icon: SmileIcon,
-      text: 'Pontuação'
+      text: 'Pontuação',
     },
     {
       icon: NotificationIcon,
-      text: 'Notificação'
+      text: 'Notificação',
     },
-  ]
+  ];
 
   return {
     states: {
       openSidebar,
-      menuItemsList
+      menuItemsList,
     },
     actions: {
-      handleClickSidebar
-    }
-  }
-}
+      handleClickSidebar,
+    },
+  };
+};

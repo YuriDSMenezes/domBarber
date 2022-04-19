@@ -1,3 +1,4 @@
+import Footer from 'components/footer';
 import { Menu } from 'components/Menu';
 import Head from 'next/head';
 import React from 'react';
@@ -6,8 +7,13 @@ import styled from 'styled-components';
 const Container = styled.div`
   width: 100%;
   height: 100%;
-  padding: 56px 16px 0 16px;
+`;
+
+const Content = styled.div`
+  padding-top: 56px;
   background: #1c1c1c;
+  width: 100%;
+  height: 100%;
   @media (min-width: 768px) {
     padding: 100px 60px 0 60px;
     width: 100%;
@@ -19,7 +25,7 @@ const Container = styled.div`
 const MainLayout: React.FC = ({ children, ...rest }) => (
   <Container {...rest}>
     <Head>
-      <script
+      {/* <script
         dangerouslySetInnerHTML={{
           __html: `
               if (!document.cookie || !document.cookie.includes('user-cookie')) {
@@ -27,10 +33,13 @@ const MainLayout: React.FC = ({ children, ...rest }) => (
               }
             `,
         }}
-      />
+      /> */}
     </Head>
-    <Menu />
-    {children}
+    <Content>
+      <Menu />
+      {children}
+    </Content>
+    <Footer />
   </Container>
 );
 

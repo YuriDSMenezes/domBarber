@@ -19,7 +19,6 @@ export const Container = styled.div`
 export const BrachInformationContainer = styled.div`
   position: absolute;
   bottom: 0;
-  height: 30%;
   width: 100%;
   background: #181818;
   border-radius: 10px;

@@ -83,7 +83,7 @@ export const ProfessionalOption = styled.div<StyleProps>`
 
   img {
     position: relative;
-    object-fit: cover;
+    object-fit: contain;
     width: 100%;
     height: 100%;
     border-radius: 50%;

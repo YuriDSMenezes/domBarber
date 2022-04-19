@@ -6,7 +6,17 @@ export const Container = styled.div`
   background: #1c1c1c;
   height: 100%;
   padding-top: 50px;
+  display: flex;
+  flex-direction: column;
   @media (min-width: 768px) {
+    display: grid;
+    grid-template-columns: 65% 35%;
+    grid-template-areas:
+      'horizontalList searchInput'
+      'banner banner'
+      'services services'
+      'professionals professionals'
+      'products products';
   }
 `;
 
@@ -35,6 +45,15 @@ export const InputContainer = styled.div`
   width: 100%;
   margin: 35px 0;
   grid-area: searchInput;
+  display: flex;
+  justify-content: flex-end;
+`;
+
+export const Input = styled.div`
+  width: 100%;
+  @media (min-width: 768px) {
+    width: 337px;
+  }
 `;
 
 export const BannerContainer = styled.div`
@@ -118,7 +137,7 @@ export const Professional = styled.div`
 `;
 
 export const Products = styled.div`
-  margin: 30px 0;
+  padding: 30px 0;
   text-align: center;
   color: #fff;
   width: 100%;

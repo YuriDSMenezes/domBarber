@@ -88,12 +88,12 @@ interface TitleProps {
 
 export const Title = styled.div<TitleProps>`
   font-size: ${ConvertToRem(18)};
-  margin: 12px 0 50px 0;
+  margin: 40px 0 50px 0;
+  text-align: center;
+  color: #fff;
   display: ${props => props.mobile && 'none'};
   @media (min-width: 768px) {
     width: 100%;
-    text-align: center;
-    color: #fff;
     font-weight: 500;
     font-size: ${ConvertToRem(36)};
   }

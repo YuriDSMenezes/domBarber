@@ -17,7 +17,9 @@ const Home: NextPage = () => (
         </S.TitleDescription>
       </S.TitleContainer>
       <S.InputContainer>
-        <Input search secondary />
+        <S.Input>
+          <Input search secondary />
+        </S.Input>
       </S.InputContainer>
       <S.BannerContainer>
         <img

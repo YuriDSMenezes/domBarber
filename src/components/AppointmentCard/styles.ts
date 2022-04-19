@@ -65,7 +65,7 @@ export const ContentAppointmentDescriptionInformationContainer = styled.div`
   width: 70%;
   display: flex;
   flex-direction: column;
-  padding: 15px;
+  padding: 8px 15px 15px 10px;
 `;
 
 export const ContentAppointmentDescriptionImageContainer = styled.div`
@@ -74,6 +74,7 @@ export const ContentAppointmentDescriptionImageContainer = styled.div`
   flex-direction: column;
   align-items: center;
   gap: 4px;
+  padding-top: 8px;
 `;
 
 export const AppointmentDescription = styled.span<AppointmentProps>`

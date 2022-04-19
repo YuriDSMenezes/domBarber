@@ -23,6 +23,9 @@ button {
 * {
   box-sizing: border-box;
   font-family: 'Roboto', sans-serif;
+    &::-webkit-scrollbar {
+    display: none;
+  }
 }
 
 div#__next,
