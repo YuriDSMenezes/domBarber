@@ -25,6 +25,8 @@
     "class-methods-use-this": "off",
     "no-return-assign": "off",
     "no-unused-expressions":"off",
+    "no-shadow": "off",
+    "@typescript-eslint/ban-types": "off",
     "import/extensions": [
       "error",
       "ignorePackages",

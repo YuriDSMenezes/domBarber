@@ -1,30 +1,6 @@
-import { ScheduleCanceled } from './types/scheduleCanceled';
+import { Schedule as ScheduleType } from './types/schedule';
 
-export interface Schedule {
-  kitId?: string;
-  clientId: string;
-  commandId?: string;
-  serviceIds: string[];
-  professionalId: string;
-  end: Date;
-  start: Date;
-  title: string;
-  color: string;
-  block: boolean;
-  from: 'whatsapp' | 'cli-app' | 'pro-app' | 'panel';
-  done?: Date;
-  payed?: Date;
-  canceled?: ScheduleCanceled;
-  // Default Properties
-  id: string;
-  projectId: string;
-  companyId: string;
-  createdAt: Date;
-  updatedAt?: Date;
-  deletedAt?: Date;
-}
-
-export const scheduleModel = (schedule: Schedule): Schedule => ({
+export const Schedule = (schedule: ScheduleType): ScheduleType => ({
   kitId: schedule?.kitId || '',
   clientId: schedule.clientId,
   commandId: schedule?.commandId || '',

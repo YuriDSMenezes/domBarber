@@ -1,9 +1,12 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-empty-function */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/ban-types */
 import 'firebase/compat/firestore';
 import firebase from 'firebase/compat/app';
-import { scheduleModel } from '../models/schedule';
+import { Company } from 'models/company';
+import { Schedule } from '../models/schedule';
 
 interface getSyncProps {
   status: number;
@@ -66,6 +69,7 @@ const FirestoreDBService = (model: any, collection: string) => ({
     wheres.length && wheres.forEach(where => (ref = ref.where(...where)));
     const response = await ref.get();
     const docs = {};
+    // @ts-ignore
     response.forEach(doc => (docs[doc.id] = model(doc.data())));
     return {
       status: 200,
@@ -99,6 +103,7 @@ const FirestoreDBService = (model: any, collection: string) => ({
     wheres.length && wheres.forEach(where => (ref = ref.where(...where)));
     ref.onSnapshot(res => {
       const obj = {};
+      // @ts-ignore
       res.forEach(doc => (obj[doc.id] = model(doc.data())));
       callback({
         status: 200,
@@ -110,9 +115,6 @@ const FirestoreDBService = (model: any, collection: string) => ({
   },
 });
 export const firestoreDb = {
-  companySchedules: FirestoreDBService(scheduleModel, 'company-schedules'),
-  // user: FirestoreDBService(modelUser, 'users'),
-  // pitch: FirestoreDBService(modelPitch, 'pitches'),
-  // match: FirestoreDBService(modelMatch, 'matches'),
-  // notification: FirestoreDBService(modelNotification, 'notifications'),
+  companySchedules: FirestoreDBService(Schedule, 'company-schedules'),
+  company: FirestoreDBService(Company, 'companies'),
 };
