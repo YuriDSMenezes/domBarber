@@ -1,4 +1,9 @@
-import { ArrowLeftIcon, LogoWhiteIcon } from '../../../../public/assets';
+import { singOut } from 'services/firebase';
+import {
+  ArrowLeftIcon,
+  LogoutIcon,
+  LogoWhiteIcon,
+} from '../../../../public/assets';
 import * as S from './styles';
 
 interface IconProps {
@@ -60,6 +65,12 @@ export const Sidebar = ({
           </>
         ))}
       </S.Content>
+      <S.Logout onClick={() => singOut()}>
+        <S.LogoItem>
+          <img src={LogoutIcon.src} alt="Sair do aplicativo" />
+        </S.LogoItem>
+        <span>Sair</span>
+      </S.Logout>
     </S.Container>
   </>
 );
