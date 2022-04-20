@@ -96,3 +96,7 @@ export const LogoText = styled.div<LogoTextProps>`
       }
     `}
 `;
+
+export const Logout = styled(Item)`
+  color: #fff;
+`;
