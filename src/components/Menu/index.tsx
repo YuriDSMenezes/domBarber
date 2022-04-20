@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import Router from 'next/router';
 import {
   LogoWhiteIcon,
   MenuIcon,
@@ -42,7 +43,7 @@ export const Menu = () => {
           </S.Notifications>
         </S.UserInfos>
 
-        <S.Logo>
+        <S.Logo onClick={() => Router.push('/home')}>
           <img
             src={LogoWhiteIcon.src}
             alt="Logo da Dom Barber"
