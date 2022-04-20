@@ -2,16 +2,20 @@ import { ConvertToRem } from 'helpers';
 import styled from 'styled-components';
 
 export const Container = styled.div`
-  width: 100%;
+  width: 95%;
+  margin: 0 auto;
   background: #1c1c1c;
   height: 100%;
   padding-top: 50px;
   display: flex;
   flex-direction: column;
   @media (min-width: 768px) {
+    width: 100%;
+    padding-top: 0;
     display: grid;
     grid-template-columns: 65% 35%;
     grid-template-areas:
+      'title title'
       'horizontalList searchInput'
       'banner banner'
       'services services'
@@ -25,6 +29,7 @@ export const TitleContainer = styled.div`
   width: 220px;
   margin: 0 auto;
   text-align: center;
+  grid-area: title;
   @media (min-width: 768px) {
     display: none;
   }
@@ -57,21 +62,18 @@ export const Input = styled.div`
 `;
 
 export const BannerContainer = styled.div`
+  width: 100%;
   height: 157px;
+  background: url(${'https://images.unsplash.com/photo-1536520002442-39764a41e987?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=987&q=80'})
+    no-repeat;
+  background-size: cover;
+  background-position: center;
   border-radius: 17px;
-  text-align: center;
-  background: #fff;
   grid-area: banner;
-  img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    border-radius: 17px;
-  }
   @media (min-width: 768px) {
+    height: 557px;
     width: 100%;
     margin: 0 auto;
-    height: 500px;
   }
 `;
 

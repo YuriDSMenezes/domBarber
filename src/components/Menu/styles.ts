@@ -74,6 +74,7 @@ export const Logo = styled.div`
   align-items: center;
   height: 100%;
   width: 140px;
+  cursor: pointer;
   @media (min-width: 768px) {
     width: 180px;
   }

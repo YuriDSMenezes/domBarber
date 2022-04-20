@@ -4,6 +4,10 @@ const nextConfig = {
 }
 const withPlugins = require('next-compose-plugins')
 const withPwa = require('next-pwa')
+const withImages = require('next-images')
+module.exports = withImages({
+ esModule: true
+})
 
 module.exports = withPlugins([
   {

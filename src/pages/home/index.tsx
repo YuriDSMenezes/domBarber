@@ -21,20 +21,13 @@ const Home: NextPage = () => (
           <Input search secondary />
         </S.Input>
       </S.InputContainer>
-      <S.BannerContainer>
-        <img
-          src="https://images.unsplash.com/photo-1536520002442-39764a41e987?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=987&q=80"
-          alt="teste"
-          width="100%"
-          height="100%"
-        />
-      </S.BannerContainer>
+      <S.BannerContainer></S.BannerContainer>
       <S.HorizontalListContainer>
         <HorizontalList />
       </S.HorizontalListContainer>
       <S.ServiceContainer>
         <S.Description>Serviços</S.Description>
-        <Carousel src={SrcImages} size="lg" />
+        <Carousel src={SrcImages} size="lg" services />
         <S.SeeMore>
           <p>Ver Todos</p>
           <img
