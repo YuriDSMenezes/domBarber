@@ -3,12 +3,14 @@ import { useEffect, useCallback } from 'react';
 import { useRouter } from 'next/router';
 import { useGlobal } from 'hooks/Global';
 import { Company } from 'models/company';
+import { useLoading } from 'hooks/Loading';
 import { getCompanyByUrl } from '../../cases/company/getCompanyByUrl';
 
 // type ObjEntriesCompanyData = [id: string, data: CompanyType][];
 
 export const useHomeController = () => {
-  const { actions } = useGlobal();
+  const { actions: globalActions } = useGlobal();
+  const { actions: loadingActions } = useLoading();
 
   const {
     query: { companyName },
@@ -16,11 +18,12 @@ export const useHomeController = () => {
   } = useRouter();
 
   const getCompanyData = useCallback(async () => {
+    loadingActions.activeLoading();
     if (isReady) {
       const companyData = await getCompanyByUrl(
         companyName ? companyName[0] : '',
       );
-      actions.setCompany(
+      globalActions.setCompany(
         Company(
           // @ts-ignore
           Object.entries(companyData as {}).map(([id, data]) =>
@@ -29,6 +32,7 @@ export const useHomeController = () => {
         ),
       );
     }
+    loadingActions.deactiveLoading();
   }, [isReady]);
 
   useEffect(() => {

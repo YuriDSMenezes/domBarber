@@ -3,6 +3,7 @@ import type { AppProps } from 'next/app';
 import { Helmet } from 'react-helmet';
 import 'react-credit-cards/es/styles-compiled.css';
 import { GlobalProvider } from 'hooks/Global';
+import { LoadingProvider } from 'hooks/Loading';
 import GlobalStyle from '../styles/global';
 
 function MyApp({ Component, pageProps }: AppProps) {
@@ -22,9 +23,11 @@ function MyApp({ Component, pageProps }: AppProps) {
         <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       </Helmet>
-      <GlobalProvider>
-        <Component {...pageProps} />
-      </GlobalProvider>
+      <LoadingProvider>
+        <GlobalProvider>
+          <Component {...pageProps} />
+        </GlobalProvider>
+      </LoadingProvider>
       <GlobalStyle />
     </>
   );
