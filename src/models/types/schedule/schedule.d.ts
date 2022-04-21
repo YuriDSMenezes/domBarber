@@ -1,6 +1,7 @@
+import { BaseTypes } from '../base/index.d';
 import { ScheduleCanceled } from './canceled';
 
-export interface Schedule {
+export interface Schedule extends BaseTypes {
   kitId?: string;
   clientId: string;
   commandId?: string;
@@ -15,11 +16,4 @@ export interface Schedule {
   done?: Date;
   payed?: Date;
   canceled?: ScheduleCanceled;
-  // Default Properties
-  id: string;
-  projectId: string;
-  companyId: string;
-  createdAt: Date;
-  updatedAt?: Date;
-  deletedAt?: Date;
 }

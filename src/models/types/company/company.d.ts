@@ -1,3 +1,4 @@
+import { BaseTypes } from '../base/index.d';
 import { CompanyAddress } from './address';
 import { CompanyApp } from './app';
 import { Wizard } from './enums';
@@ -10,7 +11,7 @@ import { CompanyTerm } from './term';
 import { CompanyTimezone } from './timezone';
 import { WorkDay } from './work-day';
 
-export interface Company {
+export interface Company extends BaseTypes {
   app: CompanyApp;
   plan: CompanyPlan;
   image: CompanyImage;
@@ -28,12 +29,4 @@ export interface Company {
   socialReason?: string;
   phones: CompanyPhone[];
   openingHours: WorkDay[];
-
-  // Default Properties
-  id: string;
-  projectId: string;
-  companyId: string;
-  createdAt: Date;
-  updatedAt?: Date;
-  deletedAt?: Date;
 }

@@ -1,12 +1,15 @@
 import React, { createContext, useContext, useState } from 'react';
 import { Company as CompanyType } from 'models/types/company';
+import { Service as ServiceType } from 'models/types/service';
 
 interface GlobalContextProps {
   states: {
     company: CompanyType;
+    services: ServiceType[];
   };
   actions: {
     setCompany: (company: CompanyType) => void;
+    setServices: (services: ServiceType[]) => void;
   };
 }
 
@@ -16,12 +19,13 @@ const GlobalContext = createContext<GlobalContextProps>(
 
 const GlobalProvider: React.FC = ({ children }) => {
   const [company, setCompany] = useState<CompanyType>({} as CompanyType);
+  const [services, setServices] = useState<ServiceType[]>([] as ServiceType[]);
 
   return (
     <GlobalContext.Provider
       value={{
-        states: { company },
-        actions: { setCompany },
+        states: { company, services },
+        actions: { setCompany, setServices },
       }}
     >
       {children}

@@ -6,6 +6,7 @@
 import 'firebase/compat/firestore';
 import firebase from 'firebase/compat/app';
 import { Company } from 'models/company';
+import { Service } from 'models/service';
 import { Schedule } from '../models/schedule';
 
 interface getSyncProps {
@@ -117,4 +118,5 @@ const FirestoreDBService = (model: any, collection: string) => ({
 export const firestoreDb = {
   companySchedules: FirestoreDBService(Schedule, 'company-schedules'),
   company: FirestoreDBService(Company, 'companies'),
+  service: FirestoreDBService(Service, 'company-services'),
 };
