@@ -61,11 +61,16 @@ export const Content = styled.div`
 `;
 
 export const Item = styled.div`
-  height: 20px;
   display: flex;
   align-items: center;
   margin: 40px 0;
   font-weight: 500;
+  cursor: pointer;
+  padding: 10px;
+  border-radius: 8px;
+  &:hover {
+    background: #636363;
+  }
 `;
 
 export const LogoItem = styled.div`
@@ -90,4 +95,8 @@ export const LogoText = styled.div<LogoTextProps>`
         right: -50px;
       }
     `}
+`;
+
+export const Logout = styled(Item)`
+  color: #fff;
 `;

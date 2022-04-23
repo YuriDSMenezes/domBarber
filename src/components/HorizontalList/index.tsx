@@ -1,31 +1,44 @@
+import Router from 'next/router';
 import { useState } from 'react';
 import * as S from './styles';
+
+interface HorizontalListItem {
+  item: string;
+  url: string;
+}
 
 export const HorizontalList = () => {
   const [itemSelected, setItemSelected] = useState<number>(0);
 
   const array = [
-    'Promoções',
-    'Agenda',
-    'Serviços',
-    'Produtos',
-    'Profissionais',
-    'Produtos',
-    'Agenda',
-    'Serviços',
-    'Profissionais',
+    {
+      item: 'Promoções',
+      url: '',
+    },
+    {
+      item: 'Agenda',
+      url: '/schedule',
+    },
+    {
+      item: 'Serviços',
+      url: '/newservice',
+    },
+    {
+      item: 'Produtos',
+      url: '/products',
+    },
+    {
+      item: 'Profissionais',
+      url: '/professionals',
+    },
   ];
 
-  const handleClick = (index: number) => setItemSelected(index);
+  const handleClick = (url: string) => Router.push(url);
 
   return (
     <S.Container>
-      {array.map((item: string, index: number) => (
-        <S.Item
-          key={`${item}${index}`}
-          onClick={() => handleClick(index)}
-          active={index === itemSelected}
-        >
+      {array.map(({ item, url }: HorizontalListItem, index: number) => (
+        <S.Item key={`${item}${index}`} onClick={() => handleClick(url)}>
           {item}
         </S.Item>
       ))}

@@ -1,3 +1,5 @@
+import Link from 'next/link';
+import Router from 'next/router';
 import {
   LogoWhiteIcon,
   MenuIcon,
@@ -24,7 +26,12 @@ export const Menu = () => {
       )}
       <S.Container openSidebar={openSidebar}>
         <S.UserInfos>
-          <S.ImageUser>Foto</S.ImageUser>
+          <S.ImageUser>
+            <img
+              src="https://images.unsplash.com/photo-1599351431202-1e0f0137899a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=988&q=80"
+              alt="algo"
+            />
+          </S.ImageUser>
 
           <S.Notifications hasNotification>
             <img
@@ -36,7 +43,7 @@ export const Menu = () => {
           </S.Notifications>
         </S.UserInfos>
 
-        <S.Logo>
+        <S.Logo onClick={() => Router.push('/home')}>
           <img
             src={LogoWhiteIcon.src}
             alt="Logo da Dom Barber"
@@ -45,14 +52,14 @@ export const Menu = () => {
           />
         </S.Logo>
 
-        <S.Sidebar onClick={handleClickSidebar}>
+        <S.Sidebar>
           <S.UserLoginDesktop>
-            <p>Entrar</p>
-            <p>Cadastre-se</p>
+            <Link href="/">Entrar</Link>
+            <Link href="/">Cadastre-se</Link>
           </S.UserLoginDesktop>
-          <div style={{ width: '25px', marginLeft: '50px' }}>
+          <S.SidebarImage onClick={handleClickSidebar}>
             <img src={MenuIcon.src} alt="Menu" width="100%" height="100%" />
-          </div>
+          </S.SidebarImage>
         </S.Sidebar>
       </S.Container>
     </>

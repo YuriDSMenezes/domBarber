@@ -22,5 +22,9 @@ export { default as PagSeguroLogo } from './pagsegurologo.svg';
 export { default as PixLogo } from './pix.svg';
 export { default as MastercardLogo } from './mastercard.svg';
 export { default as MoreOptionsIcon } from './moreoptions.svg';
+export { default as FacebookIcon } from './facebook.svg';
+export { default as InstagramIcon } from './instagram.svg';
+export { default as WhatsappIcon } from './whatsapp.svg';
+export { default as LogoutIcon } from './logout.svg';
 
 export { default as ImgAboutApp } from './about.png';
