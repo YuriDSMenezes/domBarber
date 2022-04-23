@@ -109,6 +109,7 @@ export const Description = styled.div`
   bottom: 0px;
   left: 40px;
   @media (min-width: 768px) {
+    bottom: 10px;
     left: 80px;
     font-size: ${ConvertToRem(24)};
   }

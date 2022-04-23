@@ -1,3 +1,4 @@
+import { ConvertToRem } from 'helpers';
 import styled from 'styled-components';
 
 export const Content = styled.div`
@@ -14,4 +15,17 @@ export const Title = styled.h1`
   font-size: 18px;
   line-height: 21px;
   color: #ffffff;
+  display: block;
+  @media (min-width: 768px) {
+    display: none;
+  }
+`;
+
+export const TitleOut = styled.h1`
+  font-weight: 500;
+  font-size: ${ConvertToRem(36)};
+  line-height: 21px;
+  color: #ffffff;
+  text-align: center;
+  margin-bottom: 100px;
 `;

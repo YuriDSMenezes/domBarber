@@ -1,16 +1,19 @@
+import { ConvertToRem } from 'helpers';
 import styled, { css } from 'styled-components';
 
 interface StyleProps {
   selectedTab?: boolean;
+  show?: boolean;
 }
 
-export const Container = styled.div`
+export const Container = styled.div<StyleProps>`
   width: 100%;
   height: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
   padding: 0 20px;
+  overflow-y: scroll;
 `;
 
 export const TabsContainer = styled.div`
@@ -18,6 +21,10 @@ export const TabsContainer = styled.div`
   display: flex;
   justify-content: space-around;
   padding: 15px 0;
+  @media (min-width: 768px) {
+    position: absolute;
+    top: -80px;
+  }
 `;
 
 export const TabContainer = styled.div<StyleProps>`
@@ -36,6 +43,9 @@ export const TabText = styled.span`
   font-size: 14px;
   line-height: 16px;
   color: #ffffff;
+  @media (min-width: 768px) {
+    font-size: ${ConvertToRem(18)};
+  }
 `;
 
 export const ContainerTabRenderedComponent = styled.div`
