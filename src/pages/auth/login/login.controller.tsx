@@ -4,7 +4,7 @@ import {
   singOut,
   signInWithGoogle,
   signInWithFacebook,
-} from 'services/firebase';
+} from 'services/FirebaseOAuth';
 
 export const LoginController = () => {
   const [email, setEmail] = useState<string>('');
