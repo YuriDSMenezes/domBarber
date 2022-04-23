@@ -1,0 +1,12 @@
+export { CompanyAddress } from './address';
+export { CompanyApp } from './app';
+export { Wizard } from './enums';
+export { CompanyImage } from './image';
+export { CompanyOwner } from './owner';
+export { CompanyPagSeguro } from './pagseguro';
+export { CompanyPhone } from './phone';
+export { CompanyPlan } from './plan';
+export { CompanyTerm } from './term';
+export { CompanyTimezone } from './timezone';
+export { WorkDay } from './work-day';
+export { Company } from './company';

@@ -2,6 +2,11 @@ import Router from 'next/router';
 import { useState } from 'react';
 import * as S from './styles';
 
+interface HorizontalListItem {
+  item: string;
+  url: string;
+}
+
 export const HorizontalList = () => {
   const [itemSelected, setItemSelected] = useState<number>(0);
 
@@ -32,8 +37,10 @@ export const HorizontalList = () => {
 
   return (
     <S.Container>
-      {array.map(({ item, url }: any) => (
-        <S.Item onClick={() => handleClick(url)}>{item}</S.Item>
+      {array.map(({ item, url }: HorizontalListItem, index: number) => (
+        <S.Item key={`${item}${index}`} onClick={() => handleClick(url)}>
+          {item}
+        </S.Item>
       ))}
     </S.Container>
   );
