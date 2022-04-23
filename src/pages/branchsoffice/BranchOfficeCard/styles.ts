@@ -1,11 +1,22 @@
 import styled from 'styled-components';
 
 export const Container = styled.div`
+  min-height: 196px;
+  height: 100%;
+  position: relative;
+
+  @media (min-width: 768px) {
+    display: flex;
+  }
+`;
+
+export const Content = styled.div`
   position: relative;
   min-height: 196px;
   width: 100%;
   height: 100%;
   border-radius: 10px;
+  max-width: 250px;
 
   img {
     position: relative;
@@ -13,6 +24,12 @@ export const Container = styled.div`
     width: 100%;
     height: 100%;
     border-radius: 10px;
+  }
+
+  @media (min-width: 768px) {
+    max-width: 274px;
+    height: 295px;
+    margin-bottom: 20px;
   }
 `;
 
@@ -24,7 +41,12 @@ export const BrachInformationContainer = styled.div`
   border-radius: 10px;
   display: flex;
   flex-direction: column;
+  align-items: center;
   padding: 10px;
+
+  @media (min-width: 768px) {
+    align-items: flex-start;
+  }
 `;
 
 export const BranchOfficeName = styled.span`
@@ -40,4 +62,21 @@ export const BranchOfficeAddress = styled.div`
   color: #ffffff;
   width: 80%;
   margin-top: 5px;
+  text-align: center;
+
+  @media (min-width: 768px) {
+    width: 60%;
+    text-align: left;
+  }
+`;
+
+export const Price = styled.div`
+  position: absolute;
+  bottom: 30px;
+  right: 5px;
+  color: #fff;
+`;
+
+export const Money = styled.div`
+  margin-right: 50px;
 `;

@@ -15,7 +15,7 @@ export const Container = styled.div`
   }
 `;
 export const Logo = styled.div`
-  width: 230px;
+  width: 250px;
   height: 70px;
   margin-top: 50px;
   img {

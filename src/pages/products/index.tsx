@@ -4,6 +4,7 @@ import MainLayout from 'layouts/MainLayout';
 import React from 'react';
 import BarberShopTabOption from './BarberShopTabOption';
 import HygieneTabOption from './HygieneTabOption';
+import { MobileProducts } from './MobileProducts';
 import ProductsTabOption from './ProductsTabOption';
 
 import * as S from './styles';
@@ -13,7 +14,7 @@ const products: React.FC = () => {
     {
       key: 'Produtos',
       description: 'Produtos',
-      renderComponent: <ProductsTabOption />,
+      renderComponent: <MobileProducts />,
     },
     {
       key: 'Higiene',
@@ -29,6 +30,7 @@ const products: React.FC = () => {
 
   return (
     <MainLayout>
+      <S.TitleOut>Escolha os Produtos</S.TitleOut>
       <BottomSheetFixedLayout theme="dark">
         <S.Content>
           <S.Title>Escolha os Produtos</S.Title>

@@ -5,12 +5,14 @@ interface BottomSheetFixedLayoutProps extends HTMLAttributes<HTMLDivElement> {
   theme?: 'light' | 'dark';
   mediumSize?: boolean;
   imgSrc?: string;
+  padding?: string;
 }
 
 interface StyleProps {
   theme?: 'light' | 'dark';
   mediumSize?: boolean;
   imgSrc?: string;
+  padding?: string;
 }
 
 const Container = styled.div<StyleProps>`
@@ -18,7 +20,14 @@ const Container = styled.div<StyleProps>`
   height: calc(100vh - 56px);
   background: #1c1c1c;
   position: relative;
-  /* padding-top: 40%; */
+
+  @media (min-width: 768px) {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
 
   ${props =>
     props.imgSrc &&
@@ -39,6 +48,17 @@ const Content = styled.div<StyleProps>`
   padding: 20px 15px 0px;
   bottom: -170px;
 
+  @media (min-width: 768px) {
+    position: initial;
+    height: 880px;
+    width: 50%;
+    margin: 0 auto 20px auto;
+    text-align: center;
+    border-radius: 22px;
+    background-color: #161616;
+    padding: ${props => props.padding};
+  }
+
   ${porps => porps.mediumSize && css``}
 
   ${props =>
@@ -52,11 +72,12 @@ const BottomSheetFixedLayout: React.FC<BottomSheetFixedLayoutProps> = ({
   theme = 'light',
   mediumSize = false,
   imgSrc = '',
+  padding,
   children,
 }) => {
   return (
     <Container theme={theme} imgSrc={imgSrc}>
-      <Content theme={theme} mediumSize={mediumSize}>
+      <Content theme={theme} mediumSize={mediumSize} padding={padding}>
         {children}
       </Content>
     </Container>

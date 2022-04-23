@@ -9,6 +9,8 @@ import BranchOfficeCard from './BranchOfficeCard';
 const branchsoffice: React.FC = () => {
   return (
     <MainLayout>
+      <S.TitleOut>Filiais</S.TitleOut>
+      <S.SubTitleOut>Conheça nossas Filiais</S.SubTitleOut>
       <BottomSheetFixedLayout theme="dark">
         <S.Content>
           <S.Title>Filiais</S.Title>

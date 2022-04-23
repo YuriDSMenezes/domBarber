@@ -15,7 +15,7 @@ const Content = styled.div`
   width: 100%;
   height: 100%;
   @media (min-width: 768px) {
-    padding: 100px 60px 0 60px;
+    padding: 100px 60px 20px 60px;
     width: 100%;
     height: 100%;
     background: #1c1c1c;
