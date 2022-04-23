@@ -29,7 +29,7 @@ export const signInWithGoogle = () =>
         cookie.set('user-cookie', token, {
           expires: 1,
         });
-        Router.push('/home');
+        Router.push('/app');
       }
     })
     .catch(error => {
@@ -37,7 +37,7 @@ export const signInWithGoogle = () =>
       const errorMessage = error.message;
       const { email } = error;
       const credential = GoogleAuthProvider.credentialFromError(error);
-      cookie.remove('teste');
+      cookie.remove('user-cookie');
       Router.push('/');
     });
 
@@ -79,11 +79,11 @@ export const singOut = async () => {
   await firebase.auth().signOut();
 };
 
-const service = (collection: string) => ({});
+// const service = (collection: string) => ({});
 
-export const myDB = {
-  user: service('users'),
-  pitch: service('pitches'),
-  match: service('matches'),
-  notification: service('notifications'),
-};
+// export const myDB = {
+//   user: service('users'),
+//   pitch: service('pitches'),
+//   match: service('matches'),
+//   notification: service('notifications'),
+// };

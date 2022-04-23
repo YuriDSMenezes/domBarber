@@ -7,7 +7,8 @@ import 'firebase/compat/firestore';
 import firebase from 'firebase/compat/app';
 import { Company } from 'models/company';
 import { Service } from 'models/service';
-import { Schedule } from '../models/schedule';
+import { Schedule } from 'models/schedule';
+import { Professional } from 'models/professional';
 
 interface getSyncProps {
   status: number;
@@ -119,4 +120,5 @@ export const firestoreDb = {
   companySchedules: FirestoreDBService(Schedule, 'company-schedules'),
   company: FirestoreDBService(Company, 'companies'),
   service: FirestoreDBService(Service, 'company-services'),
+  professional: FirestoreDBService(Professional, 'company-professionals'),
 };

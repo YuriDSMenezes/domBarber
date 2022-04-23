@@ -6,10 +6,10 @@ import { NextPage } from 'next';
 import { RightIcon } from '../../../public/assets';
 import * as S from './styles';
 import { SrcImages } from '../../../_mocks/srcImages';
-import { useHomeController } from './home.controller';
+import { useAppController } from './app.controller';
 
 const Home: NextPage = () => {
-  useHomeController();
+  useAppController();
 
   return (
     <MainLayout>
