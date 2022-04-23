@@ -1,6 +1,6 @@
 import 'services/firebase';
 import type { AppProps } from 'next/app';
-import { Helmet } from 'react-helmet';
+import { Helmet, HelmetProvider } from 'react-helmet-async';
 import 'react-credit-cards/es/styles-compiled.css';
 import { GlobalProvider } from 'hooks/Global';
 import { LoadingProvider } from 'hooks/Loading';
@@ -8,7 +8,7 @@ import GlobalStyle from '../styles/global';
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
-    <>
+    <HelmetProvider>
       <Helmet>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link
@@ -29,7 +29,7 @@ function MyApp({ Component, pageProps }: AppProps) {
         </GlobalProvider>
       </LoadingProvider>
       <GlobalStyle />
-    </>
+    </HelmetProvider>
   );
 }
 
