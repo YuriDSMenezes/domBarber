@@ -1,7 +1,7 @@
 import BottomSheetFixedLayout from 'layouts/BottomSheetFixedLayout';
 import MainLayout from 'layouts/MainLayout';
 import React from 'react';
-import { ImgAboutApp } from '../../../public/assets';
+import { ImgAboutApp } from '../../../../public/assets';
 
 import * as S from './styles';
 

@@ -1,7 +1,7 @@
 import BottomSheetFixedLayout from 'layouts/BottomSheetFixedLayout';
 import MainLayout from 'layouts/MainLayout';
 import React from 'react';
-import { DomBarberLogo } from '../../../public/assets';
+import { DomBarberLogo } from '../../../../public/assets';
 
 import * as S from './styles';
 
