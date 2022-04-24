@@ -4,17 +4,21 @@ import MainLayout from 'layouts/MainLayout';
 import React from 'react';
 import BarberShopTabOption from './BarberShopTabOption';
 import HygieneTabOption from './HygieneTabOption';
-import { MobileProducts } from './MobileProducts';
+import { ProductsController } from './products.controller';
 import ProductsTabOption from './ProductsTabOption';
 
 import * as S from './styles';
 
 const products: React.FC = () => {
+  const {
+    state: { services },
+  } = ProductsController();
+
   const tabs = [
     {
       key: 'Produtos',
       description: 'Produtos',
-      renderComponent: <MobileProducts />,
+      renderComponent: <ProductsTabOption services={services} />,
     },
     {
       key: 'Higiene',
@@ -27,7 +31,6 @@ const products: React.FC = () => {
       renderComponent: <BarberShopTabOption />,
     },
   ];
-
   return (
     <MainLayout>
       <S.TitleOut>Escolha os Produtos</S.TitleOut>

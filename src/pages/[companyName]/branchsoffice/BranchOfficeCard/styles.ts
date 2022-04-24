@@ -1,16 +1,7 @@
+import { ConvertToRem } from 'helpers';
 import styled from 'styled-components';
 
 export const Container = styled.div`
-  min-height: 196px;
-  height: 100%;
-  position: relative;
-
-  @media (min-width: 768px) {
-    display: flex;
-  }
-`;
-
-export const Content = styled.div`
   position: relative;
   min-height: 196px;
   width: 100%;
@@ -27,9 +18,7 @@ export const Content = styled.div`
   }
 
   @media (min-width: 768px) {
-    max-width: 274px;
-    height: 295px;
-    margin-bottom: 20px;
+    display: flex;
   }
 `;
 
@@ -45,15 +34,20 @@ export const BrachInformationContainer = styled.div`
   padding: 10px;
 
   @media (min-width: 768px) {
+    padding: 20px 10px;
     align-items: flex-start;
   }
 `;
 
 export const BranchOfficeName = styled.span`
   font-weight: 500;
-  font-size: 14px;
+  font-size: ${ConvertToRem(14)};
   line-height: 14px;
   color: #ffffff;
+
+  @media (min-width: 768px) {
+    font-size: ${ConvertToRem(18)};
+  }
 `;
 export const BranchOfficeAddress = styled.div`
   font-weight: 400;
@@ -65,7 +59,7 @@ export const BranchOfficeAddress = styled.div`
   text-align: center;
 
   @media (min-width: 768px) {
-    width: 60%;
+    width: 100%;
     text-align: left;
   }
 `;

@@ -3,6 +3,7 @@ import { HorizontalList } from 'components/HorizontalList';
 import Input from 'components/Input';
 import MainLayout from 'layouts/MainLayout';
 import { NextPage } from 'next';
+import { useGlobal } from 'hooks/Global';
 import { RightIcon } from '../../../../public/assets';
 import * as S from './styles';
 import { SrcImages } from '../../../../_mocks/srcImages';
@@ -10,7 +11,10 @@ import { useAppController } from './app.controller';
 
 const Home: NextPage = () => {
   useAppController();
-
+  const {
+    states: { services },
+  } = useGlobal();
+  console.log(services);
   return (
     <MainLayout>
       <S.Container>
