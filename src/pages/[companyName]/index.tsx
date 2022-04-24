@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { NextPage } from 'next';
-import { useRouter, Router } from 'next/router';
+import { useRouter } from 'next/router';
 import { useLoading } from 'hooks/Loading';
 
 const companyName: NextPage = () => {
