@@ -1,4 +1,4 @@
-import BranchOfficeCard from 'pages/branchsoffice/BranchOfficeCard';
+import BranchOfficeCard from '../../branchsoffice/BranchOfficeCard';
 import * as S from './styles';
 
 export const MobileProducts = () => (

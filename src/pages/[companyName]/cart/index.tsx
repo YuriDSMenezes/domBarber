@@ -4,7 +4,7 @@ import { TextArea } from 'components/TextArea/styles';
 import BottomSheetFixedLayout from 'layouts/BottomSheetFixedLayout';
 import MainLayout from 'layouts/MainLayout';
 import { useState } from 'react';
-import { ArrowDownIcon } from '../../../public/assets';
+import { ArrowDownIcon } from '../../../../public/assets';
 import { ItemCollapse } from './itemCollapse';
 import * as S from './styles';
 

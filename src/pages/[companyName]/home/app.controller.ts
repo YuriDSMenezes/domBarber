@@ -8,8 +8,8 @@ import { useLoading } from 'hooks/Loading';
 import { getAllServicesByCompanyId } from 'cases/service';
 import { Company as CompanyType } from 'models/types/company';
 import { Service } from 'models/service';
-import { getAllProfessionalsByCompanyId } from '../../cases/professional/getProfessionalsByCompanyId';
-import { getCompanyByUrl } from '../../cases/company/getCompanyByUrl';
+import { getAllProfessionalsByCompanyId } from '../../../cases/professional/getProfessionalsByCompanyId';
+import { getCompanyByUrl } from '../../../cases/company/getCompanyByUrl';
 
 // type ObjEntriesCompanyData = [id: string, data: CompanyType][];
 

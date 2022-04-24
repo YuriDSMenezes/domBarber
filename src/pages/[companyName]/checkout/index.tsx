@@ -2,7 +2,7 @@ import Button from 'components/Button';
 import BottomSheetFixedLayout from 'layouts/BottomSheetFixedLayout';
 import MainLayout from 'layouts/MainLayout';
 import React from 'react';
-import { PagSeguroLogo, SecureOrderLogo } from '../../../public/assets';
+import { PagSeguroLogo, SecureOrderLogo } from '../../../../public/assets';
 
 import * as S from './styles';
 

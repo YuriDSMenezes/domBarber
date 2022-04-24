@@ -1,7 +1,7 @@
 import BottomSheetFixedLayout from 'layouts/BottomSheetFixedLayout';
 import MainLayout from 'layouts/MainLayout';
 import React from 'react';
-import { MediumPapperIcon } from '../../../public/assets';
+import { MediumPapperIcon } from '../../../../public/assets';
 import NotificationCard from './NotificationCard';
 
 import * as S from './styles';

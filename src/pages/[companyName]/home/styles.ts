@@ -144,7 +144,4 @@ export const Products = styled.div`
   color: #fff;
   width: 100%;
   grid-area: products;
-  @media (min-width: 768px) {
-    padding-bottom: 120px;
-  }
 `;

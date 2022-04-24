@@ -26,6 +26,7 @@
     "no-return-assign": "off",
     "no-unused-expressions":"off",
     "no-shadow": "off",
+    "no-nested-ternary": "off",
     "@typescript-eslint/ban-types": "off",
     "import/extensions": [
       "error",

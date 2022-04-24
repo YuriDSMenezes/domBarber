@@ -3,7 +3,7 @@ import Button from 'components/Button';
 import BottomSheetFixedLayout from 'layouts/BottomSheetFixedLayout';
 import MainLayout from 'layouts/MainLayout';
 import React from 'react';
-import { OutlinedCheckIcon } from '../../../public/assets';
+import { OutlinedCheckIcon } from '../../../../public/assets';
 
 import * as S from './styles';
 

@@ -43,6 +43,8 @@ const Schedule = () => {
   const YearCalendarComponent = useCallback(
     () => (
       <YearView
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
         valueType="day"
         value={month}
         activeStartDate={month}
