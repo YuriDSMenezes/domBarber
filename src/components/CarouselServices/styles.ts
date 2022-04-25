@@ -6,9 +6,34 @@ export const Container = styled.div`
   overflow-x: scroll;
   display: flex;
   width: 100%;
+  cursor: pointer;
+
+  .showText {
+    display: none;
+  }
+  .showButton {
+    display: none;
+  }
+
+  &:hover {
+    .showText {
+      display: block;
+    }
+    .showButton {
+      display: block;
+    }
+  }
 
   &::-webkit-scrollbar {
     display: none;
+  }
+`;
+
+export const Content = styled.div`
+  height: 242px;
+  position: relative;
+  @media (min-width: 768px) {
+    height: 500px;
   }
 `;
 
@@ -33,7 +58,6 @@ export const Item = styled.div<ItemProps>`
   font-size: ${ConvertToRem(12)};
   margin: 0 10px;
   border-radius: 17px;
-  position: relative;
 
   @media (min-width: 768px) {
     height: ${props =>
@@ -66,7 +90,7 @@ export const BlurContainer = styled.div`
 
 export const Texts = styled.div`
   position: absolute;
-  bottom: 20px;
+  bottom: 55px;
   width: 90%;
   z-index: 2;
   @media (min-width: 768px) {
@@ -118,7 +142,13 @@ export const Description = styled.div`
 
 export const ButtonContainer = styled.div`
   position: absolute;
-  left: 80px;
-  bottom: 60px;
-  width: 150px;
+  left: 40px;
+  bottom: 10px;
+  width: 100px;
+
+  @media (min-width: 768px) {
+    left: 80px;
+    bottom: 60px;
+    width: 150px;
+  }
 `;

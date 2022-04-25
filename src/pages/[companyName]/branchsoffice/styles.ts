@@ -10,6 +10,7 @@ export const Content = styled.div`
   @media (min-width: 768px) {
     width: 70%;
     margin: 0 auto;
+    padding: 20px auto;
   }
 `;
 
@@ -19,7 +20,7 @@ export const TitleOut = styled.h1`
   font-size: ${ConvertToRem(36)};
   line-height: 21px;
   color: #ffffff;
-  margin: 50px 0;
+  margin: 20px 0;
   display: none;
   @media (min-width: 768px) {
     display: block;

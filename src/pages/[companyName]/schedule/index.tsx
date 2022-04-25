@@ -1,41 +1,26 @@
 import { useState, useCallback } from 'react';
 import MainLayout from 'layouts/MainLayout';
 import Calendar, { YearView } from 'react-calendar';
+import { useRouter } from 'next/router';
 
 import * as S from './styles';
 import 'react-calendar/dist/Calendar.css';
-
-export const hours = [
-  '00:00',
-  '01:00',
-  '02:00',
-  '03:00',
-  '04:00',
-  '05:00',
-  '06:00',
-  '07:00',
-  '08:00',
-  '09:00',
-  '10:00',
-  '11:00',
-  '12:00',
-  '13:00',
-  '14:00',
-  '15:00',
-  '16:00',
-  '17:00',
-  '18:00',
-  '19:00',
-  '20:00',
-  '21:00',
-  '22:00',
-  '23:00',
-];
+import { hours } from '../../../../_mocks/hour';
 
 const Schedule = () => {
+  const { push } = useRouter();
   const [month, setMonth] = useState<Date>(new Date());
   const [day, setDay] = useState<Date>(new Date());
   const [hour, setHour] = useState<string>();
+  const [cart, setCart] = useState(() => {
+    const cart = localStorage.getItem('@domBarber:cart');
+
+    if (cart) {
+      return JSON.parse(cart);
+    }
+
+    return [];
+  });
 
   const handleClickMonth = (getMonth: Date) => setMonth(getMonth);
   const handleClickHour = (getHour: string) => setHour(getHour);

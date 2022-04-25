@@ -4,6 +4,7 @@ import { useRouter } from 'next/router';
 import { useGlobal } from 'hooks/Global';
 import { Company } from 'models/company';
 import { Professional } from 'models/professional';
+import { Product } from 'models/product';
 import { useLoading } from 'hooks/Loading';
 import { getAllServicesByCompanyId } from 'cases/service';
 import { Company as CompanyType } from 'models/types/company';
@@ -65,11 +66,21 @@ export const useAppController = () => {
     globalActions.setProfessionals(parsedProfessionalsData);
   }, []);
 
+  const getProductsCompany = useCallback(async (companyId: string) => {
+    const productsData = await getAllProfessionalsByCompanyId(companyId);
+    const parsedProductsData = Object.entries(productsData as {}).map(
+      // @ts-ignore
+      ([id, data]) => Product({ ...data, id }),
+    );
+    globalActions.setProducts(parsedProductsData);
+  }, []);
+
   const OnloadPage = useCallback(async () => {
     const companyResponse = await getCompanyData();
     if (companyResponse) {
       await getServicesCompany(companyResponse.id);
       await getProfessionalsCompany(companyResponse.id);
+      await getProductsCompany(companyResponse.id);
     }
   }, [isReady]);
 

@@ -7,6 +7,7 @@ export const Container = styled.div`
   display: flex;
   border-radius: 10px;
   background: #181818;
+  cursor: pointer;
   & + div {
     margin-top: 20px;
   }
@@ -37,14 +38,14 @@ export const TitleAndPriceText = styled.div`
   margin-bottom: 5px;
 `;
 
-export const ServiceTitle = styled.span`
+export const ProductTitle = styled.span`
   font-weight: 500;
   font-size: 14px;
   line-height: 14px;
   color: #ff9933;
 `;
 
-export const ServicePrice = styled.span`
+export const ProductPrice = styled.span`
   font-weight: 500;
   font-size: 16px;
   line-height: 19px;

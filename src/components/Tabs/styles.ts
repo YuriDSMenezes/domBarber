@@ -48,8 +48,22 @@ export const TabText = styled.span`
   }
 `;
 
-export const ContainerTabRenderedComponent = styled.div`
+export const ContainerTabRenderedComponentDesktop = styled.div`
   width: 100%;
   height: 100%;
   margin-top: 25px;
+  display: none;
+  @media (min-width: 768px) {
+    display: block;
+  }
+`;
+
+export const ContainerTabRenderedComponentMobile = styled.div`
+  width: 100%;
+  height: 100%;
+  margin-top: 25px;
+  display: block;
+  @media (min-width: 768px) {
+    display: none;
+  }
 `;

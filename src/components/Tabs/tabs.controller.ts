@@ -3,7 +3,8 @@ import { ReactNode, useState } from 'react';
 export interface Tab {
   key: string;
   description: string;
-  renderComponent: ReactNode;
+  renderComponentDesktop: ReactNode;
+  renderComponentMobile: ReactNode;
 }
 
 export interface TabsProps {
