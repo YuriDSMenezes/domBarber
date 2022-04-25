@@ -3,14 +3,16 @@ import { HorizontalList } from 'components/HorizontalList';
 import Input from 'components/Input';
 import MainLayout from 'layouts/MainLayout';
 import { NextPage } from 'next';
+import { useGlobal } from 'hooks/Global';
 import { RightIcon } from '../../../../public/assets';
 import * as S from './styles';
 import { SrcImages } from '../../../../_mocks/srcImages';
 import { useAppController } from './app.controller';
 
 const Home: NextPage = () => {
+  const { states: globalStates } = useGlobal();
   useAppController();
-
+  console.log(globalStates);
   return (
     <MainLayout>
       <S.Container>
@@ -23,14 +25,9 @@ const Home: NextPage = () => {
         <S.InputContainer>
           <Input search secondary />
         </S.InputContainer>
-        <S.BannerContainer>
-          <img
-            src="https://images.unsplash.com/photo-1536520002442-39764a41e987?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=987&q=80"
-            alt="teste"
-            width="100%"
-            height="100%"
-          />
-        </S.BannerContainer>
+        <S.BannerContainer
+          bannerUrl={globalStates.company?.image?.cover?.desktop}
+        />
         <S.HorizontalListContainer>
           <HorizontalList />
         </S.HorizontalListContainer>
