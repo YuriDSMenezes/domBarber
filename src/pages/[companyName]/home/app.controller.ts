@@ -27,9 +27,14 @@ export const useAppController = () => {
   > => {
     loadingActions.activeLoading();
     if (isReady) {
-      const companyData = await getCompanyByUrl(
-        companyName ? companyName[0] : '',
-      );
+      let companyUrl = null;
+      if (typeof companyName === 'object') {
+        const [url] = companyName;
+        companyUrl = url;
+      } else {
+        companyUrl = companyName;
+      }
+      const companyData = await getCompanyByUrl(companyUrl || '');
       // @ts-ignore
       const parsedCompanyData = Object.entries(companyData as {}).map(
         // @ts-ignore
