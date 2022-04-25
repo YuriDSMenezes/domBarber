@@ -2,6 +2,8 @@ import Tabs from 'components/Tabs';
 import BottomSheetFixedLayout from 'layouts/BottomSheetFixedLayout';
 import MainLayout from 'layouts/MainLayout';
 import React from 'react';
+import { PaginatedItems } from 'components/Pagination';
+import { appointments } from '../../../../_mocks/appointments';
 import BeardTabOption from './BeardTabOption';
 import HairTabOption from './HairTabOption';
 import KitsAndCombosTabOption from './KitsAndCombosTabOption';
@@ -13,7 +15,13 @@ const newservice: React.FC = () => {
     {
       key: 'Cabelo',
       description: 'Cabelo',
-      renderComponent: <HairTabOption />,
+      renderComponent: (
+        <PaginatedItems
+          itemsPerPage={5}
+          items={appointments}
+          component={HairTabOption}
+        />
+      ),
     },
     {
       key: 'Barba',

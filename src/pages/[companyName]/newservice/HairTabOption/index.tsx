@@ -1,20 +1,18 @@
 import React from 'react';
-import ProsuctOrServiceCard from '../../../components/ProsuctOrServiceCard';
+import ServiceCard from 'components/ServiceCard';
 
+import { Service } from 'models/types/service';
 import * as S from './styles';
 
-const HairTabOption: React.FC = () => {
+interface HairProps {
+  list: Array<Service>;
+}
+
+const HairTabOption: React.FC<HairProps> = () => {
   return (
     <S.Container>
       <S.ServicesContainer>
-        <ProsuctOrServiceCard />
-        <ProsuctOrServiceCard />
-        <ProsuctOrServiceCard />
-        <ProsuctOrServiceCard />
-        <ProsuctOrServiceCard />
-        <ProsuctOrServiceCard />
-        <ProsuctOrServiceCard />
-        <ProsuctOrServiceCard />
+        <ServiceCard />
       </S.ServicesContainer>
     </S.Container>
   );

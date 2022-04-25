@@ -14,7 +14,7 @@ const Home: NextPage = () => {
   const {
     states: { services },
   } = useGlobal();
-  console.log(services);
+
   return (
     <MainLayout>
       <S.Container>

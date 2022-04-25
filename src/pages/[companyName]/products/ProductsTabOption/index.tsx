@@ -1,20 +1,18 @@
-import ProductOrServiceCard from 'components/ProsuctOrServiceCard';
+import ProductCard from 'components/productCard';
 import { Service } from 'models/types/service';
 import React from 'react';
 
 import * as S from './styles';
 
-interface MobileProductsProps {
-  services: Array<Service>;
+interface ProductsProps {
+  list: Array<Service>;
 }
 
-const ProductsTabOption: React.FC<MobileProductsProps> = ({ services }) => {
+const ProductsTabOption: React.FC<ProductsProps> = ({ list }) => {
   return (
     <S.Container>
       <S.ProductsContainer>
-        {services.map(service => (
-          <ProductOrServiceCard title="Pente" />
-        ))}
+        <ProductCard list={list} />
       </S.ProductsContainer>
     </S.Container>
   );

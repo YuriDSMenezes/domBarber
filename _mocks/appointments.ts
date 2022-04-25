@@ -11,7 +11,7 @@ export const appointments = [
   },
   {
     date: new Date(),
-    description: 'Corte Simples',
+    description: 'Corte Simples 2',
     value: 19.9,
     points: 20,
     paymentStatus: 'Pagamento Pendente',
@@ -21,7 +21,7 @@ export const appointments = [
   },
   {
     date: new Date(),
-    description: 'Corte Simples',
+    description: 'Corte Simples 3',
     value: 19.9,
     points: 20,
     paymentStatus: 'Pagamento Pendente',
