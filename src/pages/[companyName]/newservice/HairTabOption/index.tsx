@@ -8,11 +8,11 @@ interface HairProps {
   list: Array<Service>;
 }
 
-const HairTabOption: React.FC<HairProps> = () => {
+const HairTabOption: React.FC<HairProps> = ({ list }) => {
   return (
     <S.Container>
       <S.ServicesContainer>
-        <ServiceCard />
+        <ServiceCard list={list} />
       </S.ServicesContainer>
     </S.Container>
   );

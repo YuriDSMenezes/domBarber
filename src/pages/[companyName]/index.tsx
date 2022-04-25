@@ -15,7 +15,7 @@ const companyName: NextPage = () => {
     if (isReady) {
       loadingActions.deactiveLoading();
       push({
-        pathname: `/[companyName]/home`,
+        // pathname: `/[companyName]/home`,
         query: { companyName },
       });
     }

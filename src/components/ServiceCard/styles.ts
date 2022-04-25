@@ -7,6 +7,7 @@ export const Container = styled.div`
   display: flex;
   border-radius: 10px;
   background: #181818;
+  cursor: pointer;
   & + div {
     margin-top: 20px;
   }

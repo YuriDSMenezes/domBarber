@@ -3,7 +3,6 @@ import Tabs from 'components/Tabs';
 import BottomSheetFixedLayout from 'layouts/BottomSheetFixedLayout';
 import MainLayout from 'layouts/MainLayout';
 import React from 'react';
-import { appointments } from '../../../../_mocks/appointments';
 import BarberShopTabOption from './BarberShopTabOption';
 import HygieneTabOption from './HygieneTabOption';
 import { ProductsController } from './products.controller';
@@ -13,42 +12,45 @@ import * as S from './styles';
 
 const products: React.FC = () => {
   const {
-    state: { services },
+    state: { products },
   } = ProductsController();
 
   const tabs = [
     {
       key: 'Produtos',
       description: 'Produtos',
-      renderComponent: (
+      renderComponentDesktop: (
         <PaginatedItems
           itemsPerPage={5}
-          items={appointments}
+          items={products}
           component={ProductsTabOption}
         />
       ),
+      renderComponentMobile: <ProductsTabOption list={products} />,
     },
     {
       key: 'Higiene',
       description: 'Higiene',
-      renderComponent: (
+      renderComponentDesktop: (
         <PaginatedItems
           itemsPerPage={5}
-          items={appointments}
+          items={products}
           component={HygieneTabOption}
         />
       ),
+      renderComponentMobile: <HygieneTabOption list={products} />,
     },
     {
       key: 'Barbearia',
       description: 'Barbearia',
-      renderComponent: (
+      renderComponentDesktop: (
         <PaginatedItems
           itemsPerPage={5}
-          items={appointments}
+          items={products}
           component={BarberShopTabOption}
         />
       ),
+      renderComponentMobile: <BarberShopTabOption list={products} />,
     },
   ];
   return (

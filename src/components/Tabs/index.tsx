@@ -19,12 +19,18 @@ const Tabs: React.FC<TabsProps> = ({ tabConfig, defaultSelectedTab }) => {
           </S.TabContainer>
         ))}
       </S.TabsContainer>
-      <S.ContainerTabRenderedComponent>
+      <S.ContainerTabRenderedComponentDesktop>
         {
           tabConfig.filter(tab => tab.key === states.selectedTab)[0]
-            .renderComponent
+            .renderComponentDesktop
         }
-      </S.ContainerTabRenderedComponent>
+      </S.ContainerTabRenderedComponentDesktop>
+      <S.ContainerTabRenderedComponentMobile>
+        {
+          tabConfig.filter(tab => tab.key === states.selectedTab)[0]
+            .renderComponentMobile
+        }
+      </S.ContainerTabRenderedComponentMobile>
     </S.Container>
   );
 };

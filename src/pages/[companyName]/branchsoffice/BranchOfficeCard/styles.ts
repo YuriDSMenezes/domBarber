@@ -34,7 +34,7 @@ export const BrachInformationContainer = styled.div`
   padding: 10px;
 
   @media (min-width: 768px) {
-    padding: 20px 10px;
+    height: 70px;
     align-items: flex-start;
   }
 `;
@@ -47,6 +47,7 @@ export const BranchOfficeName = styled.span`
 
   @media (min-width: 768px) {
     font-size: ${ConvertToRem(18)};
+    margin-bottom: 5px;
   }
 `;
 export const BranchOfficeAddress = styled.div`

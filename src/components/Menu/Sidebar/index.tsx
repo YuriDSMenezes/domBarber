@@ -1,4 +1,4 @@
-import { singOut } from 'services/firebase';
+import { singOut } from 'services/FirebaseOAuth';
 import {
   ArrowLeftIcon,
   LogoutIcon,
@@ -49,20 +49,13 @@ export const Sidebar = ({
       </S.Header>
 
       <S.Content>
-        {menuItemsList?.map(item => (
-          <>
-            <S.Item>
-              <S.LogoItem>
-                <img
-                  src={item.icon.src}
-                  alt="Ícone"
-                  width="100%"
-                  height="100%"
-                />
-              </S.LogoItem>
-              <S.LogoText>{item.text}</S.LogoText>
-            </S.Item>
-          </>
+        {menuItemsList?.map((item, index) => (
+          <S.Item key={index}>
+            <S.LogoItem>
+              <img src={item.icon.src} alt="Ícone" width="100%" height="100%" />
+            </S.LogoItem>
+            <S.LogoText>{item.text}</S.LogoText>
+          </S.Item>
         ))}
       </S.Content>
       <S.Logout onClick={() => singOut()}>

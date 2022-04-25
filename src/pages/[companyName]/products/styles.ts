@@ -28,4 +28,8 @@ export const TitleOut = styled.h1`
   color: #ffffff;
   text-align: center;
   margin-bottom: 100px;
+  display: none;
+  @media (min-width: 768px) {
+    display: block;
+  }
 `;
