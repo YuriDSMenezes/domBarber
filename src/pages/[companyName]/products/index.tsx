@@ -1,7 +1,9 @@
+import { PaginatedItems } from 'components/Pagination';
 import Tabs from 'components/Tabs';
 import BottomSheetFixedLayout from 'layouts/BottomSheetFixedLayout';
 import MainLayout from 'layouts/MainLayout';
 import React from 'react';
+import { appointments } from '../../../../_mocks/appointments';
 import BarberShopTabOption from './BarberShopTabOption';
 import HygieneTabOption from './HygieneTabOption';
 import { ProductsController } from './products.controller';
@@ -18,17 +20,35 @@ const products: React.FC = () => {
     {
       key: 'Produtos',
       description: 'Produtos',
-      renderComponent: <ProductsTabOption services={services} />,
+      renderComponent: (
+        <PaginatedItems
+          itemsPerPage={5}
+          items={appointments}
+          component={ProductsTabOption}
+        />
+      ),
     },
     {
       key: 'Higiene',
       description: 'Higiene',
-      renderComponent: <HygieneTabOption />,
+      renderComponent: (
+        <PaginatedItems
+          itemsPerPage={5}
+          items={appointments}
+          component={HygieneTabOption}
+        />
+      ),
     },
     {
       key: 'Barbearia',
       description: 'Barbearia',
-      renderComponent: <BarberShopTabOption />,
+      renderComponent: (
+        <PaginatedItems
+          itemsPerPage={5}
+          items={appointments}
+          component={BarberShopTabOption}
+        />
+      ),
     },
   ];
   return (

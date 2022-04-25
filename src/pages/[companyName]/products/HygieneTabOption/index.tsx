@@ -1,20 +1,18 @@
-import ProductOrServiceCard from 'components/ProsuctOrServiceCard';
+import ProductCard from 'components/productCard';
+import { Service } from 'models/types/service';
 import React from 'react';
 
 import * as S from './styles';
 
-const HygieneTabOption: React.FC = () => {
+interface ProductsProps {
+  list: Array<Service>;
+}
+
+const HygieneTabOption: React.FC<ProductsProps> = ({ list }) => {
   return (
     <S.Container>
       <S.ProductsContainer>
-        <ProductOrServiceCard title="Shampoo" />
-        <ProductOrServiceCard title="Shampoo" />
-        <ProductOrServiceCard title="Shampoo" />
-        <ProductOrServiceCard title="Shampoo" />
-        <ProductOrServiceCard title="Shampoo" />
-        <ProductOrServiceCard title="Shampoo" />
-        <ProductOrServiceCard title="Shampoo" />
-        <ProductOrServiceCard title="Shampoo" />
+        <ProductCard list={list} />
       </S.ProductsContainer>
     </S.Container>
   );

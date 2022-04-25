@@ -1,20 +1,18 @@
-import ProductOrServiceCard from 'components/ProsuctOrServiceCard';
+import ProductCard from 'components/productCard';
+import { Service } from 'models/types/service';
 import React from 'react';
 
 import * as S from './styles';
 
-const BarberShopTabOption: React.FC = () => {
+interface ProductsProps {
+  list: Array<Service>;
+}
+
+const BarberShopTabOption: React.FC<ProductsProps> = ({ list }) => {
   return (
     <S.Container>
       <S.ProductsContainer>
-        <ProductOrServiceCard title="Pente" />
-        <ProductOrServiceCard title="Pente" />
-        <ProductOrServiceCard title="Pente" />
-        <ProductOrServiceCard title="Pente" />
-        <ProductOrServiceCard title="Pente" />
-        <ProductOrServiceCard title="Pente" />
-        <ProductOrServiceCard title="Pente" />
-        <ProductOrServiceCard title="Pente" />
+        <ProductCard list={list} />
       </S.ProductsContainer>
     </S.Container>
   );
