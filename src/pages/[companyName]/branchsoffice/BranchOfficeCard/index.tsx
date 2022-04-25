@@ -15,7 +15,7 @@ const BranchOfficeCard: React.FC<Service> = ({
         alt="Image do serviço"
       />
       <S.BrachInformationContainer>
-        <S.BranchOfficeName>{description}Dom Barber</S.BranchOfficeName>
+        <S.BranchOfficeName>{description}</S.BranchOfficeName>
         <S.BranchOfficeAddress>
           São Miguel, São Paulo Rua 22, zona sul
         </S.BranchOfficeAddress>
