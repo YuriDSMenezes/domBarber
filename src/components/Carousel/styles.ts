@@ -20,7 +20,10 @@ interface ItemProps {
 }
 
 export const Item = styled.div<ItemProps>`
-  background-image: ${props => `url(${props.srcImage})`};
+  background-image: ${props =>
+    props.srcImage
+      ? `url('${props.srcImage}')`
+      : `url('https://cdn.neemo.com.br/uploads/settings_webdelivery/logo/3957/image-not-found.jpg')`};
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
@@ -107,11 +110,13 @@ export const Description = styled.div`
   font-size: ${ConvertToRem(12)};
   margin-top: 7px;
   position: absolute;
-  bottom: 0px;
-  left: 40px;
+  bottom: 10px;
+  left: 50%;
+  transform: translate(-50%, 0%);
   @media (min-width: 768px) {
     bottom: 10px;
-    left: 80px;
+    left: 50%;
+    transform: translate(-50%, 0%);
     font-size: ${ConvertToRem(24)};
   }
 `;

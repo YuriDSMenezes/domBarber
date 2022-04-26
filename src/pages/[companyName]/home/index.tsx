@@ -8,18 +8,18 @@ import { useRouter } from 'next/router';
 import { CarouselService } from 'components/CarouselServices';
 import { RightIcon } from '../../../../public/assets';
 import * as S from './styles';
-import { SrcImages } from '../../../../_mocks/srcImages';
-import { useAppController } from './app.controller';
+import { useAppController } from './home.controller';
 
 const Home: NextPage = () => {
   const { states: globalStates } = useGlobal();
   useAppController();
   const {
-    states: { company },
+    states: {
+      company: { name: companyName },
+    },
   } = useGlobal();
-
   const { push } = useRouter();
-  const companyName = 'ps1';
+  console.log(globalStates.products);
   return (
     <MainLayout>
       <S.Container>
@@ -40,7 +40,17 @@ const Home: NextPage = () => {
         </S.HorizontalListContainer>
         <S.ServiceContainer>
           <S.Description>Serviços</S.Description>
-          <CarouselService src={SrcImages} size="lg" services />
+          <CarouselService
+            items={globalStates.services.map(service => ({
+              // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+              // @ts-ignore
+              image: service?.images[0]?.url,
+              title: service.name,
+              description: service.description,
+            }))}
+            size="lg"
+            services
+          />
           <S.SeeMore
             onClick={() =>
               push({
@@ -60,7 +70,16 @@ const Home: NextPage = () => {
         </S.ServiceContainer>
         <S.Professional>
           <S.Description>Profissionais</S.Description>
-          <Carousel src={SrcImages} size="sm" />
+          <Carousel
+            items={globalStates.professionals
+              .filter(prof => !prof.deletedAt)
+              .map(professional => ({
+                image: professional?.image,
+                title: professional.name,
+                description: '',
+              }))}
+            size="sm"
+          />
           <S.SeeMore>
             <p>Ver Todos</p>
             <img
@@ -73,7 +92,14 @@ const Home: NextPage = () => {
         </S.Professional>
         <S.Products>
           <S.Description>Produtos</S.Description>
-          <Carousel src={SrcImages} size="md" />
+          <Carousel
+            items={globalStates.products.map(product => ({
+              image: product?.images[0]?.url,
+              title: product.name,
+              description: product?.description,
+            }))}
+            size="md"
+          />
           <S.SeeMore>
             <p>Ver Todos</p>
             <img

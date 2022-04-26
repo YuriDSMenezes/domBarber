@@ -6,7 +6,7 @@ export const Product = (product: ProductType): ProductType => ({
   price: product.price,
   description: product?.description || '',
   pointsToTrade: product.pointsToTrade,
-  images: product.images,
+  images: product.images || [],
   pointsGenerated: product.pointsGenerated,
   id: product.id,
   projectId: product.projectId,

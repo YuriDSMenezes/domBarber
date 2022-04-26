@@ -9,6 +9,7 @@ import { useLoading } from 'hooks/Loading';
 import { getAllServicesByCompanyId } from 'cases/service';
 import { Company as CompanyType } from 'models/types/company';
 import { Service } from 'models/service';
+import { getProductsByCompanyId } from 'cases/product';
 import { getAllProfessionalsByCompanyId } from '../../../cases/professional/getProfessionalsByCompanyId';
 import { getCompanyByUrl } from '../../../cases/company/getCompanyByUrl';
 
@@ -67,7 +68,7 @@ export const useAppController = () => {
   }, []);
 
   const getProductsCompany = useCallback(async (companyId: string) => {
-    const productsData = await getAllProfessionalsByCompanyId(companyId);
+    const productsData = await getProductsByCompanyId(companyId);
     const parsedProductsData = Object.entries(productsData as {}).map(
       // @ts-ignore
       ([id, data]) => Product({ ...data, id }),
