@@ -20,6 +20,10 @@ export const Container = styled.button<StyleProps>`
   font-weight: 500;
   line-height: 14px;
 
+  @media (max-width: 768px) {
+    height: 27px;
+  }
+
   ${props =>
     props.green &&
     css`

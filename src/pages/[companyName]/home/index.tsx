@@ -19,7 +19,7 @@ const Home: NextPage = () => {
     },
   } = useGlobal();
   const { push } = useRouter();
-  console.log(globalStates.products);
+
   return (
     <MainLayout>
       <S.Container>
