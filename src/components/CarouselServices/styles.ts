@@ -1,6 +1,13 @@
 /* eslint-disable no-nested-ternary */
 import { ConvertToRem } from 'helpers';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
+
+interface ItemProps {
+  srcImage?: string;
+  size?: 'lg' | 'md' | 'sm';
+  animate?: boolean;
+  active?: boolean;
+}
 
 export const Container = styled.div`
   overflow-x: scroll;
@@ -37,15 +44,11 @@ export const Content = styled.div`
   }
 `;
 
-interface ItemProps {
-  srcImage?: string;
-  size: 'lg' | 'md' | 'sm';
-  animate?: boolean;
-  active?: boolean;
-}
-
 export const Item = styled.div<ItemProps>`
-  background-image: ${props => `url(${props.srcImage})`};
+  background-image: ${props =>
+    props.srcImage
+      ? `url('${props.srcImage}')`
+      : `url('https://cdn.neemo.com.br/uploads/settings_webdelivery/logo/3957/image-not-found.jpg')`};
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
@@ -74,18 +77,23 @@ export const Item = styled.div<ItemProps>`
   }
 `;
 
-export const BlurContainer = styled.div`
-  backdrop-filter: blur(3px);
-  border-radius: 17px;
-  position: absolute;
-  bottom: 0px;
-  left: 0px;
-  width: 100%;
-  height: 50px;
-  @media (max-width: 768px) {
-    bottom: 20px;
-    height: 50px;
-  }
+export const BlurContainer = styled.div<ItemProps>`
+  ${props =>
+    !!props.srcImage &&
+    css`
+      backdrop-filter: blur(2px);
+      border-radius: 17px;
+      opacity: 0.6;
+      position: absolute;
+      bottom: 0px;
+      left: 0px;
+      width: 100%;
+      height: 50px;
+      @media (max-width: 768px) {
+        bottom: 20px;
+        height: 50px;
+      }
+    `}
 `;
 
 export const Texts = styled.div`
@@ -93,6 +101,9 @@ export const Texts = styled.div`
   bottom: 55px;
   width: 90%;
   z-index: 2;
+  left: 50%;
+  transform: translate(-50%, 0%);
+
   @media (min-width: 768px) {
     bottom: 110px;
   }
@@ -142,7 +153,8 @@ export const Description = styled.div`
 
 export const ButtonContainer = styled.div`
   position: absolute;
-  left: 40px;
+  left: 50%;
+  transform: translate(-50%, 0%);
   bottom: 10px;
   width: 100px;
 

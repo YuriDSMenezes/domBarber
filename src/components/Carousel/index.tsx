@@ -2,20 +2,24 @@ import Button from 'components/Button';
 import * as S from './styles';
 
 interface CarouselProps {
-  src: Array<string>;
+  items: Array<{
+    image?: string;
+    title: string;
+    description?: string;
+  }>;
   size: 'lg' | 'md' | 'sm';
   services?: boolean;
 }
 
-export const Carousel = ({ src, size, services }: CarouselProps) => {
+export const Carousel = ({ items, size, services }: CarouselProps) => {
   return (
     <S.Container>
-      {src.map((srcImage, index) => {
+      {items.map((item, index) => {
         return (
           <S.Item
             size={size}
             key={index}
-            srcImage={srcImage}
+            srcImage={item?.image}
             active={index === 2}
           >
             {services ? (
@@ -23,8 +27,8 @@ export const Carousel = ({ src, size, services }: CarouselProps) => {
                 <S.BlurContainer />
                 {index === 2 && (
                   <S.Texts>
-                    <p>Corte na Tesoura</p>
-                    <span> com finalização na escova e pomada modeladora</span>
+                    <p>{item.title}</p>
+                    <span>{` ${item.description}`}</span>
                   </S.Texts>
                 )}
                 {index === 2 && (
@@ -34,7 +38,7 @@ export const Carousel = ({ src, size, services }: CarouselProps) => {
                 )}
               </>
             ) : (
-              <S.Description>Marcos Nunes</S.Description>
+              <S.Description>{item.title}</S.Description>
             )}
           </S.Item>
         );
