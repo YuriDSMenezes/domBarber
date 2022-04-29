@@ -19,11 +19,16 @@ const professionals: React.FC = () => {
         <S.Content>
           <S.Title>Profissionais</S.Title>
           <S.ProfissionalsContainer>
-            <PaginatedItems
-              items={professionals}
-              itemsPerPage={5}
-              component={ProfessionalCard}
-            />
+            <S.DesktopProfessionals>
+              <PaginatedItems
+                items={professionals}
+                itemsPerPage={5}
+                component={ProfessionalCard}
+              />
+            </S.DesktopProfessionals>
+            <S.MobileProfessionals>
+              <ProfessionalCard list={professionals} />
+            </S.MobileProfessionals>
           </S.ProfissionalsContainer>
         </S.Content>
       </BottomSheetFixedLayout>

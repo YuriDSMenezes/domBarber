@@ -1,3 +1,5 @@
+import { useGlobal } from 'hooks/Global';
+import { useRouter } from 'next/router';
 import { useState } from 'react';
 import {
   ArrowLeftIcon,
@@ -11,6 +13,10 @@ import {
 } from '../../../public/assets';
 
 export const MenuController = () => {
+  const {
+    states: { company },
+  } = useGlobal();
+  const { push } = useRouter();
   const [openSidebar, setOpenSidebar] = useState(false);
   const handleClickSidebar = () => setOpenSidebar(!openSidebar);
 
@@ -18,34 +24,42 @@ export const MenuController = () => {
     {
       icon: UserIcon,
       text: 'Minha Conta',
+      url: '/perfil',
     },
     {
       icon: HouseIcon,
       text: 'Inicio',
+      url: '/home',
     },
     {
       icon: CalendarIcon,
       text: 'Agenda',
+      url: '/schedule',
     },
     {
       icon: ArrowLeftIcon,
       text: 'Serviços',
+      url: '/newservice',
     },
     {
       icon: ProductsIcon,
       text: 'Produtos',
+      url: '/products',
     },
     {
       icon: PeopleIcon,
       text: 'Profissionais',
+      url: '/professionals',
     },
     {
       icon: SmileIcon,
       text: 'Pontuação',
+      url: '/score',
     },
     {
       icon: NotificationIcon,
       text: 'Notificação',
+      url: '/notifications',
     },
   ];
 
@@ -53,9 +67,11 @@ export const MenuController = () => {
     states: {
       openSidebar,
       menuItemsList,
+      company,
     },
     actions: {
       handleClickSidebar,
+      push,
     },
   };
 };

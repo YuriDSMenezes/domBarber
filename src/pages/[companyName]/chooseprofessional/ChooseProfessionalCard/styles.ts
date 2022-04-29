@@ -4,6 +4,7 @@ export const Container = styled.div`
   width: 100%;
   background: #181818;
   border-radius: 11px;
+  cursor: pointer;
 
   & + div {
     margin-top: 20px;

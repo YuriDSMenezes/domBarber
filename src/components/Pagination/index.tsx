@@ -20,10 +20,10 @@ export const PaginatedItems = ({
   const [currentItems, setCurrentItems] = useState(items);
   const [pageCount, setPageCount] = useState<number>(0);
   const [itemOffset, setItemOffset] = useState<number>(0);
+  const [itemCurrent, setItemCurrent] = useState<number>(1);
 
   useEffect(() => {
     const endOffset = itemOffset + itemsPerPage;
-    // @ts-ignore
     setCurrentItems(items.slice(itemOffset, endOffset));
     setPageCount(Math.ceil(items.length / itemsPerPage));
   }, [itemOffset, itemsPerPage]);
@@ -31,20 +31,24 @@ export const PaginatedItems = ({
   // Invoke when user click to request another page.
   const handlePageClick = (event: any) => {
     const newOffset = (event.selected * itemsPerPage) % items.length;
+    setItemCurrent(event.selected + 1);
     setItemOffset(newOffset);
   };
 
   return (
     <S.Container>
       <ReactPaginate
+        pageRangeDisplayed={2}
         breakLabel="..."
         nextLabel=">"
         onPageChange={handlePageClick}
-        pageRangeDisplayed={2}
         pageCount={pageCount}
         previousLabel="<"
-        renderOnZeroPageCount={null}
+        // renderOnZeroPageCount={null}
       />
+      <S.PageCount>
+        {itemCurrent} de {pageCount}
+      </S.PageCount>
       <Component list={currentItems} />
     </S.Container>
   );

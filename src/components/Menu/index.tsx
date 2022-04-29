@@ -1,6 +1,7 @@
 import Link from 'next/link';
-import Router from 'next/router';
+import { useRouter } from 'next/router';
 import {
+  ArrowLeftIcon,
   LogoWhiteIcon,
   MenuIcon,
   NotificationIcon,
@@ -11,9 +12,17 @@ import { Sidebar } from './Sidebar';
 
 export const Menu = () => {
   const {
-    actions: { handleClickSidebar },
-    states: { openSidebar, menuItemsList },
+    actions: { handleClickSidebar, push },
+    states: { openSidebar, menuItemsList, company },
   } = MenuController();
+  const { pathname, back } = useRouter();
+
+  const handleBack = () => {
+    if (typeof window !== 'undefined') {
+      localStorage.removeItem('@domBarber:cart');
+    }
+    back();
+  };
 
   return (
     <>
@@ -26,12 +35,19 @@ export const Menu = () => {
       )}
       <S.Container openSidebar={openSidebar}>
         <S.UserInfos>
-          <S.ImageUser>
-            <img
-              src="https://images.unsplash.com/photo-1599351431202-1e0f0137899a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=988&q=80"
-              alt="algo"
-            />
-          </S.ImageUser>
+          {pathname === '/[companyName]/home' ? (
+            <S.ImageUser>
+              <img
+                src="https://images.unsplash.com/photo-1599351431202-1e0f0137899a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=988&q=80"
+                alt="algo"
+              />
+            </S.ImageUser>
+          ) : (
+            <S.Back onClick={handleBack}>
+              <img src={ArrowLeftIcon.src} />
+              <p>Voltar</p>
+            </S.Back>
+          )}
 
           <S.Notifications hasNotification>
             <img
@@ -43,7 +59,14 @@ export const Menu = () => {
           </S.Notifications>
         </S.UserInfos>
 
-        <S.Logo onClick={() => Router.push('/home')}>
+        <S.Logo
+          onClick={() => {
+            push({
+              pathname: `/[companyName]/home`,
+              query: { companyName: company?.app?.url },
+            });
+          }}
+        >
           <img
             src={LogoWhiteIcon.src}
             alt="Logo da Dom Barber"

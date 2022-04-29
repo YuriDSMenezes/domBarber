@@ -11,10 +11,12 @@ interface ProfessionalsProps {
 const ProfessionalCard: React.FC<ProfessionalsProps> = ({ list }) => {
   const { push } = useRouter();
   const [cart, setCart] = useState(() => {
-    const cart = localStorage.getItem('@domBarber:cart');
+    if (typeof window !== 'undefined') {
+      const cart = localStorage.getItem('@domBarber:cart');
 
-    if (cart) {
-      return JSON.parse(cart);
+      if (cart) {
+        return JSON.parse(cart);
+      }
     }
 
     return [];
@@ -22,7 +24,9 @@ const ProfessionalCard: React.FC<ProfessionalsProps> = ({ list }) => {
 
   const handleClickCard = (item: Professional) => {
     setCart((oldState: any) => [...oldState, item]);
-    localStorage.setItem('@domBarber:cart', JSON.stringify([...cart, item]));
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('@domBarber:cart', JSON.stringify([...cart, item]));
+    }
     push({
       pathname: `/ps1/schedule`,
     });

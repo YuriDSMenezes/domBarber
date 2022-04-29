@@ -14,6 +14,7 @@ export const Container = styled.button<StyleProps>`
   height: 37px;
   display: flex;
   align-items: center;
+  cursor: pointer;
   gap: 16px;
   justify-content: center;
   font-size: 12px;
@@ -21,7 +22,7 @@ export const Container = styled.button<StyleProps>`
   line-height: 14px;
 
   @media (max-width: 768px) {
-    height: 27px;
+    height: 32px;
   }
 
   ${props =>

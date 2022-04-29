@@ -45,6 +45,13 @@ export const ImageUser = styled.div`
   }
 `;
 
+export const Back = styled.div`
+  color: #fff;
+  display: flex;
+  gap: 5px;
+  font-size: 14px;
+  cursor: pointer;
+`;
 interface NotificationProps {
   hasNotification?: boolean;
 }

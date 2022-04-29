@@ -50,7 +50,7 @@ const ServiceCard: ComponentType<ServiceCardProps> = ({ list }) => {
             <S.AddressText>
               São Miguel, São PauloRua 22, zona sulPauloRua 22, zona sul
             </S.AddressText>
-            <S.TimeAndPointsText>{`Tempo: 20 min  | Acumule 20 pontos`}</S.TimeAndPointsText>
+            <S.TimeAndPointsText>{`Tempo: ${item.runtime} min  | Acumule ${item.pointsGenerated} pontos`}</S.TimeAndPointsText>
           </S.InformationContainer>
         </S.Container>
       ))}

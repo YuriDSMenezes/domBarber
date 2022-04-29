@@ -20,8 +20,13 @@ const Container = styled.div<StyleProps>`
   height: calc(100vh - 56px);
   background: #1c1c1c;
   position: relative;
+  background-image: url('https://images.unsplash.com/photo-1599351431202-1e0f0137899a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=988&q=80');
+  background-position: top;
+  background-size: contain;
+  background-repeat: no-repeat;
 
   @media (min-width: 768px) {
+    background: none;
     height: 100%;
     display: flex;
     flex-direction: column;
@@ -51,9 +56,8 @@ const Content = styled.div<StyleProps>`
   @media (min-width: 768px) {
     position: initial;
     height: 880px;
-    width: 50%;
+    width: 60%;
     margin: 0 auto 20px auto;
-    text-align: center;
     border-radius: 22px;
     background-color: #161616;
     padding: ${props => props.padding};

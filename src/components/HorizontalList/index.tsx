@@ -1,5 +1,5 @@
-import Router from 'next/router';
-import { useState } from 'react';
+import { useGlobal } from 'hooks/Global';
+import { useRouter } from 'next/router';
 import * as S from './styles';
 
 interface HorizontalListItem {
@@ -8,7 +8,11 @@ interface HorizontalListItem {
 }
 
 export const HorizontalList = () => {
-  const [itemSelected, setItemSelected] = useState<number>(0);
+  const {
+    states: { company },
+  } = useGlobal();
+
+  const { push } = useRouter();
 
   const array = [
     {
@@ -33,7 +37,11 @@ export const HorizontalList = () => {
     },
   ];
 
-  const handleClick = (url: string) => Router.push(url);
+  const handleClick = (url: string) =>
+    push({
+      pathname: `/[companyName]/${url}`,
+      query: { companyName: company?.app?.url },
+    });
 
   return (
     <S.Container>

@@ -1,13 +1,20 @@
 import AppointmentCard from 'components/AppointmentCard';
 import Button from 'components/Button';
+import { useGlobal } from 'hooks/Global';
 import BottomSheetFixedLayout from 'layouts/BottomSheetFixedLayout';
 import MainLayout from 'layouts/MainLayout';
+import { useRouter } from 'next/router';
 import React from 'react';
 import { OutlinedCheckIcon } from '../../../../public/assets';
 
 import * as S from './styles';
 
 const scheduleconfirmed: React.FC = () => {
+  const { push } = useRouter();
+  const {
+    states: { company },
+  } = useGlobal();
+
   return (
     <MainLayout>
       <BottomSheetFixedLayout theme="dark">
@@ -60,7 +67,15 @@ const scheduleconfirmed: React.FC = () => {
             <S.TotalValue>39,90</S.TotalValue>
           </S.TotalAppointmentContainer>
           <S.QuestionUserText>Deseja pagar Agora?</S.QuestionUserText>
-          <Button text="Clique Aqui" />
+          <Button
+            text="Clique Aqui"
+            onClick={() =>
+              push({
+                pathname: `/[companyName]/checkout`,
+                query: { companyName: company?.app?.url },
+              })
+            }
+          />
         </S.Content>
       </BottomSheetFixedLayout>
     </MainLayout>

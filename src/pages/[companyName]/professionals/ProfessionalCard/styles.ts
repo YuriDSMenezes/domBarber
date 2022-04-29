@@ -18,6 +18,7 @@ export const Content = styled.div`
   width: 45%;
   height: 175px;
   border-radius: 10px;
+  cursor: pointer;
 
   img {
     position: relative;

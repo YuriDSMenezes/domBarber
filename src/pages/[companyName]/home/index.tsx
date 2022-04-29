@@ -14,10 +14,9 @@ const Home: NextPage = () => {
   const { states: globalStates } = useGlobal();
   useAppController();
   const {
-    states: {
-      company: { name: companyName },
-    },
+    states: { company },
   } = useGlobal();
+
   const { push } = useRouter();
 
   return (
@@ -55,7 +54,7 @@ const Home: NextPage = () => {
             onClick={() =>
               push({
                 pathname: `/[companyName]/newservice`,
-                query: { companyName },
+                query: { companyName: company?.app?.url },
               })
             }
           >

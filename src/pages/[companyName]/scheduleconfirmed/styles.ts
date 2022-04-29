@@ -6,7 +6,8 @@ export const Content = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 0 20px;
+  justify-content: space-between;
+  padding: 0 20px 20px 20px;
 `;
 
 export const ContainerImgConfirmation = styled.div`

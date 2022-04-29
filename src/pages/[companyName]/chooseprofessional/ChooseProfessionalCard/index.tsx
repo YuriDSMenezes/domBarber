@@ -1,21 +1,35 @@
 import TagButton from 'components/TagButton';
-import React from 'react';
+import { Professional } from 'models/types/professional';
+import React, { HTMLAttributes } from 'react';
 import StarRatingComponent from 'react-star-rating-component';
 
 import * as S from './styles';
 
-const ChooseProfessionalCard: React.FC = () => {
+interface ChooseProfessionalProps extends HTMLAttributes<HTMLDivElement> {
+  professional: Professional;
+  onClick: () => void;
+}
+
+const ChooseProfessionalCard: React.FC<ChooseProfessionalProps> = ({
+  name,
+  image,
+  services,
+  onClick,
+}: Professional) => {
   return (
-    <S.Container>
+    <S.Container onClick={onClick}>
       <S.Content>
         <S.ImgNameAndRatingProfessional>
           <S.ProfessionalImgContainer>
             <img
-              src="https://images.pexels.com/photos/614810/pexels-photo-614810.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500"
-              alt="Paulo R."
+              src={
+                image ||
+                'https://cdn.neemo.com.br/uploads/settings_webdelivery/logo/3957/image-not-found.jpg'
+              }
+              alt={`Foto de perfil do profissional ${name}`}
             />
           </S.ProfessionalImgContainer>
-          <S.ProfessionalName>Paulo R.</S.ProfessionalName>
+          <S.ProfessionalName>{name}</S.ProfessionalName>
           <StarRatingComponent
             name="ratingProfessional"
             value={Math.round(Math.random() * 5)}
@@ -26,11 +40,9 @@ const ChooseProfessionalCard: React.FC = () => {
             Especialidades:
           </S.ProfessionalEspecialistText>
           <S.EspecialitiesContainer>
-            <TagButton text="Barba + Cabelo" size="small" />
-            <TagButton text="Barba + Cabelo" size="small" />
-            <TagButton text="Barba + Cabelo" size="small" />
-            <TagButton text="Barba + Cabelo" size="small" />
-            <TagButton text="Barba + Cabelo" size="small" />
+            {services?.map(service => (
+              <TagButton text={service?.name} size="small" />
+            ))}
           </S.EspecialitiesContainer>
         </S.EspecialistContainer>
       </S.Content>

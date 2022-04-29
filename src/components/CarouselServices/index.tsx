@@ -14,6 +14,7 @@ interface CarouselProps {
 
 export const CarouselService = ({ items, size, services }: CarouselProps) => {
   const [sItem, setSItem] = useState<number>(2);
+
   return (
     <S.Container>
       {items.map((item, index) => {

@@ -1,7 +1,11 @@
 import { ConvertToRem } from 'helpers';
 import styled from 'styled-components';
 
-export const Container = styled.div``;
+export const Container = styled.div`
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+`;
 
 export const Title = styled.h1`
   font-weight: 500;
@@ -94,10 +98,17 @@ export const CollapseContainer = styled.div`
 
 export const CollapseDate = styled.div`
   width: 60px;
+  text-align: center;
 `;
 
 export const CollapseDescription = styled.div`
   margin-bottom: 15px;
+`;
+
+export const CollapseDay = styled.div`
+  color: #ff9933;
+  font-weight: 500;
+  font-size: ${ConvertToRem(36)};
 `;
 
 export const CollapseService = styled.div`

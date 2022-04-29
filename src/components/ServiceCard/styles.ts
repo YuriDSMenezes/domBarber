@@ -75,4 +75,5 @@ export const TimeAndPointsText = styled.span`
   font-size: 10px;
   line-height: 12px;
   color: #ffffff;
+  text-align: left;
 `;

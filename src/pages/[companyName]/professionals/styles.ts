@@ -41,3 +41,16 @@ export const TitleOut = styled.h1`
     display: block;
   }
 `;
+
+export const DesktopProfessionals = styled.div`
+  display: none;
+  @media (min-width: 768px) {
+    display: block;
+  }
+`;
+export const MobileProfessionals = styled.div`
+  display: block;
+  @media (min-width: 768px) {
+    display: none;
+  }
+`;
