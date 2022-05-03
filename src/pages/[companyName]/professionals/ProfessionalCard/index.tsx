@@ -10,23 +10,23 @@ interface ProfessionalsProps {
 
 const ProfessionalCard: React.FC<ProfessionalsProps> = ({ list }) => {
   const { push } = useRouter();
-  const [cart, setCart] = useState(() => {
-    if (typeof window !== 'undefined') {
-      const cart = localStorage.getItem('@domBarber:cart');
+  const [cart, setCart] = useState<Array<{}>>(() => {
+    const localCart = localStorage.getItem('@domBarber:cart');
 
-      if (cart) {
-        return JSON.parse(cart);
-      }
+    if (localCart) {
+      return JSON.parse(localCart);
     }
 
     return [];
   });
 
   const handleClickCard = (item: Professional) => {
-    setCart((oldState: any) => [...oldState, item]);
-    if (typeof window !== 'undefined') {
-      localStorage.setItem('@domBarber:cart', JSON.stringify([...cart, item]));
-    }
+    const lastItem = cart[cart.length - 1];
+    const newItem = { ...lastItem, professional: item, pofessionalId: item.id };
+    cart.pop();
+    const newCart = [...cart, newItem];
+    setCart(newCart);
+    localStorage.setItem('@domBarber:cart', JSON.stringify(newCart));
     push({
       pathname: `/ps1/schedule`,
     });
