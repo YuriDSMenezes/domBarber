@@ -1,6 +1,7 @@
 import Button from 'components/Button';
 import { Modal } from 'components/Modal';
 import { TextArea } from 'components/TextArea/styles';
+import { currencyFormat } from 'helpers';
 import { useGlobal } from 'hooks/Global';
 import BottomSheetFixedLayout from 'layouts/BottomSheetFixedLayout';
 import MainLayout from 'layouts/MainLayout';
@@ -35,15 +36,6 @@ const Cart = () => {
     return [];
   });
 
-  useEffect(() => {
-    const professionalIndex = cart.length - 3;
-    const serviceIndex = cart.length - 2;
-    const dateIndex = cart.length - 1;
-    setService(cart[serviceIndex]);
-    setProfessional(cart[professionalIndex]);
-    setDate(cart[dateIndex]);
-  }, []);
-
   const handleClickCard = (item: any) => {
     setCart((oldState: any) => [...oldState, item]);
     localStorage.setItem('@domBarber:cart', JSON.stringify([...cart, item]));
@@ -55,7 +47,6 @@ const Cart = () => {
   const handleOpenCollapse = () => setOpenCollapse(!openCollapse);
   const handleOpenModal = () => setOpenModal(!openModal);
   const handleCloseModal = () => setOpenModal(false);
-
   return (
     <MainLayout>
       <Modal show={openModal}>
@@ -111,22 +102,32 @@ const Cart = () => {
                 <S.Line />
                 {openCollapse && (
                   <ItemCollapse
-                    professional={professional}
-                    services={service}
-                    date={date}
+                    professional={cart[cart.length - 1]?.professional}
+                    services={cart[cart.length - 1]?.service}
+                    date={cart[cart.length - 1]?.start}
                   />
                 )}
               </S.ItemContainer>
             ) : (
-              <ItemCollapse
-                professional={professional}
-                service={service}
-                date={date}
-              />
+              cart.map((cItem, index) => (
+                <ItemCollapse
+                  professional={cItem?.professional}
+                  service={cItem?.service}
+                  date={cItem?.start || ''}
+                />
+              ))
             )}
             <S.Total>
               <S.LargeText>Total</S.LargeText>
-              <S.LargeText>R$ {service?.price}</S.LargeText>
+              <S.LargeText>
+                {currencyFormat({
+                  value: cart.reduce(
+                    (acc, curr) => (acc += curr?.service?.price),
+                    0,
+                  ),
+                  currencyPrefix: 'R$',
+                })}
+              </S.LargeText>
               <S.Line />
             </S.Total>
           </div>
