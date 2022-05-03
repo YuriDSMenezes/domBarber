@@ -10,7 +10,7 @@ interface ServiceCardProps {
 
 const ServiceCard: ComponentType<ServiceCardProps> = ({ list }) => {
   const { push } = useRouter();
-  const [cart, setCart] = useState(() => {
+  const [cart, setCart] = useState<Array<{}>>(() => {
     if (typeof window !== 'undefined') {
       const cart = localStorage.getItem('@domBarber:cart');
 
@@ -23,9 +23,15 @@ const ServiceCard: ComponentType<ServiceCardProps> = ({ list }) => {
   });
 
   const handleClickCard = (item: Service) => {
-    setCart((oldState: any) => [...oldState, item]);
+    setCart((oldState: any) => [
+      ...oldState,
+      { service: item, serviceId: item.id },
+    ]);
     if (typeof window !== 'undefined') {
-      localStorage.setItem('@domBarber:cart', JSON.stringify([...cart, item]));
+      localStorage.setItem(
+        '@domBarber:cart',
+        JSON.stringify([...cart, { service: item, serviceId: item.id }]),
+      );
     }
     push({
       pathname: `/ps1/professionals`,
