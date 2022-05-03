@@ -96,6 +96,16 @@ const Schedule = () => {
     return days.filter(day => !daysNW.includes(day));
   };
 
+  const initWorkDay = () => {
+    const daysNW = [];
+    days.forEach(day => {
+      cart[cart.length - 1].professional?.days.forEach(dw => {
+        if (dw.weekId === new Date(day).getDay()) daysNW.push(day);
+      });
+    });
+    return new Date(daysNW[0]);
+  };
+
   console.log(daysNotWork());
 
   // console.log(
@@ -105,9 +115,25 @@ const Schedule = () => {
   //     ),
   //   ),
   // );
-
+  // REFATORAR, AJUSTAR O DISPLAY NONE E RESOLVER O DIA DE HOJE QUE FICA MARCADO COMO HABILITADO
   const CalendarComponent = useCallback(
-    () => <Calendar value={date} locale="pt-BR" onClickDay={e => setDate(e)} />,
+    () => (
+      <Calendar
+        value={date}
+        locale="pt-BR"
+        onClickDay={e => setDate(e)}
+        minDate={initWorkDay()}
+        tileDisabled={({ date, view }) =>
+          view === 'month' && // Block day tiles only
+          daysNotWork().some(
+            disabledDate =>
+              date.getFullYear() === disabledDate.getFullYear() &&
+              date.getMonth() === disabledDate.getMonth() &&
+              date.getDate() === disabledDate.getDate(),
+          )
+        }
+      />
+    ),
     [date],
   );
 
