@@ -20,11 +20,15 @@ const ProfessionalCard: React.FC<ProfessionalsProps> = ({ list }) => {
     return [];
   });
 
-  const handleClickCard = (item: Professional) => {
-    const lastItem = cart[cart.length - 1];
-    const newItem = { ...lastItem, professional: item, pofessionalId: item.id };
+  const handleClickCard = (professional: Professional) => {
+    const lastProfessional = cart[cart.length - 1];
+    const newProfessional = {
+      ...lastProfessional,
+      professional,
+      pofessionalId: professional.id,
+    };
     cart.pop();
-    const newCart = [...cart, newItem];
+    const newCart = [...cart, newProfessional];
     setCart(newCart);
     localStorage.setItem('@domBarber:cart', JSON.stringify(newCart));
     push({

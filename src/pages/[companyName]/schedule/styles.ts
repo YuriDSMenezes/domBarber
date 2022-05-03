@@ -1,4 +1,5 @@
 import { ConvertToRem } from 'helpers';
+import { HTMLAttributes } from 'react';
 import styled from 'styled-components';
 
 export const Container = styled.div`
@@ -7,6 +8,7 @@ export const Container = styled.div`
   color: #fff;
   font-weight: 500;
   text-align: center;
+  margin: 0 16px;
 
   @media (min-width: 768px) {
     background: #161616;
@@ -14,6 +16,25 @@ export const Container = styled.div`
     margin: 0 auto;
     border-radius: 22px;
     padding-top: 0px;
+  }
+
+  .react-calendar__tile:disabled {
+    display: none;
+  }
+
+  .react-calendar__year-view__months {
+    .react-calendar__tile--active {
+      background: transparent;
+      abbr {
+        background: #ff9933;
+        border-radius: 5px;
+        color: black !important;
+        padding: 5px 10px;
+      }
+    }
+    .react-calendar__tile {
+      padding: 5px 0px !important;
+    }
   }
 
   .react-calendar {
@@ -31,12 +52,14 @@ export const Container = styled.div`
     abbr[title] {
       text-decoration: none;
     }
+
     .react-calendar__tile--active {
       background: transparent;
       abbr {
         background-color: #ff9933;
-        padding: 10px 15px;
-        border-radius: 50%;
+        padding: 1px 10px;
+        border-radius: 5px;
+        color: #000;
       }
     }
     .react-calendar__tile {
@@ -119,7 +142,11 @@ export const HoursContainer = styled.div`
   }
 `;
 
-export const Hour = styled.div`
+interface HourProps extends HTMLAttributes<HTMLDivElement> {
+  active?: boolean;
+}
+
+export const Hour = styled.div<HourProps>`
   width: 70%;
   margin: 0 auto;
   height: 100%;
@@ -136,6 +163,9 @@ export const Hour = styled.div`
   @media (min-width: 768px) {
     width: 30%;
   }
+
+  background: ${props => props.active && '#ff9933'};
+  color: ${props => props.active && 'black'};
 `;
 
 export const ServiceContainer = styled.div`
@@ -143,7 +173,6 @@ export const ServiceContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 20px;
 
   @media (min-width: 768px) {
     margin: 0;
@@ -204,8 +233,7 @@ export const NextContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 20px;
-  margin-top: 20px;
+  margin-top: 40px;
   @media (min-width: 768px) {
     background: #272727;
     margin: 0;
@@ -228,6 +256,7 @@ export const NextButton = styled.div`
   display: grid;
   place-items: center;
   color: #1c1c1c;
+  cursor: pointer;
 `;
 
 export const Row = styled.div`
@@ -239,5 +268,6 @@ export const Row = styled.div`
     background: #272727;
     border-radius: 0 0 10px 10px;
     height: 105px;
+    padding: 0 20px;
   }
 `;
