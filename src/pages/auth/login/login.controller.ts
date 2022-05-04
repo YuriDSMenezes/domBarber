@@ -1,7 +1,7 @@
-import { FormEvent, useState } from 'react';
+/* eslint-disable @typescript-eslint/no-unused-vars */
+import { useState } from 'react';
 import {
   singIn,
-  singOut,
   signInWithGoogle,
   signInWithFacebook,
 } from 'services/FirebaseOAuth';
@@ -13,17 +13,15 @@ export const LoginController = () => {
   const [loading, setLoading] = useState<boolean>(false);
 
   const handleLoginWithGoogle = async () => {
-    const res = await signInWithGoogle();
-    return console.log(res);
+    await signInWithGoogle();
   };
 
   const handleLoginWithFacebook = async () => {
-    const res = await signInWithFacebook();
-    return console.log(res);
+    await signInWithFacebook();
   };
 
   const handleLoginWithEmail = async () => {
-    await singIn(email, password, () => console.log('erro'));
+    await singIn(email, password, () => null);
   };
 
   const handleEmail = () => setEmail(email);

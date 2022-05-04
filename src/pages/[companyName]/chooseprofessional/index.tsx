@@ -1,9 +1,10 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import BottomSheetFixedLayout from 'layouts/BottomSheetFixedLayout';
 import MainLayout from 'layouts/MainLayout';
 import { Professional } from 'models/types/professional';
 import { useRouter } from 'next/router';
 import React, { useState } from 'react';
-import ChooseProfessionalCard from './ChooseProfessionalCard';
+import ChooseProfessionalCard from '../../../components/ChooseProfessionalCard';
 
 import * as S from './styles';
 
@@ -40,7 +41,7 @@ const chooseprofessional: React.FC = () => {
         <S.Content>
           <S.Title>Escolha um Profissional</S.Title>
           <S.ChooseProfessionalContainer>
-            {professionals.map((professional, index) => (
+            {professionals?.map((professional, index) => (
               <ChooseProfessionalCard
                 key={index}
                 professional={professional}

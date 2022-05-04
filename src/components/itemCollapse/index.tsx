@@ -2,7 +2,7 @@ import { getDay, getHours } from 'date-fns';
 import { currencyFormat } from 'helpers';
 import { Professional } from 'models/types/professional';
 import { Service } from 'models/types/service';
-import * as S from '../styles';
+import * as S from '../../pages/[companyName]/cart/styles';
 
 interface ItemCollapseProps {
   professional: Professional;

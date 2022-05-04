@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState, useCallback, useEffect } from 'react';
 import MainLayout from 'layouts/MainLayout';
 import Calendar, { YearView } from 'react-calendar';
@@ -13,8 +14,8 @@ import {
 import 'react-calendar/dist/Calendar.css';
 import { AddHours } from 'helpers/addHours';
 import { useGlobal } from 'hooks/Global';
-import { Service } from 'models/types/service';
 import { Professional } from 'models/types/professional';
+import { Service } from 'models/types/service';
 import { hours } from '../../../../_mocks/hour';
 import * as S from './styles';
 

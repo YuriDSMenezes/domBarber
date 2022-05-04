@@ -1,4 +1,4 @@
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 
 interface StyleProps {
   paymentMethod?: 'pix' | 'card' | 'money';

@@ -1,9 +1,9 @@
 import styled from 'styled-components';
 
 export const Container = styled.button`
-  background: #FFF;
+  background: #fff;
   border-radius: 10px;
-  border: 1px solid #E9E9E9;
+  border: 1px solid #e9e9e9;
   width: 100%;
   height: 37px;
   min-height: 37px;
