@@ -1,8 +1,8 @@
 import type { NextPage } from 'next';
-import Login from './auth/login';
+import CompanyName from './[companyName]';
 
 const Home: NextPage = () => {
-  return <Login />;
+  return <CompanyName />;
 };
 
 export default Home;

@@ -28,6 +28,10 @@ export const useAppController = () => {
     CompanyType | undefined
   > => {
     loadingActions.activeLoading();
+    let localCompany = null;
+    if (typeof window !== 'undefined') {
+      localCompany = localStorage.getItem('@domBarber:company');
+    }
     if (isReady) {
       let companyUrl = null;
       if (typeof companyName === 'object') {
@@ -36,6 +40,11 @@ export const useAppController = () => {
       } else {
         companyUrl = companyName;
       }
+      if (localCompany && JSON.parse(localCompany).app.url === companyUrl) {
+        globalActions.setCompany(JSON.parse(localCompany));
+        globalStates.company && loadingActions.deactiveLoading();
+        return JSON.parse(localCompany);
+      }
       const companyData = await getCompanyByUrl(companyUrl || '');
       // @ts-ignore
       const parsedCompanyData = Object.entries(companyData as {}).map(
@@ -43,6 +52,12 @@ export const useAppController = () => {
         ([id, data]) => Company({ ...data, id }),
       )[0];
       globalActions.setCompany(parsedCompanyData);
+      if (typeof window !== 'undefined') {
+        localStorage.setItem(
+          '@domBarber:company',
+          JSON.stringify(parsedCompanyData),
+        );
+      }
       globalStates.company && loadingActions.deactiveLoading();
       return parsedCompanyData;
     }
