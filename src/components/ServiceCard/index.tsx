@@ -26,7 +26,7 @@ const ServiceCard: ComponentType<ServiceCardProps> = ({ list }) => {
   const handleClickCard = (item: Service) => {
     setCart((oldState: any) => [
       ...oldState,
-      { service: item, serviceId: item.id },
+      { service: item, serviceId: item.id, start: undefined },
     ]);
     if (typeof window !== 'undefined') {
       localStorage.setItem(

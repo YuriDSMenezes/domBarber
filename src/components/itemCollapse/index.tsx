@@ -1,4 +1,5 @@
 import { getDay, getHours } from 'date-fns';
+import { currencyFormat } from 'helpers';
 import { Professional } from 'models/types/professional';
 import { Service } from 'models/types/service';
 import * as S from '../../pages/[companyName]/cart/styles';
@@ -16,16 +17,48 @@ export const ItemCollapse = ({
 }: ItemCollapseProps) => {
   const formatedDate = new Date(date);
 
+  const stringDays = [
+    'Domingo',
+    'Segunda-feira',
+    'Terça-Feira',
+    'Quarta-feira',
+    'Quinta-Feira',
+    'Sexta-Feira',
+    'Sábado',
+  ];
+
+  const stringMonths = [
+    'Janeiro',
+    'Fevereiro',
+    'Marco',
+    'Abril',
+    'Maio',
+    'Junho',
+    'Julho',
+    'Agosto',
+    'Septembro',
+    'Outubro',
+    'Novembro',
+    'Dezembro',
+  ];
+
   return (
     <S.CollapseContainer>
       <S.CollapseDate>
-        <S.SmallText>Sexta-Feira, Setembro</S.SmallText>
-        <S.CollapseDay>{getDay(formatedDate)}</S.CollapseDay>
-        <S.LargeText>{getHours(formatedDate)}:00</S.LargeText>
+        <S.SmallText>
+          {stringDays[formatedDate.getDay()]},{' '}
+          {stringMonths[formatedDate.getMonth()]}
+        </S.SmallText>
+        <S.CollapseDay>{formatedDate.getDate()}</S.CollapseDay>
+        <S.LargeText>
+          {formatedDate.toLocaleTimeString('pt-br', { timeStyle: 'short' })}
+        </S.LargeText>
       </S.CollapseDate>
       <S.CollapseDescription>
         <S.OrangeTitle>{service?.description}</S.OrangeTitle>
-        <S.MediumText>R$ {service?.price}</S.MediumText>
+        <S.MediumText>
+          {currencyFormat({ value: service?.price, currencyPrefix: 'R$' })}
+        </S.MediumText>
         <S.MediumText>{service?.pointsGenerated} Pontos</S.MediumText>
       </S.CollapseDescription>
 

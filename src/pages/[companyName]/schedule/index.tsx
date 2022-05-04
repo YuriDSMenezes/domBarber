@@ -4,7 +4,13 @@ import MainLayout from 'layouts/MainLayout';
 import Calendar, { YearView } from 'react-calendar';
 import { useRouter } from 'next/router';
 
-import { format } from 'date-fns';
+import {
+  format,
+  startOfMonth,
+  eachMonthOfInterval,
+  endOfMonth,
+  eachDayOfInterval,
+} from 'date-fns';
 import 'react-calendar/dist/Calendar.css';
 import { AddHours } from 'helpers/addHours';
 import { useGlobal } from 'hooks/Global';
@@ -34,13 +40,6 @@ const Schedule = () => {
     return [];
   });
 
-  useEffect(() => {
-    const professionalIndex = cart.length - 2;
-    const serviceIndex = cart.length - 1;
-    setService(cart[serviceIndex]);
-    setProfessional(cart[professionalIndex]);
-  }, []);
-
   const handleClickDate = (getMonth: Date) => {
     setDate(getMonth);
   };
@@ -52,11 +51,17 @@ const Schedule = () => {
     setDate(sumHoursToDate);
   };
 
-  const handleNext = (item: Date) => {
-    setCart((oldState: any) => [...oldState, item]);
-    if (typeof window !== 'undefined') {
-      localStorage.setItem('@domBarber:cart', JSON.stringify([...cart, item]));
-    }
+  const handleNext = (date: Date) => {
+    const lastItem = cart[cart.length - 1];
+    const newItem = { ...lastItem, start: date };
+    cart.pop();
+    const newCart = [...cart, newItem];
+    setCart(newCart);
+    localStorage.setItem('@domBarber:cart', JSON.stringify(newCart));
+    // setCart((oldState: any) => [...oldState, item]);
+    // if (typeof window !== 'undefined') {
+    //   localStorage.setItem('@domBarber:cart', JSON.stringify([...cart, item]));
+    // }
   };
 
   const YearCalendarComponent = useCallback(
@@ -69,14 +74,67 @@ const Schedule = () => {
         value={date}
         activeStartDate={date}
         onClick={e => handleClickDate(e)}
-        locale="en-US"
+        locale="pt-BR"
       />
     ),
     [date],
   );
 
+  const days = eachDayOfInterval({
+    start: new Date(),
+    end: endOfMonth(new Date()),
+  });
+
+  console.log(cart[cart.length - 1].professional.days);
+
+  const daysNotWork = () => {
+    const daysNW = [];
+    days.forEach(day => {
+      cart[cart.length - 1].professional?.days.forEach(dw => {
+        if (dw.weekId === new Date(day).getDay()) daysNW.push(day);
+      });
+    });
+    return days.filter(day => !daysNW.includes(day));
+  };
+
+  const initWorkDay = () => {
+    const daysNW = [];
+    days.forEach(day => {
+      cart[cart.length - 1].professional?.days.forEach(dw => {
+        if (dw.weekId === new Date(day).getDay()) daysNW.push(day);
+      });
+    });
+    return new Date(daysNW[0]);
+  };
+
+  console.log(daysNotWork());
+
+  // console.log(
+  //   days.filter(day =>
+  //     cart[cart.length - 1].professional?.days.filter(
+  //       dw => dw.weekId === new Date(day).getDay(),
+  //     ),
+  //   ),
+  // );
+  // REFATORAR, AJUSTAR O DISPLAY NONE E RESOLVER O DIA DE HOJE QUE FICA MARCADO COMO HABILITADO
   const CalendarComponent = useCallback(
-    () => <Calendar value={date} locale="en-US" onClickDay={e => setDate(e)} />,
+    () => (
+      <Calendar
+        value={date}
+        locale="pt-BR"
+        onClickDay={e => setDate(e)}
+        minDate={initWorkDay()}
+        tileDisabled={({ date, view }) =>
+          view === 'month' && // Block day tiles only
+          daysNotWork().some(
+            disabledDate =>
+              date.getFullYear() === disabledDate.getFullYear() &&
+              date.getMonth() === disabledDate.getMonth() &&
+              date.getDate() === disabledDate.getDate(),
+          )
+        }
+      />
+    ),
     [date],
   );
 
@@ -110,17 +168,22 @@ const Schedule = () => {
               <S.Image>
                 <img
                   src={
-                    service?.image ||
+                    cart[cart.length - 1]?.service?.image ||
                     'https://cdn.neemo.com.br/uploads/settings_webdelivery/logo/3957/image-not-found.jpg'
                   }
                   alt="logo"
                 />
               </S.Image>
               <S.ServiceDescription>
-                <S.ServiceTitle>{service?.description}</S.ServiceTitle>
-                <S.ServiceDescription>R$ {service?.price}</S.ServiceDescription>
+                <S.ServiceTitle>
+                  {cart[cart.length - 1]?.service?.description}
+                </S.ServiceTitle>
+                <S.ServiceDescription>
+                  R$ {cart[cart.length - 1]?.service?.price}
+                </S.ServiceDescription>
                 <S.ServiceText>
-                  {service?.pointsGenerated} Pontos Tempo: {service?.runtime}
+                  {cart[cart.length - 1]?.service?.pointsGenerated} Pontos
+                  Tempo: {cart[cart.length - 1]?.service?.runtime}
                 </S.ServiceText>
               </S.ServiceDescription>
             </S.Service>
@@ -128,7 +191,7 @@ const Schedule = () => {
               <S.Image>
                 <img
                   src={
-                    professional?.image ||
+                    cart[cart.length - 1]?.professional?.image ||
                     'https://cdn.neemo.com.br/uploads/settings_webdelivery/logo/3957/image-not-found.jpg'
                   }
                   alt="logo"
@@ -138,7 +201,9 @@ const Schedule = () => {
                 <S.ServiceDescription hasTitle>
                   Profissional
                 </S.ServiceDescription>
-                <S.ServiceText>{professional?.name}</S.ServiceText>
+                <S.ServiceText>
+                  {cart[cart.length - 1]?.professional?.name}
+                </S.ServiceText>
               </S.ServiceDescription>
             </S.Service>
           </S.ServiceContainer>

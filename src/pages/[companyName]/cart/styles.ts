@@ -5,6 +5,8 @@ export const Container = styled.div`
   display: flex;
   flex-direction: column;
   height: 100%;
+  overflow-y: auto;
+  padding-bottom: 50px;
 `;
 
 export const Title = styled.h1`
@@ -94,6 +96,7 @@ export const CollapseContainer = styled.div`
   align-items: center;
   justify-content: space-between;
   position: relative;
+  margin-bottom: 20px;
 `;
 
 export const CollapseDate = styled.div`
