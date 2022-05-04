@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React from 'react';
 import { getDay, getMonth, getDate, getHours, getMinutes } from 'date-fns';
 import * as S from './styles';

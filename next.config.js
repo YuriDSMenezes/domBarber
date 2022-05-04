@@ -1,6 +1,10 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
+  compiler: {
+    styledComponents: true,
+  },
+  pageExtensions: ['tsx'],
 }
 const withPlugins = require('next-compose-plugins')
 const withPwa = require('next-pwa')
@@ -26,10 +30,11 @@ module.exports = withPlugins([
   },
   [withPwa, {
     pwa: {
-      disable: process.env.NODE !== 'production',
+      // disable: process.env.NODE !== 'production',
       dest: 'public',
       register: true,
-      sw: '/sw.js'
+      sw: '/sw.js',
+      skipWaiting: true,
     }
   }],
   [nextConfig]

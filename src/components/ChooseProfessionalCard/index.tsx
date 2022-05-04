@@ -1,21 +1,20 @@
+import React from 'react';
 import TagButton from 'components/TagButton';
 import { Professional } from 'models/types/professional';
-import React, { HTMLAttributes } from 'react';
 import StarRatingComponent from 'react-star-rating-component';
 
 import * as S from './styles';
 
-interface ChooseProfessionalProps extends HTMLAttributes<HTMLDivElement> {
+interface ChooseProfessionalProps {
   professional: Professional;
   onClick: () => void;
 }
 
 const ChooseProfessionalCard: React.FC<ChooseProfessionalProps> = ({
-  name,
-  image,
-  services,
+  professional,
   onClick,
-}: Professional) => {
+}) => {
+  const { image, name, services } = professional;
   return (
     <S.Container onClick={onClick}>
       <S.Content>

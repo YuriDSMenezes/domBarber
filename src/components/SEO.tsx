@@ -1,12 +1,12 @@
-import Head from 'next/head'
+import Head from 'next/head';
 
 interface SEOProps {
-  title: string
-  description?: string
-  keywords?: string[]
-  image?: string
-  shouldExcludeTitleSuffix?: boolean
-  shouldIndexPage?: boolean
+  title: string;
+  description?: string;
+  keywords?: string[];
+  image?: string;
+  shouldExcludeTitleSuffix?: boolean;
+  shouldIndexPage?: boolean;
 }
 
 export default function SEO({
@@ -15,14 +15,14 @@ export default function SEO({
   keywords,
   image,
   shouldExcludeTitleSuffix = false,
-  shouldIndexPage = true
+  shouldIndexPage = true,
 }: SEOProps) {
-  const pageTitle = `${title} ${!shouldExcludeTitleSuffix && '| DomBarber'}`
+  const pageTitle = `${title} ${!shouldExcludeTitleSuffix && '| DomBarber'}`;
   const pageImage = image
     ? image.startsWith('/')
       ? `${process.env.NEXT_PUBLIC_SITE_URL}${image}`
       : image
-    : null
+    : null;
 
   return (
     <Head>
@@ -77,5 +77,5 @@ export default function SEO({
         content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=5" // ,user-scalable=no
       />
     </Head>
-  )
+  );
 }

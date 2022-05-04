@@ -11,10 +11,8 @@ interface ProfessionalsProps {
 const ProfessionalCard: React.FC<ProfessionalsProps> = ({ list }) => {
   const { push } = useRouter();
   const [cart, setCart] = useState<Array<{}>>(() => {
-    const localCart = localStorage.getItem('@domBarber:cart');
-
-    if (localCart) {
-      return JSON.parse(localCart);
+    if (typeof window !== 'undefined') {
+      localStorage.getItem('@domBarber:cart');
     }
 
     return [];
@@ -30,7 +28,9 @@ const ProfessionalCard: React.FC<ProfessionalsProps> = ({ list }) => {
     cart.pop();
     const newCart = [...cart, newProfessional];
     setCart(newCart);
-    localStorage.setItem('@domBarber:cart', JSON.stringify(newCart));
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('@domBarber:cart', JSON.stringify(newCart));
+    }
     push({
       pathname: `/ps1/schedule`,
     });
@@ -38,7 +38,7 @@ const ProfessionalCard: React.FC<ProfessionalsProps> = ({ list }) => {
 
   return (
     <S.Container>
-      {list.map((professional, index) => (
+      {list?.map((professional, index) => (
         <S.Content key={index} onClick={() => handleClickCard(professional)}>
           <img
             src="https://images.pexels.com/photos/614810/pexels-photo-614810.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500"

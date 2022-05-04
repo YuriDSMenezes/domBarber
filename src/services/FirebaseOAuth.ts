@@ -23,8 +23,10 @@ export const signInWithGoogle = () =>
       const credential = GoogleAuthProvider.credentialFromResult(result);
       const token = credential?.accessToken;
       const { user } = result;
-      localStorage.setItem('token', JSON.stringify(token));
-      localStorage.setItem('user', JSON.stringify(user));
+      if (typeof window !== 'undefined') {
+        localStorage.setItem('token', JSON.stringify(token));
+        localStorage.setItem('user', JSON.stringify(user));
+      }
       if (token) {
         cookie.set('user-cookie', token, {
           expires: 1,
@@ -47,8 +49,10 @@ export const signInWithFacebook = () =>
       const credential = GoogleAuthProvider.credentialFromResult(result);
       const token = credential?.accessToken;
       const { user } = result;
-      localStorage.setItem('token', JSON.stringify(token));
-      localStorage.setItem('user', JSON.stringify(user));
+      if (typeof window !== 'undefined') {
+        localStorage.setItem('token', JSON.stringify(token));
+        localStorage.setItem('user', JSON.stringify(user));
+      }
     })
     .catch(error => {
       const errorCode = error.code;
