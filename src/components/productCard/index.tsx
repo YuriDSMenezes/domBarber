@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Product } from 'models/types/product';
 import { useRouter } from 'next/router';
 import React, { useState } from 'react';

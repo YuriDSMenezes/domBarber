@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Service } from 'models/types/service';
 import { useRouter } from 'next/router';
 import React, { ComponentType, useState } from 'react';
@@ -40,7 +41,7 @@ const ServiceCard: ComponentType<ServiceCardProps> = ({ list }) => {
 
   return (
     <>
-      {list.map((item, index) => (
+      {list?.map((item, index) => (
         <S.Container key={index} onClick={() => handleClickCard(item)}>
           <S.ImgContainer>
             <img

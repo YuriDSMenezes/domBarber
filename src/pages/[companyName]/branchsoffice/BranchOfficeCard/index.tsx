@@ -3,11 +3,7 @@ import React from 'react';
 
 import * as S from './styles';
 
-const BranchOfficeCard: React.FC<Service> = ({
-  description,
-  price,
-  images,
-}: Service) => {
+const BranchOfficeCard: React.FC<Service> = ({ description }: Service) => {
   return (
     <S.Container>
       <img

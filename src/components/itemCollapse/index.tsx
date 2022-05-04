@@ -1,7 +1,7 @@
 import { getDay, getHours } from 'date-fns';
 import { Professional } from 'models/types/professional';
 import { Service } from 'models/types/service';
-import * as S from '../styles';
+import * as S from '../../pages/[companyName]/cart/styles';
 
 interface ItemCollapseProps {
   professional: Professional;

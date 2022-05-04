@@ -3,7 +3,7 @@ import {
   MastercardLogo,
   MoreOptionsIcon,
   PixLogo,
-} from '../../../../public/assets';
+} from '../../../../../public/assets';
 
 import * as S from './styles';
 

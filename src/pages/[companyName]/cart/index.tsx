@@ -1,6 +1,9 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import Button from 'components/Button';
 import { Modal } from 'components/Modal';
 import { TextArea } from 'components/TextArea/styles';
+import { ConvertToRem } from 'helpers';
 import { useGlobal } from 'hooks/Global';
 import BottomSheetFixedLayout from 'layouts/BottomSheetFixedLayout';
 import MainLayout from 'layouts/MainLayout';
@@ -8,9 +11,9 @@ import { Professional } from 'models/types/professional';
 import { Service } from 'models/types/service';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
-import { ArrowDownIcon } from '../../../../public/assets';
-import { ItemCollapse } from './itemCollapse';
 import * as S from './styles';
+import { ArrowDownIcon } from '../../../../public/assets';
+import { ItemCollapse } from '../../../components/itemCollapse';
 
 const Cart = () => {
   const { push } = useRouter();
@@ -46,7 +49,9 @@ const Cart = () => {
 
   const handleClickCard = (item: any) => {
     setCart((oldState: any) => [...oldState, item]);
-    localStorage.setItem('@domBarber:cart', JSON.stringify([...cart, item]));
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('@domBarber:cart', JSON.stringify([...cart, item]));
+    }
     push({
       pathname: `/ps1/scheduleconfirmed`,
     });
