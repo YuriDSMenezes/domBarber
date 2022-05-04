@@ -3,7 +3,7 @@ import { NextPage } from 'next';
 import { useRouter } from 'next/router';
 import { useLoading } from 'hooks/Loading';
 
-const companyName: NextPage = () => {
+const CompanyName: NextPage = () => {
   const { actions: loadingActions } = useLoading();
   const {
     push,
@@ -13,6 +13,15 @@ const companyName: NextPage = () => {
   useEffect(() => {
     if (!isReady) loadingActions.activeLoading();
     if (isReady) {
+      let localCompany = null;
+      if (typeof window !== 'undefined') {
+        localCompany = localStorage.getItem('@domBarber:company');
+      }
+      if (localCompany) {
+        push(`${JSON.parse(localCompany).app.url}/home`);
+        loadingActions.deactiveLoading();
+        return;
+      }
       loadingActions.deactiveLoading();
       push({
         pathname: `/[companyName]/home`,
@@ -36,4 +45,4 @@ const companyName: NextPage = () => {
   );
 };
 
-export default companyName;
+export default CompanyName;

@@ -22,7 +22,7 @@ const Login: NextPage = () => {
 
   return (
     <S.Container>
-      <SEO title="teste" />
+      <SEO title="Login" />
       <S.Form onSubmit={handleLoginWithEmail}>
         <S.Content>
           <S.LogoContainer>
