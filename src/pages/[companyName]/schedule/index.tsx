@@ -1,21 +1,12 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { useState, useCallback, useEffect } from 'react';
+import { useState, useCallback } from 'react';
 import MainLayout from 'layouts/MainLayout';
 import Calendar, { YearView } from 'react-calendar';
 import { useRouter } from 'next/router';
-
-import {
-  format,
-  startOfMonth,
-  eachMonthOfInterval,
-  endOfMonth,
-  eachDayOfInterval,
-} from 'date-fns';
+import { format, endOfMonth, eachDayOfInterval } from 'date-fns';
 import 'react-calendar/dist/Calendar.css';
 import { AddHours } from 'helpers/addHours';
 import { useGlobal } from 'hooks/Global';
-import { Professional } from 'models/types/professional';
-import { Service } from 'models/types/service';
 import { hours } from '../../../../_mocks/hour';
 import * as S from './styles';
 
@@ -26,8 +17,6 @@ const Schedule = () => {
   } = useGlobal();
   const [date, setDate] = useState<Date>(new Date());
   const [hour, setHour] = useState<string>();
-  const [service, setService] = useState<Service>();
-  const [professional, setProfessional] = useState<Professional>();
   const [cart, setCart] = useState(() => {
     if (typeof window !== 'undefined') {
       const cart = localStorage.getItem('@domBarber:cart');
@@ -85,12 +74,10 @@ const Schedule = () => {
     end: endOfMonth(new Date()),
   });
 
-  console.log(cart[cart.length - 1].professional.days);
-
   const daysNotWork = () => {
     const daysNW = [];
     days.forEach(day => {
-      cart[cart.length - 1].professional?.days.forEach(dw => {
+      cart[cart.length - 1]?.professional?.days.forEach(dw => {
         if (dw.weekId === new Date(day).getDay()) daysNW.push(day);
       });
     });
@@ -100,22 +87,12 @@ const Schedule = () => {
   const initWorkDay = () => {
     const daysNW = [];
     days.forEach(day => {
-      cart[cart.length - 1].professional?.days.forEach(dw => {
+      cart[cart.length - 1]?.professional?.days.forEach(dw => {
         if (dw.weekId === new Date(day).getDay()) daysNW.push(day);
       });
     });
     return new Date(daysNW[0]);
   };
-
-  console.log(daysNotWork());
-
-  // console.log(
-  //   days.filter(day =>
-  //     cart[cart.length - 1].professional?.days.filter(
-  //       dw => dw.weekId === new Date(day).getDay(),
-  //     ),
-  //   ),
-  // );
   // REFATORAR, AJUSTAR O DISPLAY NONE E RESOLVER O DIA DE HOJE QUE FICA MARCADO COMO HABILITADO
   const CalendarComponent = useCallback(
     () => (
