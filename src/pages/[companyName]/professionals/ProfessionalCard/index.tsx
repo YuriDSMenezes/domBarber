@@ -10,22 +10,27 @@ interface ProfessionalsProps {
 
 const ProfessionalCard: React.FC<ProfessionalsProps> = ({ list }) => {
   const { push } = useRouter();
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-ignore
   const [cart, setCart] = useState<Array<{}>>(() => {
     if (typeof window !== 'undefined') {
-      localStorage.getItem('@domBarber:cart');
+      const cart = localStorage.getItem('@domBarber:cart');
+
+      if (cart) {
+        return JSON.parse(cart);
+      }
     }
 
     return [];
   });
 
   const handleClickCard = (professional: Professional) => {
-    const lastProfessional = cart[cart.length - 1];
+    const lastItem = cart.pop();
     const newProfessional = {
-      ...lastProfessional,
+      ...lastItem,
       professional,
       pofessionalId: professional.id,
     };
-    cart.pop();
     const newCart = [...cart, newProfessional];
     setCart(newCart);
     if (typeof window !== 'undefined') {
