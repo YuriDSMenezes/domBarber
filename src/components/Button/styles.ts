@@ -7,7 +7,7 @@ interface StyleProps {
 }
 
 export const Container = styled.button<StyleProps>`
-  background: ${props => (props.white ? '#fff' : '#ff9933')};
+  background: ${props => (props.white ? '#fff' : 'var(--color-primary)')};
   border-radius: 10px;
   border: none;
   width: 100%;
