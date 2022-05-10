@@ -7,8 +7,11 @@ export const currencyFormat = ({
   value,
   currencyPrefix = '$',
 }: iCurrencyFormat) => {
-  return `${currencyPrefix} ${value
-    .toFixed(2)
-    .replace('.', ',')
-    .replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.')}`;
+  if (value !== undefined) {
+    return `${currencyPrefix} ${value
+      .toFixed(2)
+      .replace('.', ',')
+      .replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.')}`;
+  }
+  return `R$ 0,00`;
 };
