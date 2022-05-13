@@ -2,32 +2,24 @@
 import { useGlobal } from 'hooks/Global';
 import BottomSheetFixedLayout from 'layouts/BottomSheetFixedLayout';
 import MainLayout from 'layouts/MainLayout';
-import { Professional, ProfessionalService } from 'models/types/professional';
+import { Professional } from 'models/types/professional';
 import { useRouter } from 'next/router';
 import React, { useState } from 'react';
 import ChooseProfessionalCard from '../../../components/ChooseProfessionalCard';
 
 import * as S from './styles';
 
-const chooseprofessional: React.FC = () => {
-  const { push } = useRouter();
+const chooseprofessionals: React.FC = () => {
   const {
     states: { professionals },
   } = useGlobal();
-  const [professionalsByService, setProfessionalsByService] = useState<
-    Array<Professional>
-  >([]);
+  const { push } = useRouter();
   const [cart, setCart] = useState(() => {
     if (typeof window !== 'undefined') {
       const cart = localStorage.getItem('@domBarber:cart');
 
       if (cart) {
         const parsedCart = JSON.parse(cart);
-        const { serviceId } = parsedCart[parsedCart.length - 1];
-        const getProfessionalsByService = professionals.filter(professional =>
-          professional.serviceIds.includes(serviceId),
-        );
-        setProfessionalsByService(getProfessionalsByService);
         return parsedCart;
       }
     }
@@ -48,7 +40,7 @@ const chooseprofessional: React.FC = () => {
       localStorage.setItem('@domBarber:cart', JSON.stringify(newCart));
     }
     push({
-      pathname: `/ps1/schedule`,
+      pathname: `/ps1/newservice`,
     });
   };
 
@@ -57,8 +49,8 @@ const chooseprofessional: React.FC = () => {
       <BottomSheetFixedLayout theme="dark">
         <S.Content>
           <S.Title>Escolha um Profissional</S.Title>
-          <S.ChooseProfessionalContainer>
-            {professionalsByService?.map((professional, index) => (
+          <S.ChooseProfessionalsContainer>
+            {professionals?.map((professional, index) => (
               <ChooseProfessionalCard
                 key={index}
                 professional={professional}
@@ -67,11 +59,11 @@ const chooseprofessional: React.FC = () => {
                 }}
               />
             ))}
-          </S.ChooseProfessionalContainer>
+          </S.ChooseProfessionalsContainer>
         </S.Content>
       </BottomSheetFixedLayout>
     </MainLayout>
   );
 };
 
-export default chooseprofessional;
+export default chooseprofessionals;

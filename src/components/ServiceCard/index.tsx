@@ -11,32 +11,42 @@ interface ServiceCardProps {
 
 const ServiceCard: ComponentType<ServiceCardProps> = ({ list }) => {
   const { push } = useRouter();
-  const [cart, setCart] = useState<Array<{}>>(() => {
+  const [hasProfessional, setHasProfessional] = useState(false);
+  const [cart, setCart] = useState(() => {
     if (typeof window !== 'undefined') {
       const cart = localStorage.getItem('@domBarber:cart');
-
       if (cart) {
-        return JSON.parse(cart);
+        const parsedCart = JSON.parse(cart);
+        const lastItemCart = parsedCart[parsedCart.length - 1];
+        lastItemCart.professionalId && setHasProfessional(true);
+        return parsedCart;
       }
     }
 
     return [];
   });
 
-  const handleClickCard = (item: Service) => {
-    setCart((oldState: any) => [
-      ...oldState,
-      { service: item, serviceId: item.id, start: undefined },
-    ]);
+  const handleClickCard = (service: Service) => {
+    const lastItem = cart.pop();
+    const newService = {
+      ...lastItem,
+      service,
+      serviceId: service.id,
+    };
+    const newCart = [...cart, newService];
+    setCart(newCart);
     if (typeof window !== 'undefined') {
-      localStorage.setItem(
-        '@domBarber:cart',
-        JSON.stringify([...cart, { service: item, serviceId: item.id }]),
-      );
+      localStorage.setItem('@domBarber:cart', JSON.stringify(newCart));
     }
-    push({
-      pathname: `/ps1/professionals`,
-    });
+    push(
+      hasProfessional
+        ? {
+            pathname: `/ps1/schedule`,
+          }
+        : {
+            pathname: `/ps1/chooseprofessional`,
+          },
+    );
   };
 
   return (

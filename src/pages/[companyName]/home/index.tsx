@@ -39,17 +39,7 @@ const Home: NextPage = () => {
         </S.HorizontalListContainer>
         <S.ServiceContainer>
           <S.Description>Serviços</S.Description>
-          <CarouselService
-            items={globalStates.services.map(service => ({
-              // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-              // @ts-ignore
-              image: service?.images[0]?.url,
-              title: service.name,
-              description: service.description,
-            }))}
-            size="lg"
-            services
-          />
+          <CarouselService services={globalStates?.services} size="lg" />
           <S.SeeMore
             onClick={() =>
               push({
@@ -79,7 +69,14 @@ const Home: NextPage = () => {
               }))}
             size="sm"
           />
-          <S.SeeMore>
+          <S.SeeMore
+            onClick={() =>
+              push({
+                pathname: `/[companyName]/chooseprofessionals`,
+                query: { companyName: company?.app?.url },
+              })
+            }
+          >
             <p>Ver Todos</p>
             <img
               src={RightIcon.src}
@@ -99,7 +96,14 @@ const Home: NextPage = () => {
             }))}
             size="md"
           />
-          <S.SeeMore>
+          <S.SeeMore
+            onClick={() =>
+              push({
+                pathname: `/[companyName]/products`,
+                query: { companyName: company?.app?.url },
+              })
+            }
+          >
             <p>Ver Todos</p>
             <img
               src={RightIcon.src}
