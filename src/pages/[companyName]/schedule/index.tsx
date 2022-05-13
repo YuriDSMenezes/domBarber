@@ -77,17 +77,17 @@ const Schedule = () => {
   const daysNotWork = () => {
     const daysNW = [];
     days.forEach(day => {
-      cart[cart.length - 1]?.professional?.days.forEach(dw => {
+      cart[cart.length - 1]?.professional?.days?.forEach(dw => {
         if (dw.weekId === new Date(day).getDay()) daysNW.push(day);
       });
     });
-    return days.filter(day => !daysNW.includes(day));
+    return days.filter(day => !daysNW?.includes(day));
   };
 
   const initWorkDay = () => {
     const daysNW = [];
-    days.forEach(day => {
-      cart[cart.length - 1]?.professional?.days.forEach(dw => {
+    days?.forEach(day => {
+      cart[cart.length - 1]?.professional?.days?.forEach(dw => {
         if (dw.weekId === new Date(day).getDay()) daysNW.push(day);
       });
     });

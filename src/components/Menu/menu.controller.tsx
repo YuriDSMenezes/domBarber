@@ -49,7 +49,7 @@ export const MenuController = () => {
     {
       icon: PeopleIcon,
       text: 'Profissionais',
-      url: '/professionals',
+      url: '/chooseprofessional',
     },
     {
       icon: SmileIcon,

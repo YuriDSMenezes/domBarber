@@ -48,9 +48,18 @@ const Cart = () => {
     });
   };
 
+  const handleClickService = () => {
+    const hasService = {};
+    cart.push(hasService);
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('@domBarber:cart', JSON.stringify(cart));
+    }
+  };
+
   const handleOpenCollapse = () => setOpenCollapse(!openCollapse);
   const handleOpenModal = () => setOpenModal(!openModal);
   const handleCloseModal = () => setOpenModal(false);
+
   return (
     <MainLayout>
       <Modal show={openModal}>
@@ -107,16 +116,18 @@ const Cart = () => {
                 {openCollapse && (
                   <ItemCollapse
                     professional={cart[cart.length - 1]?.professional}
-                    services={cart[cart.length - 1]?.service}
+                    service={cart[cart.length - 1]?.service}
                     date={cart[cart.length - 1]?.start}
                   />
                 )}
               </S.ItemContainer>
             ) : (
-              cart.map((cItem, index) => (
+              cart.map((cItem, index: number) => (
                 <ItemCollapse
+                  key={index}
                   professional={cItem?.professional}
                   service={cItem?.service}
+                  product={cItem?.product}
                   date={cItem?.start || ''}
                 />
               ))
@@ -126,7 +137,8 @@ const Cart = () => {
               <S.LargeText>
                 {currencyFormat({
                   value: cart.reduce(
-                    (acc, curr) => (acc += curr?.service?.price),
+                    (acc, curr) =>
+                      (acc += curr?.service?.price || curr?.product?.price),
                     0,
                   ),
                   currencyPrefix: 'R$',
@@ -150,12 +162,13 @@ const Cart = () => {
               <Button
                 white
                 text="Adicionar Serviço"
-                onClick={() =>
+                onClick={() => {
+                  handleClickService();
                   push({
                     pathname: `/[companyName]/newservice`,
                     query: { companyName: company?.app?.url },
-                  })
-                }
+                  });
+                }}
               />
             </S.Row>
             <Button

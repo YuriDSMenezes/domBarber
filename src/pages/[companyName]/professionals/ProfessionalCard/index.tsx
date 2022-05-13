@@ -29,7 +29,7 @@ const ProfessionalCard: React.FC<ProfessionalsProps> = ({ list }) => {
     const newProfessional = {
       ...lastItem,
       professional,
-      pofessionalId: professional.id,
+      professionalId: professional.id,
     };
     const newCart = [...cart, newProfessional];
     setCart(newCart);
