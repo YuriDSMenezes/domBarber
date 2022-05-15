@@ -1,13 +1,20 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 import MainLayout from 'layouts/MainLayout';
 import Calendar, { YearView } from 'react-calendar';
 import { useRouter } from 'next/router';
-import { format, endOfMonth, eachDayOfInterval } from 'date-fns';
+import ptBR, {
+  format,
+  endOfMonth,
+  eachDayOfInterval,
+  startOfMonth,
+} from 'date-fns';
 import 'react-calendar/dist/Calendar.css';
 import { AddHours } from 'helpers/addHours';
 import { useGlobal } from 'hooks/Global';
+import { DayPicker } from 'react-day-picker';
 import { hours } from '../../../../_mocks/hour';
+import 'react-day-picker/dist/style.css';
 import * as S from './styles';
 
 const Schedule = () => {
@@ -53,69 +60,85 @@ const Schedule = () => {
     // }
   };
 
-  const YearCalendarComponent = useCallback(
-    () => (
-      <YearView
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
-        valueType="month"
-        minDate={new Date()}
-        value={date}
-        activeStartDate={date}
-        onClick={e => handleClickDate(e)}
-        locale="pt-BR"
-      />
-    ),
-    [date],
+  const YearCalendarComponent = () => (
+    <YearView
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      valueType="month"
+      minDate={new Date()}
+      value={date}
+      activeStartDate={new Date()}
+      onClick={e => handleClickDate(e)}
+      locale="pt-BR"
+    />
   );
 
   const days = eachDayOfInterval({
-    start: new Date(),
-    end: endOfMonth(new Date()),
+    start: startOfMonth(new Date(date)),
+    end: endOfMonth(new Date(date)),
   });
 
-  const daysNotWork = () => {
-    const daysNW = [];
+  const setInitalDateWork = () => {
+    const daysNW: Array<Date> = [];
     days.forEach(day => {
+      if (new Date(day) < new Date()) daysNW.push(day);
       cart[cart.length - 1]?.professional?.days?.forEach(dw => {
         if (dw.weekId === new Date(day).getDay()) daysNW.push(day);
       });
     });
-    return days.filter(day => !daysNW?.includes(day));
+    setDate(daysNW.filter(d => new Date(d) > new Date())[0]);
   };
 
-  const initWorkDay = () => {
-    const daysNW = [];
-    days?.forEach(day => {
+  const daysNotWork = useCallback(() => {
+    const daysNW: Array<Date> = [];
+    days.forEach(day => {
+      if (new Date(day) < new Date()) daysNW.push(day);
       cart[cart.length - 1]?.professional?.days?.forEach(dw => {
         if (dw.weekId === new Date(day).getDay()) daysNW.push(day);
       });
     });
-    return new Date(daysNW[0]);
-  };
-  // REFATORAR, AJUSTAR O DISPLAY NONE E RESOLVER O DIA DE HOJE QUE FICA MARCADO COMO HABILITADO
+
+    return [
+      ...days.filter(day => new Date(day) < new Date()),
+      ...days.filter(day => !daysNW?.includes(day)),
+    ];
+  }, [date]);
+
+  // const initWorkDay = () => {
+  //   const daysNW = [];
+  //   days?.forEach(day => {
+  //     cart[cart.length - 1]?.professional?.days?.forEach(dw => {
+  //       if (dw.weekId === new Date(day).getDay()) daysNW.push(day);
+  //     });
+  //   });
+  //   return new Date(daysNW[0]);
+  // };
+
   const CalendarComponent = useCallback(
     () => (
-      <Calendar
-        value={date}
-        locale="pt-BR"
-        onClickDay={e => setDate(e)}
-        minDate={initWorkDay()}
-        tileDisabled={({ date, view }) =>
-          view === 'month' && // Block day tiles only
-          daysNotWork().some(
-            disabledDate =>
-              date.getFullYear() === disabledDate.getFullYear() &&
-              date.getMonth() === disabledDate.getMonth() &&
-              date.getDate() === disabledDate.getDate(),
-          )
-        }
+      <DayPicker
+        // disableNavigation
+        mode="single"
+        captionLayout="dropdown"
+        month={date}
+        selected={date}
+        onSelect={setDate}
+        // modifiersClassNames={{
+        //   selected: "selected-day"
+        // }}
+        locale={ptBR}
+        disabled={daysNotWork()}
       />
     ),
     [date],
   );
 
-  const formattedDate = format(date, "'Dia' dd 'de' MMMM', às ' HH:mm'h'");
+  const formattedDate = (date: Date) =>
+    format(date, "'Dia' dd 'de' MMMM', às ' HH:mm'h'");
+
+  useEffect(() => {
+    return () => setInitalDateWork();
+  }, []);
 
   return (
     <MainLayout>

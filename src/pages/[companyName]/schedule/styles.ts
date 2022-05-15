@@ -102,7 +102,11 @@ export const Container = styled.div`
 `;
 
 export const CalendarContainer = styled.div`
+  width: 100%;
   margin: 30px 0 40px 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 `;
 
 interface TitleProps {

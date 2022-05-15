@@ -1,0 +1,39 @@
+:root {
+  --rdp-accent-color: #ff9933;
+  --rdp-background-color: #ff9933;
+  /* Switch to dark colors for dark themes */
+  --rdp-accent-color-dark: #ff9933;
+  --rdp-background-color-dark: #ff9933;
+  /* Outline border for focused elements */
+  --rdp-outline: 2px solid var(--rdp-accent-color);
+  /* Outline border for focused and selected elements */
+  --rdp-outline-selected: none;
+}
+
+.rdp-caption {
+  display: none !important;
+}
+
+.rdp-table {
+  color: #fff !important;
+}
+
+.rdp-day {
+  border-radius: 50% !important;
+  height: 30px !important;
+  width: 30px !important;
+}
+
+.rdp-day:hover {
+  background: #ff9933 !important;
+}
+
+.rdp-day_selected {
+  font-weight: bold !important;
+  color: #000 !important;
+  background: #ff9933 !important;
+}
+
+.rdp-months {
+  justify-content: center !important;
+}
