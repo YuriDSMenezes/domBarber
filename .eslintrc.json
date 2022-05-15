@@ -27,6 +27,7 @@
     "no-unused-expressions":"off",
     "no-param-reassign": "off",
     "no-unsafe-optional-chaining": "off",
+    "@typescript-eslint/ban-ts-comment": "off",
     "no-shadow": "off",
     "no-nested-ternary": "off",
     "@typescript-eslint/ban-types": "off",

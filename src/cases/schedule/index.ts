@@ -1,3 +1,1 @@
-import { getSchedules } from './getSchedules';
-
-export { getSchedules };
+export { getSchedulesByProfessionalId } from './getSchedulesByProfessionalId';

@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState, useCallback, useEffect } from 'react';
 import MainLayout from 'layouts/MainLayout';
-import Calendar, { YearView } from 'react-calendar';
+import { YearView } from 'react-calendar';
 import { useRouter } from 'next/router';
 import ptBR, {
   format,
@@ -13,9 +13,11 @@ import 'react-calendar/dist/Calendar.css';
 import { AddHours } from 'helpers/addHours';
 import { useGlobal } from 'hooks/Global';
 import { DayPicker } from 'react-day-picker';
+import { WorkDay } from 'models/types/company';
 import { hours } from '../../../../_mocks/hour';
 import 'react-day-picker/dist/style.css';
 import * as S from './styles';
+// import { getSchedulesByProfessionalId } from 'cases/schedule';
 
 const Schedule = () => {
   const { push } = useRouter();
@@ -78,54 +80,30 @@ const Schedule = () => {
     end: endOfMonth(new Date(date)),
   });
 
-  const setInitalDateWork = () => {
-    const daysNW: Array<Date> = [];
-    days.forEach(day => {
-      if (new Date(day) < new Date()) daysNW.push(day);
-      cart[cart.length - 1]?.professional?.days?.forEach(dw => {
-        if (dw.weekId === new Date(day).getDay()) daysNW.push(day);
-      });
-    });
-    setDate(daysNW.filter(d => new Date(d) > new Date())[0]);
-  };
-
   const daysNotWork = useCallback(() => {
     const daysNW: Array<Date> = [];
     days.forEach(day => {
       if (new Date(day) < new Date()) daysNW.push(day);
-      cart[cart.length - 1]?.professional?.days?.forEach(dw => {
+      cart[cart.length - 1]?.professional?.days?.forEach((dw: WorkDay) => {
         if (dw.weekId === new Date(day).getDay()) daysNW.push(day);
       });
     });
-
     return [
       ...days.filter(day => new Date(day) < new Date()),
       ...days.filter(day => !daysNW?.includes(day)),
     ];
   }, [date]);
 
-  // const initWorkDay = () => {
-  //   const daysNW = [];
-  //   days?.forEach(day => {
-  //     cart[cart.length - 1]?.professional?.days?.forEach(dw => {
-  //       if (dw.weekId === new Date(day).getDay()) daysNW.push(day);
-  //     });
-  //   });
-  //   return new Date(daysNW[0]);
-  // };
-
   const CalendarComponent = useCallback(
     () => (
       <DayPicker
-        // disableNavigation
+        disableNavigation
         mode="single"
         captionLayout="dropdown"
         month={date}
         selected={date}
+        // @ts-ignore
         onSelect={setDate}
-        // modifiersClassNames={{
-        //   selected: "selected-day"
-        // }}
         locale={ptBR}
         disabled={daysNotWork()}
       />
@@ -136,7 +114,19 @@ const Schedule = () => {
   const formattedDate = (date: Date) =>
     format(date, "'Dia' dd 'de' MMMM', às ' HH:mm'h'");
 
+  const setInitalDateWork = () => {
+    const daysNW: Array<Date> = [];
+    days.forEach(day => {
+      if (new Date(day) < new Date()) daysNW.push(day);
+      cart[cart.length - 1]?.professional?.days?.forEach((dw: WorkDay) => {
+        if (dw.weekId === new Date(day).getDay()) daysNW.push(day);
+      });
+    });
+    setDate(daysNW.filter(d => new Date(d) > new Date())[0]);
+  };
+
   useEffect(() => {
+    // const response = getSchedulesByProfessionalId(cart[cart.length - 1]?.professionalId);
     return () => setInitalDateWork();
   }, []);
 
