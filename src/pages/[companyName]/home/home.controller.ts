@@ -10,6 +10,7 @@ import { getAllServicesByCompanyId } from 'cases/service';
 import { Company as CompanyType } from 'models/types/company';
 import { Service } from 'models/service';
 import { getProductsByCompanyId } from 'cases/product';
+import { setTheme } from 'hooks/theme';
 import { getAllProfessionalsByCompanyId } from '../../../cases/professional/getProfessionalsByCompanyId';
 import { getCompanyByUrl } from '../../../cases/company/getCompanyByUrl';
 
@@ -51,6 +52,7 @@ export const useAppController = () => {
         // @ts-ignore
         ([id, data]) => Company({ ...data, id }),
       )[0];
+
       globalActions.setCompany(parsedCompanyData);
       if (typeof window !== 'undefined') {
         localStorage.setItem(
@@ -94,6 +96,7 @@ export const useAppController = () => {
   const OnloadPage = useCallback(async () => {
     const companyResponse = await getCompanyData();
     if (companyResponse) {
+      companyResponse.app.theme && setTheme(companyResponse.app.theme);
       await getServicesCompany(companyResponse.id);
       await getProfessionalsCompany(companyResponse.id);
       await getProductsCompany(companyResponse.id);

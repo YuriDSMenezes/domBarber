@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Product } from 'models/types/product';
 import { useRouter } from 'next/router';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import * as S from './styles';
 
@@ -20,19 +20,21 @@ const ProductCard: React.FC<ProductCardProps> = ({ list }) => {
       }
     }
 
-    return [{}];
+    return [];
   });
 
   const handleClickCard = (product: Product) => {
-    setCart((oldState: any) => [...oldState, { product }]);
+    const newProduct = {
+      product,
+      productId: product.id,
+    };
+    const newCart = [...cart, newProduct];
+    setCart(newCart);
     if (typeof window !== 'undefined') {
-      localStorage.setItem(
-        '@domBarber:cart',
-        JSON.stringify([...cart, product]),
-      );
+      localStorage.setItem('@domBarber:cart', JSON.stringify(newCart));
     }
     push({
-      pathname: `/ps1/chooseprofessional`,
+      pathname: `/ps1/cart`,
     });
   };
 

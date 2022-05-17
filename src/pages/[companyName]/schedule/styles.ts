@@ -102,7 +102,11 @@ export const Container = styled.div`
 `;
 
 export const CalendarContainer = styled.div`
+  width: 100%;
   margin: 30px 0 40px 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 `;
 
 interface TitleProps {
@@ -147,17 +151,16 @@ interface HourProps extends HTMLAttributes<HTMLDivElement> {
 }
 
 export const Hour = styled.div<HourProps>`
-  width: 70%;
   margin: 0 auto;
   height: 100%;
-  padding: 5px 0px;
+  padding: 5px;
   cursor: pointer;
   p {
     margin: 0;
   }
+  border-radius: 4px;
   &:hover {
     background: #ff9933;
-    border-radius: 4px;
     color: #000;
   }
   @media (min-width: 768px) {

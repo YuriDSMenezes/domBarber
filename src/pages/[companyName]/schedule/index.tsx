@@ -1,44 +1,37 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { useState, useCallback } from 'react';
+import { useCallback } from 'react';
 import MainLayout from 'layouts/MainLayout';
-import Calendar, { YearView } from 'react-calendar';
+import { YearView } from 'react-calendar';
 import { useRouter } from 'next/router';
-import { format, endOfMonth, eachDayOfInterval } from 'date-fns';
+import ptBR from 'date-fns/locale/pt-BR';
 import 'react-calendar/dist/Calendar.css';
-import { AddHours } from 'helpers/addHours';
 import { useGlobal } from 'hooks/Global';
-import { hours } from '../../../../_mocks/hour';
+import { DayPicker } from 'react-day-picker';
+import 'react-day-picker/dist/style.css';
 import * as S from './styles';
+import { useSchedules } from './schedules.controller';
+// import { getSchedulesByProfessionalId } from 'cases/schedule';
 
 const Schedule = () => {
   const { push } = useRouter();
   const {
     states: { company },
   } = useGlobal();
-  const [date, setDate] = useState<Date>(new Date());
-  const [hour, setHour] = useState<string>();
-  const [cart, setCart] = useState(() => {
-    if (typeof window !== 'undefined') {
-      const cart = localStorage.getItem('@domBarber:cart');
-
-      if (cart) {
-        return JSON.parse(cart);
-      }
-    }
-
-    return [];
-  });
-
-  const handleClickDate = (getMonth: Date) => {
-    setDate(getMonth);
-  };
-
-  const handleClickHour = (e: string) => {
-    const stringToNumber = parseInt(e, 10);
-    const sumHoursToDate = AddHours(date, stringToNumber);
-    setHour(e);
-    setDate(sumHoursToDate);
-  };
+  const {
+    states: { cart, date, hour: selectedHour, confirmedSchedules },
+    actions: {
+      setCart,
+      setDate,
+      handleSelectDate,
+      handleSelectHour,
+      daysNotWork,
+      formatExibitionDate,
+      TimesOfDayBasedInTimeService,
+      verifyWorkTime,
+      verifyIntervalTime,
+      itsScheduled,
+    },
+  } = useSchedules();
 
   const handleNext = (date: Date) => {
     const lastItem = cart[cart.length - 1];
@@ -47,75 +40,56 @@ const Schedule = () => {
     const newCart = [...cart, newItem];
     setCart(newCart);
     localStorage.setItem('@domBarber:cart', JSON.stringify(newCart));
-    // setCart((oldState: any) => [...oldState, item]);
-    // if (typeof window !== 'undefined') {
-    //   localStorage.setItem('@domBarber:cart', JSON.stringify([...cart, item]));
-    // }
   };
 
-  const YearCalendarComponent = useCallback(
-    () => (
-      <YearView
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
-        valueType="month"
-        minDate={new Date()}
-        value={date}
-        activeStartDate={date}
-        onClick={e => handleClickDate(e)}
-        locale="pt-BR"
-      />
-    ),
-    [date],
+  const YearCalendarComponent = () => (
+    <YearView
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      valueType="month"
+      minDate={new Date()}
+      value={date}
+      activeStartDate={new Date()}
+      onClick={e => handleSelectDate(e)}
+      locale="pt-BR"
+    />
   );
 
-  const days = eachDayOfInterval({
-    start: new Date(),
-    end: endOfMonth(new Date()),
-  });
-
-  const daysNotWork = () => {
-    const daysNW = [];
-    days.forEach(day => {
-      cart[cart.length - 1]?.professional?.days.forEach(dw => {
-        if (dw.weekId === new Date(day).getDay()) daysNW.push(day);
-      });
-    });
-    return days.filter(day => !daysNW.includes(day));
-  };
-
-  const initWorkDay = () => {
-    const daysNW = [];
-    days.forEach(day => {
-      cart[cart.length - 1]?.professional?.days.forEach(dw => {
-        if (dw.weekId === new Date(day).getDay()) daysNW.push(day);
-      });
-    });
-    return new Date(daysNW[0]);
-  };
-  // REFATORAR, AJUSTAR O DISPLAY NONE E RESOLVER O DIA DE HOJE QUE FICA MARCADO COMO HABILITADO
   const CalendarComponent = useCallback(
     () => (
-      <Calendar
-        value={date}
-        locale="pt-BR"
-        onClickDay={e => setDate(e)}
-        minDate={initWorkDay()}
-        tileDisabled={({ date, view }) =>
-          view === 'month' && // Block day tiles only
-          daysNotWork().some(
-            disabledDate =>
-              date.getFullYear() === disabledDate.getFullYear() &&
-              date.getMonth() === disabledDate.getMonth() &&
-              date.getDate() === disabledDate.getDate(),
-          )
-        }
+      <DayPicker
+        disableNavigation
+        mode="single"
+        captionLayout="dropdown"
+        month={date}
+        selected={date}
+        // @ts-ignore
+        onSelect={setDate}
+        locale={ptBR}
+        disabled={daysNotWork()}
       />
     ),
     [date],
   );
 
-  const formattedDate = format(date, "'Dia' dd 'de' MMMM', às ' HH:mm'h'");
+  const HoursComponent = useCallback(
+    (): any =>
+      TimesOfDayBasedInTimeService(cart[cart.length - 1]?.service?.runtime).map(
+        (hour: Date) =>
+          verifyWorkTime(hour, cart[cart.length - 1]?.service?.runtime) &&
+          verifyIntervalTime(hour, cart[cart.length - 1]?.service?.runtime) &&
+          itsScheduled(hour) ? (
+            <S.Hour
+              onClick={() => handleSelectHour(hour.toISOString())}
+              key={hour.getTime()}
+              active={selectedHour === hour.toISOString()}
+            >
+              <p>{hour.toLocaleTimeString('pt-br', { timeStyle: 'short' })}</p>
+            </S.Hour>
+          ) : null,
+      ),
+    [selectedHour, date, confirmedSchedules],
+  );
 
   return (
     <MainLayout>
@@ -129,15 +103,7 @@ const Schedule = () => {
         </S.CalendarContainer>
         <S.Description>Escolha um horário disponível</S.Description>
         <S.HoursContainer>
-          {hours.map((getHour: string) => (
-            <S.Hour
-              onClick={() => handleClickHour(getHour)}
-              key={getHour}
-              active={hour === getHour}
-            >
-              <p>{getHour}</p>
-            </S.Hour>
-          ))}
+          <HoursComponent />
         </S.HoursContainer>
         <S.Row>
           <S.ServiceContainer>
@@ -185,7 +151,7 @@ const Schedule = () => {
             </S.Service>
           </S.ServiceContainer>
           <S.NextContainer>
-            <S.Date>{formattedDate}</S.Date>
+            <S.Date>{formatExibitionDate(date, ptBR)}</S.Date>
             <S.NextButton
               onClick={() => {
                 handleNext(date);

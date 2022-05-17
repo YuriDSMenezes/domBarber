@@ -7,11 +7,14 @@ export const Content = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
-  padding: 0 20px 20px 20px;
+  padding: 0 10px 20px 10px;
 `;
 
 export const ContainerImgConfirmation = styled.div`
-  margin-top: 20px;
+  img {
+    width: 80px;
+    height: 80px;
+  }
 `;
 
 export const Title = styled.span`
@@ -20,7 +23,6 @@ export const Title = styled.span`
   line-height: 19px;
   text-align: center;
   color: #ffffff;
-  margin-top: 20px;
 `;
 
 export const MessageText = styled.span`
@@ -29,16 +31,15 @@ export const MessageText = styled.span`
   line-height: 16px;
   text-align: center;
   color: #ffffff;
-  width: 60%;
-  margin-top: 10px;
+  width: 90%;
 `;
 
 export const AppointmentsContainer = styled.div`
   position: relative;
   width: 100%;
-  height: 40%;
+  max-height: 220px;
   overflow-y: auto;
-  margin-bottom: 10px;
+  margin: 10px 0;
 `;
 
 export const TotalAppointmentContainer = styled.div`
@@ -69,5 +70,4 @@ export const QuestionUserText = styled.span`
   line-height: 16px;
   text-align: center;
   color: #ffffff;
-  margin-bottom: 10px;
 `;

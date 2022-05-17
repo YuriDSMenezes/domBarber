@@ -41,10 +41,11 @@ export const MonthText = styled.span<AppointmentProps>`
 
 export const DayNumber = styled.span<AppointmentProps>`
   font-weight: 500;
-  font-size: 20px;
+  font-size: 36px;
   line-height: 23px;
   text-align: center;
-  color: ${props => (props.theme === 'light' ? '#1c1c1c' : '#fff')};
+  color: var(--color-primary);
+  margin: 10px 0;
 `;
 
 export const Time = styled.span<AppointmentProps>`
@@ -58,7 +59,6 @@ export const Time = styled.span<AppointmentProps>`
 export const ContentAppointmentDescription = styled.div`
   display: flex;
   width: 70%;
-  padding: 0px 14px;
 `;
 
 export const ContentAppointmentDescriptionInformationContainer = styled.div`

@@ -7,7 +7,7 @@ interface StyleProps {
 }
 
 export const Container = styled.button<StyleProps>`
-  background: ${props => (props.white ? '#fff' : '#ff9933')};
+  background: ${props => (props.white ? '#fff' : 'var(--color-primary)')};
   border-radius: 10px;
   border: none;
   width: 100%;
@@ -22,7 +22,7 @@ export const Container = styled.button<StyleProps>`
   line-height: 14px;
 
   @media (max-width: 768px) {
-    height: 32px;
+    height: 41px;
   }
 
   ${props =>

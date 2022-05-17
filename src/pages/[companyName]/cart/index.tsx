@@ -22,9 +22,6 @@ const Cart = () => {
   } = useGlobal();
   const [openCollapse, setOpenCollapse] = useState(true);
   const [openModal, setOpenModal] = useState<boolean>(false);
-  const [service, setService] = useState<Service>();
-  const [professional, setProfessional] = useState<Professional>();
-  const [date, setDate] = useState<string>();
   const isCombo = false;
   const [cart, setCart] = useState(() => {
     if (typeof window !== 'undefined') {
@@ -38,19 +35,18 @@ const Cart = () => {
     return [];
   });
 
-  const handleClickCard = (item: any) => {
-    setCart((oldState: any) => [...oldState, item]);
+  const handleClickService = () => {
+    const hasService = {};
+    cart.push(hasService);
     if (typeof window !== 'undefined') {
-      localStorage.setItem('@domBarber:cart', JSON.stringify([...cart, item]));
+      localStorage.setItem('@domBarber:cart', JSON.stringify(cart));
     }
-    push({
-      pathname: `/ps1/scheduleconfirmed`,
-    });
   };
 
   const handleOpenCollapse = () => setOpenCollapse(!openCollapse);
   const handleOpenModal = () => setOpenModal(!openModal);
   const handleCloseModal = () => setOpenModal(false);
+
   return (
     <MainLayout>
       <Modal show={openModal}>
@@ -107,16 +103,18 @@ const Cart = () => {
                 {openCollapse && (
                   <ItemCollapse
                     professional={cart[cart.length - 1]?.professional}
-                    services={cart[cart.length - 1]?.service}
+                    service={cart[cart.length - 1]?.service}
                     date={cart[cart.length - 1]?.start}
                   />
                 )}
               </S.ItemContainer>
             ) : (
-              cart.map((cItem, index) => (
+              cart.map((cItem: any, index: number) => (
                 <ItemCollapse
+                  key={index}
                   professional={cItem?.professional}
                   service={cItem?.service}
+                  product={cItem?.product}
                   date={cItem?.start || ''}
                 />
               ))
@@ -126,7 +124,8 @@ const Cart = () => {
               <S.LargeText>
                 {currencyFormat({
                   value: cart.reduce(
-                    (acc, curr) => (acc += curr?.service?.price),
+                    (acc: number, curr: any) =>
+                      (acc += curr?.service?.price || curr?.product?.price),
                     0,
                   ),
                   currencyPrefix: 'R$',
@@ -150,12 +149,13 @@ const Cart = () => {
               <Button
                 white
                 text="Adicionar Serviço"
-                onClick={() =>
+                onClick={() => {
+                  handleClickService();
                   push({
                     pathname: `/[companyName]/newservice`,
                     query: { companyName: company?.app?.url },
-                  })
-                }
+                  });
+                }}
               />
             </S.Row>
             <Button

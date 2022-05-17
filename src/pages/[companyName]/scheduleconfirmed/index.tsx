@@ -1,10 +1,11 @@
 import AppointmentCard from 'components/AppointmentCard';
 import Button from 'components/Button';
+import { currencyFormat } from 'helpers';
 import { useGlobal } from 'hooks/Global';
 import BottomSheetFixedLayout from 'layouts/BottomSheetFixedLayout';
 import MainLayout from 'layouts/MainLayout';
 import { useRouter } from 'next/router';
-import React from 'react';
+import React, { useState } from 'react';
 import { OutlinedCheckIcon } from '../../../../public/assets';
 
 import * as S from './styles';
@@ -14,6 +15,18 @@ const scheduleconfirmed: React.FC = () => {
   const {
     states: { company },
   } = useGlobal();
+
+  const [cart, setCart] = useState(() => {
+    if (typeof window !== 'undefined') {
+      const cart = localStorage.getItem('@domBarber:cart');
+
+      if (cart) {
+        return JSON.parse(cart);
+      }
+    }
+
+    return [];
+  });
 
   return (
     <MainLayout>
@@ -25,46 +38,38 @@ const scheduleconfirmed: React.FC = () => {
           <S.Title>Agendamento Confirmado!</S.Title>
           <S.MessageText>Você pode realizar o pagamento no Local</S.MessageText>
           <S.AppointmentsContainer>
-            <AppointmentCard
-              appointment={{
-                date: new Date(),
-                description: 'Corte Simples',
-                value: 19.9,
-                points: 20,
-                paymentStatus: 'Pagamento Pendente',
-                professional: 'Paulo R.',
-                avatar:
-                  'https://images.pexels.com/photos/1516680/pexels-photo-1516680.jpeg?auto=compress&cs=tinysrgb&h=750&w=1260',
-              }}
-            />
-            <AppointmentCard
-              appointment={{
-                date: new Date(),
-                description: 'Corte Simples',
-                value: 19.9,
-                points: 20,
-                paymentStatus: 'Pagamento Pendente',
-                professional: 'Paulo R.',
-                avatar:
-                  'https://images.pexels.com/photos/1516680/pexels-photo-1516680.jpeg?auto=compress&cs=tinysrgb&h=750&w=1260',
-              }}
-            />
-            <AppointmentCard
-              appointment={{
-                date: new Date(),
-                description: 'Corte Simples',
-                value: 19.9,
-                points: 20,
-                paymentStatus: 'Pagamento Pendente',
-                professional: 'Paulo R.',
-                avatar:
-                  'https://images.pexels.com/photos/1516680/pexels-photo-1516680.jpeg?auto=compress&cs=tinysrgb&h=750&w=1260',
-              }}
-            />
+            {cart.map(itemCart => (
+              <AppointmentCard
+                appointment={{
+                  date: itemCart?.start ? itemCart?.start : new Date(),
+                  description:
+                    itemCart?.service?.description ||
+                    itemCart?.product?.description,
+                  value: itemCart?.service?.price || itemCart?.product?.price,
+                  points:
+                    itemCart?.service?.pointsGenerated ||
+                    itemCart?.product?.pointsGenerated,
+                  paymentStatus: 'Pagamento Pendente',
+                  professional:
+                    itemCart?.profissional?.name ||
+                    itemCart?.profissional?.name,
+                  avatar: itemCart?.professional?.image,
+                }}
+              />
+            ))}
           </S.AppointmentsContainer>
           <S.TotalAppointmentContainer>
             <S.TotalText>Total</S.TotalText>
-            <S.TotalValue>39,90</S.TotalValue>
+            <S.TotalValue>
+              {currencyFormat({
+                value: cart.reduce(
+                  (acc, curr) =>
+                    (acc += curr?.service?.price || curr?.product?.price),
+                  0,
+                ),
+                currencyPrefix: 'R$',
+              })}
+            </S.TotalValue>
           </S.TotalAppointmentContainer>
           <S.QuestionUserText>Deseja pagar Agora?</S.QuestionUserText>
           <Button
