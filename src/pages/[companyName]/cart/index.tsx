@@ -122,7 +122,7 @@ const Cart = () => {
                 )}
               </S.ItemContainer>
             ) : (
-              cart.map((cItem, index: number) => (
+              cart.map((cItem: any, index: number) => (
                 <ItemCollapse
                   key={index}
                   professional={cItem?.professional}
@@ -137,7 +137,7 @@ const Cart = () => {
               <S.LargeText>
                 {currencyFormat({
                   value: cart.reduce(
-                    (acc, curr) =>
+                    (acc: number, curr: any) =>
                       (acc += curr?.service?.price || curr?.product?.price),
                     0,
                   ),

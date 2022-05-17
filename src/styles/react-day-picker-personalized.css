@@ -37,3 +37,7 @@
 .rdp-months {
   justify-content: center !important;
 }
+
+.rdp {
+  margin: 0 !important;
+}
