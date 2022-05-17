@@ -4,11 +4,11 @@ import ServiceCard from 'components/ServiceCard';
 import { Service } from 'models/types/service';
 import * as S from './styles';
 
-interface ProductsProps {
+interface ServiceProps {
   list: Array<Service>;
 }
 
-const KitsAndCombosTabOption: React.FC<ProductsProps> = ({ list }) => {
+const KitsAndCombosTabOption: React.FC<ServiceProps> = ({ list }) => {
   return (
     <S.Container>
       <S.ServicesContainer>

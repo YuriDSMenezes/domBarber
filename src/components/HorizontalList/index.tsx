@@ -33,7 +33,7 @@ export const HorizontalList = () => {
     },
     {
       item: 'Profissionais',
-      url: '/chooseprofessional',
+      url: '/chooseprofessionals',
     },
   ];
 

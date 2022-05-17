@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React from 'react';
-import { getDay, getMonth, getDate, getHours, getMinutes } from 'date-fns';
 import * as S from './styles';
 
 interface AppointmentCardProps {
@@ -49,18 +48,17 @@ const AppointmentCard: React.FC<AppointmentCardProps> = ({
   appointment,
   theme,
 }) => {
+  const formatedDate = new Date(appointment.date);
   return (
     <S.Container>
       <S.ContainerDateTime>
-        <S.DayText theme={theme}>{`${
-          stringDays[getDay(appointment.date)]
-        },`}</S.DayText>
+        <S.DayText theme={theme}>{stringDays[formatedDate.getDay()]}</S.DayText>
         <S.MonthText theme={theme}>
-          {stringMonths[getMonth(appointment.date)]}
+          {stringDays[formatedDate.getMonth()]}
         </S.MonthText>
-        <S.DayNumber theme={theme}>{getDate(appointment.date)}</S.DayNumber>
+        <S.DayNumber theme={theme}>{formatedDate.getDate()}</S.DayNumber>
         <S.Time theme={theme}>
-          {`${getHours(appointment.date)}:${getMinutes(appointment.date)}`}
+          {`${formatedDate.getHours()}:${formatedDate.getMinutes()}`}
         </S.Time>
       </S.ContainerDateTime>
       <S.ContentAppointmentDescription>
@@ -69,7 +67,10 @@ const AppointmentCard: React.FC<AppointmentCardProps> = ({
             {appointment.description}
           </S.AppointmentDescription>
           <S.AppointmentValue theme={theme}>
-            {currencyFormat({ value: appointment.value, currencyPrefix: 'R$' })}
+            {currencyFormat({
+              value: Number(appointment.value),
+              currencyPrefix: 'R$',
+            })}
           </S.AppointmentValue>
           <S.AppointmentPoints theme={theme}>
             {`${appointment.points} Pontos`}
