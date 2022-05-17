@@ -22,9 +22,6 @@ const Cart = () => {
   } = useGlobal();
   const [openCollapse, setOpenCollapse] = useState(true);
   const [openModal, setOpenModal] = useState<boolean>(false);
-  const [service, setService] = useState<Service>();
-  const [professional, setProfessional] = useState<Professional>();
-  const [date, setDate] = useState<string>();
   const isCombo = false;
   const [cart, setCart] = useState(() => {
     if (typeof window !== 'undefined') {
@@ -37,16 +34,6 @@ const Cart = () => {
 
     return [];
   });
-
-  const handleClickCard = (item: any) => {
-    setCart((oldState: any) => [...oldState, item]);
-    if (typeof window !== 'undefined') {
-      localStorage.setItem('@domBarber:cart', JSON.stringify([...cart, item]));
-    }
-    push({
-      pathname: `/ps1/scheduleconfirmed`,
-    });
-  };
 
   const handleClickService = () => {
     const hasService = {};

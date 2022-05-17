@@ -22,7 +22,7 @@ export const Container = styled.button<StyleProps>`
   line-height: 14px;
 
   @media (max-width: 768px) {
-    height: 32px;
+    height: 41px;
   }
 
   ${props =>
