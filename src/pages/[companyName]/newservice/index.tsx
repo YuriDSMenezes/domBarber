@@ -22,7 +22,7 @@ const newservice: React.FC = () => {
       description: 'Cabelo',
       renderComponentDesktop: (
         <PaginatedItems
-          itemsPerPage={2}
+          itemsPerPage={5}
           items={services}
           component={HairTabOption}
         />

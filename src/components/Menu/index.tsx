@@ -18,9 +18,6 @@ export const Menu = () => {
   const { pathname, back } = useRouter();
 
   const handleBack = () => {
-    if (typeof window !== 'undefined') {
-      localStorage.removeItem('@domBarber:cart');
-    }
     back();
   };
 

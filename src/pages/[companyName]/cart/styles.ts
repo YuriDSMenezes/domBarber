@@ -31,6 +31,7 @@ export const OrangeTitle = styled.div`
   color: #ff9933;
   font-weight: 500;
   font-size: ${ConvertToRem(14)};
+  margin-bottom: 5px;
 `;
 
 export const MediumText = styled.div`

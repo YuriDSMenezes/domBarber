@@ -1,14 +1,14 @@
 import ProductCard from 'components/productCard';
-import { Service } from 'models/types/service';
+import { Product } from 'models/types/product';
 import React from 'react';
 
 import * as S from './styles';
 
-interface ProductsProps {
-  list: Array<Service>;
+interface ProductProps {
+  list: Array<Product>;
 }
 
-const BarberShopTabOption: React.FC<ProductsProps> = ({ list }) => {
+const BarberShopTabOption: React.FC<ProductProps> = ({ list }) => {
   return (
     <S.Container>
       <S.ProductsContainer>
