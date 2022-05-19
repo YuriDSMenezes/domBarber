@@ -6,6 +6,7 @@ import { NextPage } from 'next';
 import { useGlobal } from 'hooks/Global';
 import { useRouter } from 'next/router';
 import { CarouselService } from 'components/CarouselServices';
+import SEO from 'components/SEO';
 import { RightIcon } from '../../../../public/assets';
 import * as S from './styles';
 import { useAppController } from './home.controller';
@@ -21,6 +22,7 @@ const Home: NextPage = () => {
 
   return (
     <MainLayout>
+      <SEO company={company} />
       <S.Container>
         <S.TitleContainer>
           <S.Title>Seja Bem-Vindo,</S.Title>
