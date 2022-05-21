@@ -49,10 +49,12 @@ export const useSchedules = () => {
     setDate(newDate);
   };
 
-  const days = eachDayOfInterval({
-    start: startOfMonth(new Date(date)),
-    end: endOfMonth(new Date(date)),
-  });
+  const days =
+    date &&
+    eachDayOfInterval({
+      start: startOfMonth(date),
+      end: endOfMonth(date),
+    });
 
   const daysNotWork = useCallback(() => {
     const daysNW: Array<Date> = [];
@@ -77,7 +79,7 @@ export const useSchedules = () => {
       });
     });
     setDate(daysNW.filter(d => new Date(d) > new Date())[0]);
-    setHour(daysNW.filter(d => new Date(d) > new Date())[0].toISOString());
+    setHour(daysNW.filter(d => new Date(d) > new Date())[0]?.toISOString());
   };
 
   const formatExibitionDate = (date: Date, locale: Locale) =>
@@ -199,10 +201,11 @@ export const useSchedules = () => {
   };
 
   useEffect(() => {
-    return () => {
-      getScheduledTimes();
-      setInitalDateWork();
-    };
+    getScheduledTimes();
+  }, []);
+
+  useEffect(() => {
+    return () => setInitalDateWork();
   }, []);
 
   return {

@@ -45,18 +45,35 @@ export const ItemCollapse = ({
   ];
   return (
     <S.CollapseContainer>
-      {service && (
-        <S.CollapseDate>
-          <S.SmallText>
-            {stringDays[formatedDate.getDay()]},{' '}
-            {stringMonths[formatedDate.getMonth()]}
-          </S.SmallText>
-          <S.CollapseDay>{formatedDate.getDate()}</S.CollapseDay>
-          <S.LargeText>
-            {formatedDate.toLocaleTimeString('pt-br', { timeStyle: 'short' })}
-          </S.LargeText>
-        </S.CollapseDate>
-      )}
+      <S.CollapseDate>
+        <S.SmallText>
+          {
+            stringDays[
+              date ? formatedDate.getDay() : product ? new Date().getDay() : -1
+            ]
+          }
+          ,{' '}
+          {
+            stringMonths[
+              date
+                ? formatedDate.getMonth()
+                : product
+                ? new Date().getMonth()
+                : -1
+            ]
+          }
+        </S.SmallText>
+        <S.CollapseDay>
+          {date ? formatedDate.getDate() : product ? new Date().getDate() : ''}
+        </S.CollapseDay>
+        <S.LargeText>
+          {date
+            ? formatedDate.toLocaleTimeString('pt-br', { timeStyle: 'short' })
+            : product
+            ? new Date().toLocaleTimeString('pt-br', { timeStyle: 'short' })
+            : ''}
+        </S.LargeText>
+      </S.CollapseDate>
       <S.CollapseDescription>
         <S.OrangeTitle>
           {service?.description || product?.description}

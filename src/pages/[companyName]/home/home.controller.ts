@@ -10,8 +10,8 @@ import { getAllServicesByCompanyId } from 'cases/service';
 import { Company as CompanyType } from 'models/types/company';
 import { Service } from 'models/service';
 import { getProductsByCompanyId } from 'cases/product';
-import { setTheme } from 'hooks/theme';
-import { ManifestConfig } from 'hooks/manifestConfig';
+import { setTheme } from 'hooks/Theme';
+import { ManifestConfig } from 'hooks/ManifestConfig';
 import { getAllProfessionalsByCompanyId } from '../../../cases/professional/getProfessionalsByCompanyId';
 import { getCompanyByUrl } from '../../../cases/company/getCompanyByUrl';
 

@@ -115,7 +115,7 @@ const Cart = () => {
                   professional={cItem?.professional}
                   service={cItem?.service}
                   product={cItem?.product}
-                  date={cItem?.start || ''}
+                  date={cItem?.start || undefined}
                 />
               ))
             )}
