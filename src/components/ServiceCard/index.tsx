@@ -27,9 +27,7 @@ const ServiceCard: ComponentType<ServiceCardProps> = ({ list }) => {
   });
 
   const handleClickCard = (service: Service) => {
-    const lastItem = cart.pop();
     const newService = {
-      ...lastItem,
       service,
       serviceId: service.id,
     };
