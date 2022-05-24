@@ -1,6 +1,6 @@
 import { ConvertToRem } from 'helpers';
 import { HTMLAttributes } from 'react';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 export const Container = styled.div`
   height: 100%;
@@ -148,6 +148,7 @@ export const HoursContainer = styled.div`
 
 interface HourProps extends HTMLAttributes<HTMLDivElement> {
   active?: boolean;
+  disabled?: boolean;
 }
 
 export const Hour = styled.div<HourProps>`
@@ -159,10 +160,22 @@ export const Hour = styled.div<HourProps>`
     margin: 0;
   }
   border-radius: 4px;
-  &:hover {
-    background: #ff9933;
-    color: #000;
-  }
+
+  ${props =>
+    !props.disabled &&
+    css`
+      &:hover {
+        background: #ff9933;
+        color: #000;
+      }
+    `}
+
+  ${props =>
+    props.disabled &&
+    css`
+      color: #474747;
+    `}
+
   @media (min-width: 768px) {
     width: 30%;
   }

@@ -28,13 +28,10 @@ const chooseprofessionals: React.FC = () => {
   });
 
   const handleClickCard = (professional: Professional) => {
-    const lastItem = cart.pop();
-    const newProfessional = {
-      ...lastItem,
-      professional,
-      professionalId: professional.id,
-    };
-    const newCart = [...cart, newProfessional];
+    const newCart = [
+      ...cart,
+      { professional, professionalId: professional.id },
+    ];
     setCart(newCart);
     if (typeof window !== 'undefined') {
       localStorage.setItem('@domBarber:cart', JSON.stringify(newCart));

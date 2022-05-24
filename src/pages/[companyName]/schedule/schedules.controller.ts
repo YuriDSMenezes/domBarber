@@ -1,3 +1,4 @@
+import { useGlobal } from 'hooks/Global';
 import { getSchedulesByProfessionalId } from 'cases/schedule';
 import {
   addDays,
@@ -16,8 +17,13 @@ import { WorkDay } from 'models/types/company';
 import { useCallback, useEffect, useState } from 'react';
 import { Schedule } from 'models/schedule';
 import { getSchedulesByProfessionalIdAndServiceId } from 'cases/schedule/getSchedulesByProfessionalIdAndServiceId';
+import { firestoreDb } from 'services/FirestoreDatabase';
 
 export const useSchedules = () => {
+  const {
+    states: { company },
+  } = useGlobal();
+  const [isSelectedFirstHour, setIsSelectedFirstHour] = useState(false);
   const [date, setDate] = useState<Date>(new Date());
   const [hour, setHour] = useState<string>();
   const [cart, setCart] = useState(() => {
@@ -107,6 +113,34 @@ export const useSchedules = () => {
     return times;
   };
 
+  const verifyOpeningCompanyTime = useCallback(
+    (date: Date) => {
+      const rulesOfDay = company?.openingHours?.filter(
+        (d: WorkDay) => d.weekId === date.getDay(),
+      )[0];
+
+      const initOpen = new Date(
+        date.getFullYear(),
+        date.getMonth(),
+        date.getDate(),
+        Number(rulesOfDay?.init.split(':')[0]),
+        Number(rulesOfDay?.init.split(':')[1]),
+      );
+
+      const endOpen = new Date(
+        date.getFullYear(),
+        date.getMonth(),
+        date.getDate(),
+        Number(rulesOfDay?.end.split(':')[0]),
+        Number(rulesOfDay?.end.split(':')[1]),
+      );
+
+      if (isAfter(date, initOpen) && isBefore(date, endOpen)) return true;
+      return false;
+    },
+    [hour],
+  );
+
   const verifyWorkTime = useCallback(
     (date: Date, workTime: number) => {
       const rulesOfDay = cart[cart.length - 1]?.professional?.days?.filter(
@@ -173,35 +207,59 @@ export const useSchedules = () => {
     [hour],
   );
 
-  const getScheduledTimes = async () => {
-    const response = await getSchedulesByProfessionalIdAndServiceId(
-      cart[cart.length - 1]?.professionalId,
-      cart[cart.length - 1]?.serviceId,
-    );
-    const parsedSchedulesData = Object.entries(response as {}).map(
-      // @ts-ignore
-      ([id, data]) => Schedule({ ...data, id }),
-    );
-    const confirmedSchedules = parsedSchedulesData.map(
-      // @ts-ignore
-      schedule => new Date(schedule.start.seconds * 1000),
-    );
-    setConfirmedSchedules(confirmedSchedules);
-    return confirmedSchedules;
-  };
+  // const getScheduledTimes = async () => {
+  //   const response = await getSchedulesByProfessionalIdAndServiceId(
+  //     cart[cart.length - 1]?.professionalId,
+  //     cart[cart.length - 1]?.serviceId,
+  //   );
+  //   const parsedSchedulesData = Object.entries(response as {}).map(
+  //     // @ts-ignore
+  //     ([id, data]) => Schedule({ ...data, id }),
+  //   );
+  //   const confirmedSchedules = parsedSchedulesData.map(
+  //     // @ts-ignore
+  //     schedule => new Date(schedule.start.seconds * 1000),
+  //   );
+  //   setConfirmedSchedules(confirmedSchedules);
+  //   return confirmedSchedules;
+  // };
 
-  const itsScheduled = (date: Date) => {
-    let isScheduled = true;
-    confirmedSchedules.forEach(schedule => {
-      if (date.toISOString() === schedule.toISOString()) {
-        isScheduled = false;
-      }
-    });
-    return isScheduled;
-  };
+  const itsScheduled = useCallback(
+    (date: Date) => {
+      let isScheduled = false;
+      confirmedSchedules.forEach(schedule => {
+        if (date.toISOString() === schedule.toISOString()) {
+          isScheduled = true;
+        }
+      });
+      return isScheduled;
+    },
+    [confirmedSchedules],
+  );
 
   useEffect(() => {
-    getScheduledTimes();
+    // getScheduledTimes();
+    firestoreDb.companySchedules.getSyncWhere({
+      wheres: [
+        // @ts-ignore
+        ['professionalId', '==', cart[cart.length - 1]?.professionalId],
+        // @ts-ignore
+        ['serviceIds', 'array-contains', cart[cart.length - 1]?.serviceId],
+      ],
+      callback: response => {
+        const parsedSchedulesData = Object.entries(
+          response?.data?.docs as {},
+        ).map(
+          // @ts-ignore
+          ([id, data]) => Schedule({ ...data, id }),
+        );
+        const confirmedSchedules = parsedSchedulesData.map(
+          // @ts-ignore
+          schedule => new Date(schedule.start?.seconds * 1000),
+        );
+        setConfirmedSchedules(confirmedSchedules);
+      },
+    });
   }, []);
 
   useEffect(() => {
@@ -222,7 +280,9 @@ export const useSchedules = () => {
       verifyWorkTime,
       verifyIntervalTime,
       itsScheduled,
+      verifyOpeningCompanyTime,
+      setIsSelectedFirstHour,
     },
-    states: { date, hour, cart, confirmedSchedules },
+    states: { date, hour, cart, confirmedSchedules, isSelectedFirstHour },
   };
 };
