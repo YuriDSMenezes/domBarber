@@ -18,7 +18,13 @@ const Schedule = () => {
     states: { company },
   } = useGlobal();
   const {
-    states: { cart, date, hour: selectedHour, confirmedSchedules },
+    states: {
+      cart,
+      date,
+      hour: selectedHour,
+      confirmedSchedules,
+      isSelectedFirstHour,
+    },
     actions: {
       setCart,
       setDate,
@@ -27,9 +33,11 @@ const Schedule = () => {
       daysNotWork,
       formatExibitionDate,
       TimesOfDayBasedInTimeService,
+      verifyOpeningCompanyTime,
       verifyWorkTime,
       verifyIntervalTime,
       itsScheduled,
+      setIsSelectedFirstHour,
     },
   } = useSchedules();
 
@@ -69,20 +77,53 @@ const Schedule = () => {
         disabled={daysNotWork()}
       />
     ),
-    [date],
+    [date, confirmedSchedules],
   );
 
   const HoursComponent = useCallback(
     (): any =>
       TimesOfDayBasedInTimeService(cart[cart.length - 1]?.service?.runtime).map(
         (hour: Date) =>
-          verifyWorkTime(hour, cart[cart.length - 1]?.service?.runtime) &&
-          verifyIntervalTime(hour, cart[cart.length - 1]?.service?.runtime) &&
-          itsScheduled(hour) ? (
+          verifyOpeningCompanyTime(hour) ? (
             <S.Hour
-              onClick={() => handleSelectHour(hour.toISOString())}
+              onClick={() => {
+                if (
+                  !itsScheduled(hour) &&
+                  verifyWorkTime(
+                    hour,
+                    cart[cart.length - 1]?.service?.runtime,
+                  ) &&
+                  verifyIntervalTime(
+                    hour,
+                    cart[cart.length - 1]?.service?.runtime,
+                  )
+                ) {
+                  handleSelectHour(hour.toISOString());
+                  setIsSelectedFirstHour(true);
+                }
+              }}
               key={hour.getTime()}
-              active={selectedHour === hour.toISOString()}
+              active={
+                selectedHour === hour.toISOString() &&
+                !itsScheduled(hour) &&
+                verifyWorkTime(hour, cart[cart.length - 1]?.service?.runtime) &&
+                verifyIntervalTime(
+                  hour,
+                  cart[cart.length - 1]?.service?.runtime,
+                )
+              }
+              disabled={
+                itsScheduled(hour) ||
+                !verifyOpeningCompanyTime(hour) ||
+                !verifyWorkTime(
+                  hour,
+                  cart[cart.length - 1]?.service?.runtime,
+                ) ||
+                !verifyIntervalTime(
+                  hour,
+                  cart[cart.length - 1]?.service?.runtime,
+                )
+              }
             >
               <p>{hour.toLocaleTimeString('pt-br', { timeStyle: 'short' })}</p>
             </S.Hour>
@@ -151,7 +192,9 @@ const Schedule = () => {
             </S.Service>
           </S.ServiceContainer>
           <S.NextContainer>
-            <S.Date>{formatExibitionDate(date, ptBR)}</S.Date>
+            <S.Date>
+              {isSelectedFirstHour && formatExibitionDate(date, ptBR)}
+            </S.Date>
             <S.NextButton
               onClick={() => {
                 handleNext(date);

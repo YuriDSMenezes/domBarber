@@ -18,7 +18,9 @@ const ServiceCard: ComponentType<ServiceCardProps> = ({ list }) => {
       if (cart) {
         const parsedCart = JSON.parse(cart);
         const lastItemCart = parsedCart[parsedCart.length - 1];
-        lastItemCart.professionalId && setHasProfessional(true);
+        lastItemCart.professionalId &&
+          !lastItemCart.serviceId &&
+          setHasProfessional(true);
         return parsedCart;
       }
     }
@@ -27,14 +29,28 @@ const ServiceCard: ComponentType<ServiceCardProps> = ({ list }) => {
   });
 
   const handleClickCard = (service: Service) => {
-    const newService = {
-      service,
-      serviceId: service.id,
-    };
-    const newCart = [...cart, newService];
-    setCart(newCart);
-    if (typeof window !== 'undefined') {
-      localStorage.setItem('@domBarber:cart', JSON.stringify(newCart));
+    if (!hasProfessional) {
+      const newService = {
+        service,
+        serviceId: service.id,
+      };
+      const newCart = [...cart, newService];
+      setCart(newCart);
+      if (typeof window !== 'undefined') {
+        localStorage.setItem('@domBarber:cart', JSON.stringify(newCart));
+      }
+    } else {
+      const lastItemCart = cart[cart.length - 1];
+      const newLastItemCart = {
+        ...lastItemCart,
+        service,
+        serviceId: service.id,
+      };
+      cart.pop();
+      const newCart = [...cart, newLastItemCart];
+      if (typeof window !== 'undefined') {
+        localStorage.setItem('@domBarber:cart', JSON.stringify(newCart));
+      }
     }
     push(
       hasProfessional
