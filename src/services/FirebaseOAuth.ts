@@ -24,8 +24,8 @@ export const signInWithGoogle = () =>
       const token = credential?.accessToken;
       const { user } = result;
       if (typeof window !== 'undefined') {
-        localStorage.setItem('token', JSON.stringify(token));
-        localStorage.setItem('user', JSON.stringify(user));
+        localStorage.setItem('@domBarber:token', JSON.stringify(token));
+        localStorage.setItem('@domBarber:user', JSON.stringify(user));
       }
       if (token) {
         cookie.set('user-cookie', token, {
