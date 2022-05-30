@@ -10,9 +10,9 @@ export const Container = styled.div`
   padding: 10px 0;
   border-bottom: 2px solid #535353;
 
-  &:nth-last-child(1) {
+  /* &:nth-last-child(1) {
     border-bottom: none;
-  }
+  } */
 `;
 
 export const ContainerDateTime = styled.div`

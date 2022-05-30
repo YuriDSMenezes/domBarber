@@ -1,3 +1,7 @@
+import { getClientByUserIdAndCompanyId } from 'cases/client/getClientByUserIdAndCompanyId';
+import { getCompanyFromLocalStorage } from '../cases/company/getCompanyFromLocalStorage';
+import { useGlobal } from 'hooks/Global';
+import { api } from 'services/api';
 /* eslint-disable no-return-assign */
 import firebase from 'firebase/compat/app';
 import cookie from 'js-cookie';
@@ -10,6 +14,7 @@ import {
   FacebookAuthProvider,
 } from 'firebase/auth';
 import 'firebase/compat/firestore';
+import { userLoginOnInternalApi } from 'cases/user/userLoginOnInternalApi';
 
 export const fireAuth = firebase.auth();
 
@@ -19,10 +24,18 @@ const auth = getAuth();
 
 export const signInWithGoogle = () =>
   signInWithPopup(auth, googleProvider)
-    .then(result => {
+    .then(async result => {
       const credential = GoogleAuthProvider.credentialFromResult(result);
       const token = credential?.accessToken;
       const { user } = result;
+
+      await userLoginOnInternalApi(
+        user.uid,
+        'google',
+        getCompanyFromLocalStorage().id,
+        user.stsTokenManager.accessToken,
+      );
+
       if (typeof window !== 'undefined') {
         localStorage.setItem('@domBarber:token', JSON.stringify(token));
         localStorage.setItem('@domBarber:user', JSON.stringify(user));

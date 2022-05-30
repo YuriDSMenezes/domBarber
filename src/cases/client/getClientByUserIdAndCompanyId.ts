@@ -11,7 +11,9 @@ export const getClientByUserIdAndCompanyId = async (
       `client/auth;authId=${userId};companyId=${companyId};projectId=${environment.projectId}`,
       {
         headers: {
-          Authorization: token,
+          ProjectId: environment.projectId,
+          CompanyId: companyId,
+          Authorization: `Bearer ${token}`,
         },
       },
     );
