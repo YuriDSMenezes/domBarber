@@ -12,6 +12,11 @@ import { appointments as mockAppointments } from '../../../../_mocks/appointment
 
 const appointments: NextPage = () => {
   const [selectedIndex, setSelectedIndex] = useState<number | undefined>();
+
+  useEffect(() => {
+    setTimeout(() => setSelectedIndex(0), 1000);
+    setTimeout(() => setSelectedIndex(undefined), 2000);
+  }, []);
   return (
     <MainLayout>
       <BottomSheetFixedLayout theme="dark">
