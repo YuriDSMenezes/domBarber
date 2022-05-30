@@ -29,7 +29,6 @@ const appointments: NextPage = () => {
                 key={index}
                 swiped={selectedIndex === index}
                 onClick={() => {
-                  console.log('click');
                   if (selectedIndex === index) {
                     setSelectedIndex(undefined);
                   } else {
