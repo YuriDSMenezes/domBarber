@@ -1,4 +1,4 @@
-import ProductCard from 'components/productCard';
+import ServiceCard from 'components/ServiceCard';
 import { Product } from 'models/types/product';
 import React from 'react';
 
@@ -12,7 +12,7 @@ const BarberShopTabOption: React.FC<ProductProps> = ({ list }) => {
   return (
     <S.Container>
       <S.ProductsContainer>
-        <ProductCard list={list} />
+        <ServiceCard list={list} />
       </S.ProductsContainer>
     </S.Container>
   );

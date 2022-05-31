@@ -9,32 +9,7 @@ interface ItemProps {
   active?: boolean;
 }
 
-export const Container = styled.div`
-  overflow-x: scroll;
-  display: flex;
-  width: 100%;
-  cursor: pointer;
-
-  .showText {
-    display: none;
-  }
-  .showButton {
-    display: none;
-  }
-
-  &:hover {
-    .showText {
-      display: block;
-    }
-    .showButton {
-      display: block;
-    }
-  }
-
-  &::-webkit-scrollbar {
-    display: none;
-  }
-`;
+export const Container = styled.div``;
 
 export const Content = styled.div`
   height: 242px;
@@ -54,13 +29,12 @@ export const Item = styled.div<ItemProps>`
   background-size: cover;
   height: ${props =>
     props.size === 'lg' ? '219px' : props.size === 'md' ? '155px' : '120px'};
-  min-width: 151px;
   font-weight: 500;
   border-radius: 14px;
   padding: 6px;
   font-size: ${ConvertToRem(12)};
-  margin: 0 10px;
   border-radius: 17px;
+  transform: ${props => props.active && ''};
 
   @media (min-width: 768px) {
     height: ${props =>

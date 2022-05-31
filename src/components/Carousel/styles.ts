@@ -3,13 +3,7 @@ import { ConvertToRem } from 'helpers';
 import styled from 'styled-components';
 
 export const Container = styled.div`
-  overflow-x: scroll;
-  display: flex;
   width: 100%;
-
-  &::-webkit-scrollbar {
-    display: none;
-  }
 `;
 
 interface ItemProps {
@@ -29,7 +23,6 @@ export const Item = styled.div<ItemProps>`
   background-size: cover;
   height: ${props =>
     props.size === 'lg' ? '219px' : props.size === 'md' ? '155px' : '120px'};
-  min-width: 151px;
   font-weight: 500;
   border-radius: 14px;
   padding: 6px;

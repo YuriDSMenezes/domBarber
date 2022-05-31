@@ -12,7 +12,7 @@ const KitsAndCombosTabOption: React.FC<ServiceProps> = ({ list }) => {
   return (
     <S.Container>
       <S.ServicesContainer>
-        <ServiceCard list={list} />
+        <ServiceCard list={list} isKit />
       </S.ServicesContainer>
     </S.Container>
   );

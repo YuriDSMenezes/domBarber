@@ -3,32 +3,32 @@ import { PaginatedItems } from 'components/Pagination';
 import BottomSheetFixedLayout from 'layouts/BottomSheetFixedLayout';
 import MainLayout from 'layouts/MainLayout';
 import React from 'react';
-import ProfessionalCard from './ProfessionalCard';
-import { ProfessionalsController } from './professionals.controller';
+import ProductCard from './productsCard';
+import { ListProductsController } from './listproducts.controller';
 
 import * as S from './styles';
 
-const professionals: React.FC = () => {
+const ListProducts: React.FC = () => {
   const {
-    state: { professionals },
-  } = ProfessionalsController();
+    state: { products },
+  } = ListProductsController();
 
   return (
     <MainLayout>
-      <S.TitleOut>Lista de Profissionais</S.TitleOut>
+      <S.TitleOut>Lista de Produtos</S.TitleOut>
       <BottomSheetFixedLayout theme="dark">
         <S.Content>
-          <S.Title>Lista de Profissionais</S.Title>
+          <S.Title>Lista de Produtos</S.Title>
           <S.ProfissionalsContainer>
             <S.DesktopProfessionals>
               <PaginatedItems
-                items={professionals}
+                items={products}
                 itemsPerPage={5}
-                component={ProfessionalCard}
+                component={ProductCard}
               />
             </S.DesktopProfessionals>
             <S.MobileProfessionals>
-              <ProfessionalCard list={professionals} />
+              <ProductCard list={products} />
             </S.MobileProfessionals>
           </S.ProfissionalsContainer>
         </S.Content>
@@ -37,4 +37,4 @@ const professionals: React.FC = () => {
   );
 };
 
-export default professionals;
+export default ListProducts;

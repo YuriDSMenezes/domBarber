@@ -1713,6 +1713,18 @@
   resolved "https://registry.yarnpkg.com/@sindresorhus/is/-/is-0.14.0.tgz#9fb3a3cf3132328151f353de4632e01e52102bea"
   integrity sha512-9NET910DNaIPngYnLLPeg+Ogzqsi9uM4mSboU5y6p8S5DzMTVEsJZrawi+BoDNUVBa2DhJqQYUFvMDfgU062LQ==
 
+"@splidejs/react-splide@^0.7.6":
+  version "0.7.6"
+  resolved "https://registry.yarnpkg.com/@splidejs/react-splide/-/react-splide-0.7.6.tgz#38afe053cd2389af078506e7d8a85b90cc091123"
+  integrity sha512-urjKQkMdcUStlv+ujghN6X91IZRcxyG1kGqf3eQcLfSSXMPJmytImLSzzuMoPnfDx0tNE13metPsnBpMWpMiwg==
+  dependencies:
+    "@splidejs/splide" "^4.0.3"
+
+"@splidejs/splide@^4.0.3":
+  version "4.0.3"
+  resolved "https://registry.yarnpkg.com/@splidejs/splide/-/splide-4.0.3.tgz#0c0820c084c8b22b6f269c02f2236798889580dc"
+  integrity sha512-VaiUVIU5zaWI5Mrj4w1UqURVMD6oOZgvVllSB7Aae3ARGR6UBvhYPCgYOwUTdLnoxBNaAh2Fr4AeL70UAdA1Qw==
+
 "@surma/rollup-plugin-off-main-thread@^2.2.3":
   version "2.2.3"
   resolved "https://registry.yarnpkg.com/@surma/rollup-plugin-off-main-thread/-/rollup-plugin-off-main-thread-2.2.3.tgz#ee34985952ca21558ab0d952f00298ad2190c053"

@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import { useGlobal } from 'hooks/Global';
 import { Service } from 'models/types/service';
 import { useRouter } from 'next/router';
 import React, { ComponentType, useState } from 'react';
@@ -7,9 +8,13 @@ import * as S from './styles';
 
 interface ServiceCardProps {
   list: Array<Service>;
+  isKit?: boolean;
 }
 
-const ServiceCard: ComponentType<ServiceCardProps> = ({ list }) => {
+const ServiceCard: ComponentType<ServiceCardProps> = ({ list, isKit }) => {
+  const {
+    states: { company },
+  } = useGlobal();
   const { push } = useRouter();
   const [hasProfessional, setHasProfessional] = useState(false);
   const [cart, setCart] = useState(() => {
@@ -52,15 +57,25 @@ const ServiceCard: ComponentType<ServiceCardProps> = ({ list }) => {
         localStorage.setItem('@domBarber:cart', JSON.stringify(newCart));
       }
     }
-    push(
-      hasProfessional
-        ? {
-            pathname: `/ps1/schedule`,
-          }
-        : {
-            pathname: `/ps1/chooseprofessional`,
-          },
-    );
+
+    if (isKit) {
+      push({
+        pathname: `/[companyName]/choosekit`,
+        query: { companyName: company?.app?.url },
+      });
+    } else {
+      push(
+        hasProfessional
+          ? {
+              pathname: `/[companyName]/schedule`,
+              query: { companyName: company?.app?.url },
+            }
+          : {
+              pathname: `/[companyName]/chooseprofessional`,
+              query: { companyName: company?.app?.url },
+            },
+      );
+    }
   };
 
   return (
@@ -78,9 +93,7 @@ const ServiceCard: ComponentType<ServiceCardProps> = ({ list }) => {
               <S.ServiceTitle>{item.description}</S.ServiceTitle>
               <S.ServicePrice>{item.price}</S.ServicePrice>
             </S.TitleAndPriceText>
-            <S.AddressText>
-              São Miguel, São PauloRua 22, zona sulPauloRua 22, zona sul
-            </S.AddressText>
+            <S.AddressText>São Miguel, São Paulo Rua 22</S.AddressText>
             <S.TimeAndPointsText>{`Tempo: ${item.runtime} min  | Acumule ${item.pointsGenerated} pontos`}</S.TimeAndPointsText>
           </S.InformationContainer>
         </S.Container>

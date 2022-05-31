@@ -7,6 +7,7 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   smallSize?: boolean;
   white?: boolean;
   green?: boolean;
+  onClick?: any;
 }
 
 const Button: React.FC<ButtonProps> = ({
@@ -14,10 +15,17 @@ const Button: React.FC<ButtonProps> = ({
   smallSize = false,
   white = false,
   green = false,
+  onClick,
   ...rest
 }) => {
   return (
-    <S.Container green={green} white={white} smallSize={smallSize} {...rest}>
+    <S.Container
+      green={green}
+      white={white}
+      smallSize={smallSize}
+      onClick={onClick}
+      {...rest}
+    >
       {text}
     </S.Container>
   );
