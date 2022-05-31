@@ -74,7 +74,7 @@ const Home: NextPage = () => {
           <S.SeeMore
             onClick={() =>
               push({
-                pathname: `/[companyName]/chooseprofessionals`,
+                pathname: `/[companyName]/professionals`,
                 query: { companyName: company?.app?.url },
               })
             }
@@ -101,7 +101,7 @@ const Home: NextPage = () => {
           <S.SeeMore
             onClick={() =>
               push({
-                pathname: `/[companyName]/products`,
+                pathname: `/[companyName]/listproducts`,
                 query: { companyName: company?.app?.url },
               })
             }

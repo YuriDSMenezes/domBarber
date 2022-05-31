@@ -1,10 +1,10 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import { Company as CompanyType } from 'models/types/company';
 import { Service as ServiceType } from 'models/types/service';
+import { Kit as KitType } from 'models/types/kit';
 import { Professional as ProfessionalType } from 'models/types/professional';
 import { Product as ProductType } from 'models/types/product';
 import { firestoreDb } from 'services/FirestoreDatabase';
-import { useRouter } from 'next/router';
 import { Company } from 'models/company';
 import { setTheme } from './Theme';
 
@@ -12,12 +12,14 @@ interface GlobalContextProps {
   states: {
     company: CompanyType;
     services: ServiceType[];
+    kits: KitType[];
     professionals: ProfessionalType[];
     products: ProductType[];
   };
   actions: {
     setCompany: (company: CompanyType) => void;
     setServices: (services: ServiceType[]) => void;
+    setKits: (services: KitType[]) => void;
     setProfessionals: (professionals: ProfessionalType[]) => void;
     setProducts: (products: ProductType[]) => void;
   };
@@ -30,14 +32,11 @@ const GlobalContext = createContext<GlobalContextProps>(
 const GlobalProvider: React.FC = ({ children }) => {
   const [company, setCompany] = useState<CompanyType>({} as CompanyType);
   const [services, setServices] = useState<ServiceType[]>([] as ServiceType[]);
+  const [kits, setKits] = useState<KitType[]>([] as KitType[]);
   const [products, setProducts] = useState<ProductType[]>([] as ProductType[]);
   const [professionals, setProfessionals] = useState<ProfessionalType[]>(
     [] as ProfessionalType[],
   );
-  const {
-    query: { companyName },
-    isReady,
-  } = useRouter();
 
   useEffect(() => {
     firestoreDb.company.getSyncWhere({
@@ -67,8 +66,14 @@ const GlobalProvider: React.FC = ({ children }) => {
   return (
     <GlobalContext.Provider
       value={{
-        states: { company, services, professionals, products },
-        actions: { setCompany, setServices, setProfessionals, setProducts },
+        states: { company, services, professionals, products, kits },
+        actions: {
+          setCompany,
+          setServices,
+          setProfessionals,
+          setProducts,
+          setKits,
+        },
       }}
     >
       {children}

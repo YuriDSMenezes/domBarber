@@ -24,6 +24,8 @@ const Container = styled.div<StyleProps>`
   background-position: top;
   background-size: contain;
   background-repeat: no-repeat;
+  padding-top: 100px;
+  overflow-y: scroll;
 
   @media (min-width: 768px) {
     background: none;
@@ -46,13 +48,12 @@ const Container = styled.div<StyleProps>`
 
 const Content = styled.div<StyleProps>`
   position: absolute;
+  overflow-y: scroll;
   background-color: #fff;
   width: 100%;
-  height: 90vh;
+  min-height: 100%;
   border-radius: 46px 46px 0px 0px;
   padding: 20px 15px 0px;
-  bottom: -170px;
-
   @media (min-width: 768px) {
     position: initial;
     height: 880px;

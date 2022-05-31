@@ -1,3 +1,6 @@
+import { Splide, SplideSlide } from '@splidejs/react-splide';
+import '@splidejs/react-splide/css';
+
 import Button from 'components/Button';
 import * as S from './styles';
 
@@ -13,9 +16,9 @@ interface CarouselProps {
 
 export const Carousel = ({ items, size, services }: CarouselProps) => {
   return (
-    <S.Container>
-      {items.map((item, index) => {
-        return (
+    <Splide options={{ perPage: 3, pagination: false, slideFocus: true }}>
+      {items.map((item, index) => (
+        <SplideSlide>
           <S.Item
             size={size}
             key={index}
@@ -41,8 +44,8 @@ export const Carousel = ({ items, size, services }: CarouselProps) => {
               <S.Description>{item.title}</S.Description>
             )}
           </S.Item>
-        );
-      })}
-    </S.Container>
+        </SplideSlide>
+      ))}
+    </Splide>
   );
 };

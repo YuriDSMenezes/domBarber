@@ -1,59 +1,119 @@
 import Button from 'components/Button';
+import { currencyFormat } from 'helpers';
+import { useGlobal } from 'hooks/Global';
 import BottomSheetFixedLayout from 'layouts/BottomSheetFixedLayout';
 import MainLayout from 'layouts/MainLayout';
-import React from 'react';
+import { Professional } from 'models/types/professional';
+import { Service } from 'models/types/service';
+import { useRouter } from 'next/router';
+import React, { useEffect, useState } from 'react';
 
 import * as S from './styles';
 
 const confirmservice: React.FC = () => {
+  const {
+    states: { professionals, services },
+  } = useGlobal();
+  const {
+    isReady,
+    query: { id },
+    push,
+  } = useRouter();
+  const [service, setService] = useState<Service>();
+  const [selectedProfessional, setSelectedProfessional] =
+    useState<Professional>(professionals[0]);
+  const [professionalsByService, setProfessionalByService] =
+    useState<Array<Professional>>();
+
+  useEffect(() => {
+    if (isReady) {
+      const getService = services.find((service: Service) => service.id === id);
+      setService(getService);
+      const getProfessionalsByService = professionals.filter(
+        (professional: Professional) =>
+          professional.serviceIds.includes(getService?.id),
+      );
+      setProfessionalByService(getProfessionalsByService);
+    }
+  }, [isReady]);
+
+  const [cart, setCart] = useState(() => {
+    if (typeof window !== 'undefined') {
+      const cart = localStorage.getItem('@domBarber:cart');
+
+      if (cart) {
+        return JSON.parse(cart);
+      }
+    }
+
+    return [];
+  });
+
+  const handleGetService = (value: Professional) => {
+    const getProfessional = professionals.find(
+      (professional: Professional) => professional.id === value.id,
+    );
+    setSelectedProfessional(getProfessional);
+  };
+
+  const handleClickCard = () => {
+    const lastItemCart = cart[cart.length - 1];
+    const newProfessional = {
+      ...lastItemCart,
+      professional: selectedProfessional,
+      professionalId: selectedProfessional?.id,
+      service,
+      serviceId: service?.id,
+    };
+    cart.pop();
+    const newCart = [...cart, newProfessional];
+    setCart(newCart);
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('@domBarber:cart', JSON.stringify(newCart));
+    }
+    push({
+      pathname: `/ps1/schedule`,
+    });
+  };
+
   return (
     <MainLayout>
       <BottomSheetFixedLayout theme="dark" mediumSize>
         <S.Content>
-          <S.Title>Barboterapia</S.Title>
-          <S.ServiceTimeText>Tempo: 20 min</S.ServiceTimeText>
-          <S.ServicePointsText>Acumule 20 pontos</S.ServicePointsText>
-          <S.ServicePriceText>R$ 19,90</S.ServicePriceText>
+          <S.Title>{service?.name}</S.Title>
+          <S.ServiceTimeText>Tempo: {service?.runtime} min</S.ServiceTimeText>
+          <S.ServicePointsText>
+            Acumule {service?.pointsGenerated} pontos
+          </S.ServicePointsText>
+          <S.ServicePriceText>
+            {currencyFormat({
+              value: Number(service?.price),
+              currencyPrefix: 'R$',
+            })}
+          </S.ServicePriceText>
           <S.ServiceDescriptionText>
-            Toalha quente para dilatar os poros e fortalecedor para estimular o
-            crescimento.
+            {service?.description}
           </S.ServiceDescriptionText>
           <S.ChooseOneProfessionalText>
             Escolha um Profissional:
           </S.ChooseOneProfessionalText>
           <S.ProfessionalOptions>
-            <S.ProfessionalOption selected>
-              <img
-                src="https://images.pexels.com/photos/614810/pexels-photo-614810.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500"
-                alt="Paulo R."
-              />
-            </S.ProfessionalOption>
-            <S.ProfessionalOption>
-              <img
-                src="https://images.pexels.com/photos/614810/pexels-photo-614810.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500"
-                alt="Paulo R."
-              />
-            </S.ProfessionalOption>
-            <S.ProfessionalOption>
-              <img
-                src="https://images.pexels.com/photos/614810/pexels-photo-614810.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500"
-                alt="Paulo R."
-              />
-            </S.ProfessionalOption>
-            <S.ProfessionalOption>
-              <img
-                src="https://images.pexels.com/photos/614810/pexels-photo-614810.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500"
-                alt="Paulo R."
-              />
-            </S.ProfessionalOption>
-            <S.ProfessionalOption>
-              <img
-                src="https://images.pexels.com/photos/614810/pexels-photo-614810.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500"
-                alt="Paulo R."
-              />
-            </S.ProfessionalOption>
+            {professionalsByService?.map(professional => (
+              <S.ProfessionalOption
+                selected
+                onClick={() => handleGetService(professional)}
+              >
+                <img
+                  src={
+                    professional.image ||
+                    'https://images.pexels.com/photos/614810/pexels-photo-614810.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500'
+                  }
+                  alt={professional.name}
+                />
+              </S.ProfessionalOption>
+            ))}
           </S.ProfessionalOptions>
-          <Button text="Agendar" />
+          <Button text="Agendar" onClick={handleClickCard} />
         </S.Content>
       </BottomSheetFixedLayout>
     </MainLayout>

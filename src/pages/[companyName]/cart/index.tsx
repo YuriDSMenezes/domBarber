@@ -35,14 +35,6 @@ const Cart = () => {
     return [];
   });
 
-  const handleClickService = () => {
-    const hasService = {};
-    cart.push(hasService);
-    if (typeof window !== 'undefined') {
-      localStorage.setItem('@domBarber:cart', JSON.stringify(cart));
-    }
-  };
-
   const handleOpenCollapse = () => setOpenCollapse(!openCollapse);
   const handleOpenModal = () => setOpenModal(!openModal);
   const handleCloseModal = () => setOpenModal(false);
@@ -150,7 +142,6 @@ const Cart = () => {
                 white
                 text="Adicionar Serviço"
                 onClick={() => {
-                  handleClickService();
                   push({
                     pathname: `/[companyName]/newservice`,
                     query: { companyName: company?.app?.url },

@@ -1,8 +1,12 @@
+import { useState } from 'react';
+import { Splide, SplideSlide } from '@splidejs/react-splide';
+
 import Button from 'components/Button';
 import { Service } from 'models/types/service';
 import { useRouter } from 'next/router';
-import { useState } from 'react';
 import * as S from './styles';
+
+import '@splidejs/react-splide/css';
 
 interface CarouselProps {
   services: Array<Service>;
@@ -14,6 +18,7 @@ export const CarouselService: React.FC<CarouselProps> = ({
   size,
 }) => {
   const [sItem, setSItem] = useState<number>(2);
+  const [active, setActive] = useState<boolean>(false);
 
   const { push } = useRouter();
   const [cart, setCart] = useState<Array<{}>>(() => {
@@ -43,45 +48,42 @@ export const CarouselService: React.FC<CarouselProps> = ({
       pathname: `/ps1/chooseprofessional`,
     });
   };
-
   return (
-    <S.Container>
-      {services?.map((item, index) => {
-        return (
-          <S.Content
-            key={index}
-            onMouseEnter={() => setSItem(index)}
-            onClick={() => handleClickCard(item)}
-          >
-            <S.Item
-              size={size}
-              srcImage={item?.images[0]?.url}
-              active={sItem === index}
-            >
-              {services ? (
-                <>
-                  <S.BlurContainer srcImage={item.images[0]?.url} />
-                  {sItem === index && (
-                    <>
-                      <S.Texts className={sItem === index ? 'showText' : ''}>
-                        <p>{item.description}</p>
-                        <span>{` ${item.description}`}</span>
-                      </S.Texts>
-                      <S.ButtonContainer
-                        className={sItem === index ? 'showButton' : ''}
-                      >
-                        <Button text="Agendar" />
-                      </S.ButtonContainer>
-                    </>
-                  )}
-                </>
-              ) : (
-                <S.Description>{item.description}</S.Description>
-              )}
-            </S.Item>
-          </S.Content>
-        );
-      })}
-    </S.Container>
+    <Splide
+      options={{
+        pagination: false,
+        slideFocus: true,
+        focus: 'center',
+        snap: true,
+        gap: 20,
+        perPage: 4,
+        breakpoints: {
+          400: {
+            perPage: 3,
+          },
+        },
+      }}
+    >
+      {services?.map((item, index) => (
+        <SplideSlide key={index}>
+          <S.Item size={size} srcImage={item?.images[0]?.url} active={active}>
+            {services ? (
+              <>
+                <S.BlurContainer srcImage={item.images[0]?.url} />
+                <S.Texts className="showText">
+                  <p>{item.description}</p>
+                  <span>{` ${item.description}`}</span>
+                </S.Texts>
+                <S.ButtonContainer className="showButton">
+                  <Button text="Agendar" />
+                </S.ButtonContainer>
+              </>
+            ) : (
+              <S.Description>{item.description}</S.Description>
+            )}
+          </S.Item>
+        </SplideSlide>
+      ))}
+    </Splide>
   );
 };

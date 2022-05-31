@@ -4,6 +4,7 @@ import { useRouter } from 'next/router';
 import { useGlobal } from 'hooks/Global';
 import { Company } from 'models/company';
 import { Professional } from 'models/professional';
+import { Kits } from 'models/kits';
 import { Product } from 'models/product';
 import { useLoading } from 'hooks/Loading';
 import { getAllServicesByCompanyId } from 'cases/service';
@@ -13,6 +14,7 @@ import { getProductsByCompanyId } from 'cases/product';
 import { setTheme } from 'hooks/Theme';
 import { ManifestConfig } from 'hooks/ManifestConfig';
 import { getAllProfessionalsByCompanyId } from '../../../cases/professional/getProfessionalsByCompanyId';
+import { getAllKitsByCompanyId } from '../../../cases/kit/getAllKitByService';
 import { getCompanyByUrl } from '../../../cases/company/getCompanyByUrl';
 
 // type ObjEntriesCompanyData = [id: string, data: CompanyType][];
@@ -85,6 +87,15 @@ export const useAppController = () => {
     globalActions.setProfessionals(parsedProfessionalsData);
   }, []);
 
+  const getKitsCompany = useCallback(async (companyId: string) => {
+    const kitsData = await getAllKitsByCompanyId(companyId);
+    const parsedKitsData = Object.entries(kitsData as {}).map(
+      // @ts-ignore
+      ([id, data]) => Kits({ ...data, id }),
+    );
+    globalActions.setKits(parsedKitsData);
+  }, []);
+
   const getProductsCompany = useCallback(async (companyId: string) => {
     const productsData = await getProductsByCompanyId(companyId);
     const parsedProductsData = Object.entries(productsData as {}).map(
@@ -102,6 +113,7 @@ export const useAppController = () => {
       await getServicesCompany(companyResponse.id);
       await getProfessionalsCompany(companyResponse.id);
       await getProductsCompany(companyResponse.id);
+      await getKitsCompany(companyResponse.id);
     }
   }, [isReady]);
 

@@ -100,6 +100,25 @@ export const ServiceContainer = styled.div`
   color: #fff;
   width: 100%;
   grid-area: services;
+
+  .showText {
+    display: none;
+  }
+  .showButton {
+    display: none;
+  }
+
+  .splide__slide.is-active {
+    width: calc(((100% + 110px) / 3) - 20px) !important;
+    height: 270px !important;
+
+    .showText {
+      display: block;
+    }
+    .showButton {
+      display: block;
+    }
+  }
 `;
 
 export const Description = styled.div`
