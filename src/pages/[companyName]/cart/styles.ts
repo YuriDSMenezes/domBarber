@@ -18,15 +18,6 @@ export const Title = styled.h1`
   text-align: center;
 `;
 
-export const ItemContainer = styled.div`
-  position: relative;
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 20px;
-`;
-
-export const ItemDescription = styled.div``;
-
 export const OrangeTitle = styled.div`
   color: #ff9933;
   font-weight: 500;
@@ -43,7 +34,7 @@ export const MediumText = styled.div`
 export const SmallText = styled.div`
   font-weight: 400;
   color: #fff;
-  font-size: ${ConvertToRem(10)};
+  font-size: ${ConvertToRem(13)};
 `;
 
 export const LargeText = styled.div`
@@ -89,7 +80,6 @@ export const Line = styled.div`
   background-color: #535353;
   position: absolute;
   bottom: -10px;
-  left: -10px;
 `;
 
 export const CollapseContainer = styled.div`
@@ -97,16 +87,17 @@ export const CollapseContainer = styled.div`
   align-items: center;
   justify-content: space-between;
   position: relative;
-  margin-bottom: 20px;
+  margin: 20px 0;
 `;
 
 export const CollapseDate = styled.div`
-  width: 60px;
+  width: 110px;
   text-align: center;
+  display: flex;
 `;
 
 export const CollapseDescription = styled.div`
-  margin-bottom: 15px;
+  margin-bottom: 30px;
 `;
 
 export const CollapseDay = styled.div`

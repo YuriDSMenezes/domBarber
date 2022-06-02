@@ -13,7 +13,7 @@ import { useSchedulesKit } from './schedulekit.controller';
 // import { getSchedulesByProfessionalId } from 'cases/schedule';
 
 const Schedule = () => {
-  const { push } = useRouter();
+  const { push, query } = useRouter();
   const {
     states: { company },
   } = useGlobal();
@@ -42,13 +42,26 @@ const Schedule = () => {
   } = useSchedulesKit();
 
   const handleNext = (date: Date) => {
-    const lastItem = cart[cart.length - 1];
-    const newItem = { ...lastItem, start: date };
-    cart.pop();
-    const newCart = [...cart, newItem];
+    const lastItem = cart.pop();
+    const serviceIndex = lastItem?.service.services.findIndex(
+      (service: any) => service.id === query.kitId && !service.start,
+    );
+
+    lastItem.service.services[serviceIndex] = {
+      ...lastItem?.service.services[serviceIndex],
+      start: date,
+    };
+
+    const newCart = [...cart, lastItem];
     setCart(newCart);
-    localStorage.setItem('@domBarber:cart', JSON.stringify(newCart));
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('@domBarber:cart', JSON.stringify(newCart));
+    }
   };
+
+  const hasProfessional = cart.map(item =>
+    item?.service?.services?.find(sItem => sItem?.professional),
+  );
 
   const YearCalendarComponent = () => (
     <YearView
@@ -79,6 +92,9 @@ const Schedule = () => {
     ),
     [date, confirmedSchedules],
   );
+  const runTimeService = cart[cart.length - 1]?.service?.services.find(
+    (service: any) => service.id === query.kitId,
+  );
 
   const HoursComponent = useCallback(
     (): any =>
@@ -89,14 +105,8 @@ const Schedule = () => {
               onClick={() => {
                 if (
                   !itsScheduled(hour) &&
-                  verifyWorkTime(
-                    hour,
-                    cart[cart.length - 1]?.service?.runtime,
-                  ) &&
-                  verifyIntervalTime(
-                    hour,
-                    cart[cart.length - 1]?.service?.runtime,
-                  )
+                  verifyWorkTime(hour, runTimeService?.customRuntime) &&
+                  verifyIntervalTime(hour, runTimeService?.customRuntime)
                 ) {
                   handleSelectHour(hour.toISOString());
                   setIsSelectedFirstHour(true);
@@ -106,23 +116,14 @@ const Schedule = () => {
               active={
                 selectedHour === hour.toISOString() &&
                 !itsScheduled(hour) &&
-                verifyWorkTime(hour, cart[cart.length - 1]?.service?.runtime) &&
-                verifyIntervalTime(
-                  hour,
-                  cart[cart.length - 1]?.service?.runtime,
-                )
+                verifyWorkTime(hour, runTimeService?.customRuntime) &&
+                verifyIntervalTime(hour, runTimeService?.customRuntime)
               }
               disabled={
                 itsScheduled(hour) ||
                 !verifyOpeningCompanyTime(hour) ||
-                !verifyWorkTime(
-                  hour,
-                  cart[cart.length - 1]?.service?.runtime,
-                ) ||
-                !verifyIntervalTime(
-                  hour,
-                  cart[cart.length - 1]?.service?.runtime,
-                )
+                !verifyWorkTime(hour, runTimeService?.customRuntime) ||
+                !verifyIntervalTime(hour, runTimeService?.customRuntime)
               }
             >
               <p>{hour.toLocaleTimeString('pt-br', { timeStyle: 'short' })}</p>
@@ -152,22 +153,18 @@ const Schedule = () => {
               <S.Image>
                 <img
                   src={
-                    cart[cart.length - 1]?.service?.image ||
                     'https://cdn.neemo.com.br/uploads/settings_webdelivery/logo/3957/image-not-found.jpg'
                   }
                   alt="logo"
                 />
               </S.Image>
               <S.ServiceDescription>
-                <S.ServiceTitle>
-                  {cart[cart.length - 1]?.service?.description}
-                </S.ServiceTitle>
+                <S.ServiceTitle>{runTimeService?.name}</S.ServiceTitle>
                 <S.ServiceDescription>
-                  R$ {cart[cart.length - 1]?.service?.price}
+                  R$ {runTimeService?.customPrice}
                 </S.ServiceDescription>
                 <S.ServiceText>
-                  {cart[cart.length - 1]?.service?.pointsGenerated} Pontos
-                  Tempo: {cart[cart.length - 1]?.service?.runtime}
+                  Tempo: {runTimeService?.customRuntime}
                 </S.ServiceText>
               </S.ServiceDescription>
             </S.Service>
@@ -175,7 +172,7 @@ const Schedule = () => {
               <S.Image>
                 <img
                   src={
-                    cart[cart.length - 1]?.professional?.image ||
+                    runTimeService?.professional?.image ||
                     'https://cdn.neemo.com.br/uploads/settings_webdelivery/logo/3957/image-not-found.jpg'
                   }
                   alt="logo"
@@ -186,7 +183,7 @@ const Schedule = () => {
                   Profissional
                 </S.ServiceDescription>
                 <S.ServiceText>
-                  {cart[cart.length - 1]?.professional?.name}
+                  {runTimeService?.professional?.name}
                 </S.ServiceText>
               </S.ServiceDescription>
             </S.Service>
@@ -198,10 +195,17 @@ const Schedule = () => {
             <S.NextButton
               onClick={() => {
                 handleNext(date);
-                push({
-                  pathname: `/[companyName]/cart`,
-                  query: { companyName: company?.app?.url },
-                });
+                push(
+                  hasProfessional.length > 0
+                    ? {
+                        pathname: `/[companyName]/choosekit`,
+                        query: { companyName: company?.app?.url },
+                      }
+                    : {
+                        pathname: `/[companyName]/cart`,
+                        query: { companyName: company?.app?.url },
+                      },
+                );
               }}
             >
               Próximo

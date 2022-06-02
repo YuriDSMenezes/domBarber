@@ -64,11 +64,15 @@ export const useSchedulesKit = () => {
       end: endOfMonth(date),
     });
 
+  const cartProfessional = cart[cart.length - 1]?.service?.services.find(
+    (service: any) => service.id === query.kitId,
+  );
+
   const daysNotWork = useCallback(() => {
     const daysNW: Array<Date> = [];
     days?.forEach(day => {
       if (new Date(day) < new Date()) daysNW.push(day);
-      cart[cart.length - 1]?.professional?.days?.forEach((dw: WorkDay) => {
+      cartProfessional?.professional?.days?.forEach((dw: WorkDay) => {
         if (dw.weekId === new Date(day).getDay()) daysNW.push(day);
       });
     });
@@ -85,7 +89,7 @@ export const useSchedulesKit = () => {
     const daysNW: Array<Date> = [];
     days?.forEach(day => {
       if (new Date(day) < new Date()) daysNW.push(day);
-      cart[cart.length - 1]?.professional?.days?.forEach((dw: WorkDay) => {
+      cartProfessional?.professional?.days?.forEach((dw: WorkDay) => {
         if (dw.weekId === new Date(day).getDay()) daysNW.push(day);
       });
     });
@@ -148,7 +152,7 @@ export const useSchedulesKit = () => {
 
   const verifyWorkTime = useCallback(
     (date: Date, workTime: number) => {
-      const rulesOfDay = cart[cart.length - 1]?.professional?.days?.filter(
+      const rulesOfDay = cartProfessional?.professional?.days?.filter(
         (d: WorkDay) => d.weekId === date?.getDay(),
       )[0];
       const initWork = new Date(
@@ -178,7 +182,7 @@ export const useSchedulesKit = () => {
   const verifyIntervalTime = useCallback(
     (date: Date, workTime: number) => {
       let isIntervalTime = true;
-      const rulesOfDay = cart[cart.length - 1]?.professional?.days?.filter(
+      const rulesOfDay = cartProfessional?.days?.filter(
         (d: WorkDay) => d.weekId === date?.getDay(),
       )[0];
       const intervalsOfDay = rulesOfDay?.intervals?.map(
@@ -199,7 +203,7 @@ export const useSchedulesKit = () => {
           ),
         }),
       );
-      intervalsOfDay.forEach((iD: { init: Date; end: Date }) => {
+      intervalsOfDay?.forEach((iD: { init: Date; end: Date }) => {
         if (
           isAfter(date, subMinutes(iD.init, workTime)) &&
           isBefore(date, iD.end)
@@ -212,28 +216,11 @@ export const useSchedulesKit = () => {
     [hour],
   );
 
-  // const getScheduledTimes = async () => {
-  //   const response = await getSchedulesByProfessionalIdAndServiceId(
-  //     cart[cart.length - 1]?.professionalId,
-  //     cart[cart.length - 1]?.serviceId,
-  //   );
-  //   const parsedSchedulesData = Object.entries(response as {}).map(
-  //     // @ts-ignore
-  //     ([id, data]) => Schedule({ ...data, id }),
-  //   );
-  //   const confirmedSchedules = parsedSchedulesData.map(
-  //     // @ts-ignore
-  //     schedule => new Date(schedule.start.seconds * 1000),
-  //   );
-  //   setConfirmedSchedules(confirmedSchedules);
-  //   return confirmedSchedules;
-  // };
-
   const itsScheduled = useCallback(
     (date: Date) => {
       let isScheduled = false;
       confirmedSchedules.forEach(schedule => {
-        if (date?.toISOString() === schedule.toISOString()) {
+        if (date?.toISOString() === schedule?.toISOString()) {
           isScheduled = true;
         }
       });
@@ -252,7 +239,7 @@ export const useSchedulesKit = () => {
         // @ts-ignore
         ['professionalId', '==', getService?.professionalId],
         // @ts-ignore
-        ['serviceIds', 'array-contains', '1231231'],
+        ['serviceIds', 'array-contains', getService?.id],
       ],
       callback: response => {
         const parsedSchedulesData = Object.entries(
@@ -261,10 +248,15 @@ export const useSchedulesKit = () => {
           // @ts-ignore
           ([id, data]) => Schedule({ ...data, id }),
         );
-        const confirmedSchedules = parsedSchedulesData.map(
-          // @ts-ignore
-          schedule => new Date(schedule.start?.seconds * 1000),
-        );
+        const confirmedSchedules = [
+          ...parsedSchedulesData.map(
+            // @ts-ignore
+            schedule => new Date(schedule.start?.seconds * 1000),
+          ),
+          ...lastItem?.service.services.map(
+            service => service.start && new Date(service?.start),
+          ),
+        ];
         setConfirmedSchedules(confirmedSchedules);
       },
     });

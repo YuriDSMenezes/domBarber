@@ -1,3 +1,5 @@
+import { stringDays } from 'constants/stringDays';
+import { stringMonths } from 'constants/stringMonths';
 import { currencyFormat } from 'helpers';
 import { Product } from 'models/types/product';
 import { Professional } from 'models/types/professional';
@@ -19,74 +21,72 @@ export const ItemCollapse = ({
 }: ItemCollapseProps) => {
   const formatedDate = new Date(date);
 
-  const stringDays = [
-    'Domingo',
-    'Segunda-feira',
-    'Terça-Feira',
-    'Quarta-feira',
-    'Quinta-Feira',
-    'Sexta-Feira',
-    'Sábado',
-  ];
-
-  const stringMonths = [
-    'Janeiro',
-    'Fevereiro',
-    'Marco',
-    'Abril',
-    'Maio',
-    'Junho',
-    'Julho',
-    'Agosto',
-    'Septembro',
-    'Outubro',
-    'Novembro',
-    'Dezembro',
-  ];
   return (
     <S.CollapseContainer>
       <S.CollapseDate>
-        <S.SmallText>
-          {
-            stringDays[
-              date ? formatedDate.getDay() : product ? new Date().getDay() : -1
-            ]
-          }
-          ,{' '}
-          {
-            stringMonths[
-              date
-                ? formatedDate.getMonth()
-                : product
-                ? new Date().getMonth()
-                : -1
-            ]
-          }
-        </S.SmallText>
-        <S.CollapseDay>
-          {date ? formatedDate.getDate() : product ? new Date().getDate() : ''}
-        </S.CollapseDay>
-        <S.LargeText>
-          {date
-            ? formatedDate.toLocaleTimeString('pt-br', { timeStyle: 'short' })
-            : product
-            ? new Date().toLocaleTimeString('pt-br', { timeStyle: 'short' })
-            : ''}
-        </S.LargeText>
+        <div>
+          <S.SmallText>
+            {
+              stringDays[
+                date
+                  ? formatedDate.getDay()
+                  : product
+                  ? new Date().getDay()
+                  : -1
+              ]
+            }{' '}
+            {
+              stringMonths[
+                date
+                  ? formatedDate.getMonth()
+                  : product
+                  ? new Date().getMonth()
+                  : -1
+              ]
+            }
+          </S.SmallText>
+          <S.CollapseDay>
+            {date
+              ? formatedDate.getDate()
+              : product
+              ? new Date().getDate()
+              : ''}
+          </S.CollapseDay>
+          <S.LargeText>
+            {date
+              ? formatedDate.toLocaleTimeString('pt-br', { timeStyle: 'short' })
+              : product
+              ? new Date().toLocaleTimeString('pt-br', { timeStyle: 'short' })
+              : ''}
+          </S.LargeText>
+        </div>
+        <div
+          style={{ width: '60px', display: 'flex', justifyContent: 'center' }}
+        >
+          <div
+            style={{
+              height: '89px',
+              width: '1px',
+              background: '#ccc',
+            }}
+          />
+        </div>
       </S.CollapseDate>
       <S.CollapseDescription>
         <S.OrangeTitle>
-          {service?.description || product?.description}
+          {service?.description || service?.name || product?.description}
         </S.OrangeTitle>
         <S.MediumText>
           {currencyFormat({
-            value: Number(service?.price) || Number(product?.price),
+            value:
+              Number(service?.price || service?.customPrice) ||
+              Number(product?.price),
             currencyPrefix: 'R$',
           })}
         </S.MediumText>
-        <S.MediumText>
+        {/* <S.MediumText>
           {service?.pointsGenerated || product?.pointsGenerated} Pontos
-        </S.MediumText>
+        </S.MediumText> */}
       </S.CollapseDescription>
       {service && (
         <S.CollapseService>

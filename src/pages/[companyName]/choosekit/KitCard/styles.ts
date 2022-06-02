@@ -52,4 +52,7 @@ export const ActionButtonContainer = styled.div`
   justify-content: center;
   align-items: center;
   margin-left: 10%;
+  img {
+    width: 30px;
+  }
 `;

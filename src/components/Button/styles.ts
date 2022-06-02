@@ -20,6 +20,10 @@ export const Container = styled.button<StyleProps>`
   font-size: 12px;
   font-weight: 500;
   line-height: 14px;
+  &:disabled {
+    background-color: #1c1c1c;
+    color: black;
+  }
 
   @media (max-width: 768px) {
     height: 41px;
