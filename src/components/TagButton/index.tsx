@@ -12,10 +12,11 @@ const TagButton: React.FC<TagButtonProps> = ({
   text,
   selected,
   size,
+  onClick,
   ...rest
 }) => {
   return (
-    <S.Container selected={selected} size={size} {...rest}>
+    <S.Container selected={selected} size={size} onClick={onClick} {...rest}>
       <S.Text size={size}>{text}</S.Text>
     </S.Container>
   );

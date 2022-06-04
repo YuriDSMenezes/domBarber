@@ -1,21 +1,87 @@
 import Button from 'components/Button';
 import TagButton from 'components/TagButton';
+import { useGlobal } from 'hooks/Global';
 import BottomSheetFixedLayout from 'layouts/BottomSheetFixedLayout';
 import MainLayout from 'layouts/MainLayout';
-import React from 'react';
+import { Professional, ProfessionalService } from 'models/types/professional';
+import { Service } from 'models/types/service';
+import { useRouter } from 'next/router';
+import React, { useState, useEffect } from 'react';
 import StarRatingComponent from 'react-star-rating-component';
 
 import * as S from './styles';
 
 const confirmprofessional: React.FC = () => {
+  const {
+    states: { professionals, services },
+  } = useGlobal();
+  const {
+    isReady,
+    query: { id },
+    push,
+  } = useRouter();
+  const [professional, setProfessional] = useState<Professional>();
+  const [selectedService, setSelectedService] = useState<Service>(services[0]);
+
+  useEffect(() => {
+    if (isReady) {
+      const getProfessional = professionals.find(
+        (professional: Professional) => professional.id === id,
+      );
+      setProfessional(getProfessional);
+    }
+  }, [isReady]);
+
+  const [cart, setCart] = useState(() => {
+    if (typeof window !== 'undefined') {
+      const cart = localStorage.getItem('@domBarber:cart');
+
+      if (cart) {
+        return JSON.parse(cart);
+      }
+    }
+
+    return [];
+  });
+
+  const handleGetService = (value: ProfessionalService) => {
+    const getService = services.find(
+      (service: Service) => service.id === value.serviceId,
+    );
+    setSelectedService(getService);
+  };
+
+  const handleClickCard = () => {
+    const lastItemCart = cart[cart.length - 1];
+    const newProfessional = {
+      ...lastItemCart,
+      professional,
+      professionalId: professional?.id,
+      service: selectedService,
+      serviceId: selectedService?.id,
+    };
+    cart.pop();
+    const newCart = [...cart, newProfessional];
+    setCart(newCart);
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('@domBarber:cart', JSON.stringify(newCart));
+    }
+    push({
+      pathname: `/ps1/schedule`,
+    });
+  };
+
   return (
     <MainLayout>
       <BottomSheetFixedLayout
         theme="dark"
-        imgSrc="https://img.freepik.com/free-photo/young-handsome-man-with-beard-isolated-keeping-arms-crossed-frontal-position_1368-132662.jpg?w=2000"
+        imgSrc={
+          professional?.image ||
+          'https://img.freepik.com/free-photo/young-handsome-man-with-beard-isolated-keeping-arms-crossed-frontal-position_1368-132662.jpg?w=2000'
+        }
       >
         <S.Content>
-          <S.Title>Paulo Ribeiro</S.Title>
+          <S.Title>{professional?.name}</S.Title>
           <StarRatingComponent
             name="ratingProfessional"
             value={Math.round(Math.random() * 5)}
@@ -28,17 +94,15 @@ const confirmprofessional: React.FC = () => {
             Escolha uma Especialidade:
           </S.ChooseOneEspecialityText>
           <S.EspecialityOptionsContainer>
-            <TagButton text="Barba + Cabelo" />
-            <TagButton text="Barba + Cabelo" />
-            <TagButton text="Barba + Cabelo" />
-            <TagButton text="Barba + Cabelo" />
-            <TagButton text="Barba + Cabelo" />
-            <TagButton text="Barba + Cabelo" />
-            <TagButton text="Barba + Cabelo" />
-            <TagButton text="Barba + Cabelo" />
-            <TagButton text="Barba + Cabelo" />
+            {professional?.services.map((service: ProfessionalService) => (
+              <TagButton
+                selected={selectedService?.id === service.serviceId}
+                text={service.name}
+                onClick={() => handleGetService(service)}
+              />
+            ))}
           </S.EspecialityOptionsContainer>
-          <Button text="Agendar" />
+          <Button text="Agendar" onClick={handleClickCard} />
         </S.Content>
       </BottomSheetFixedLayout>
     </MainLayout>

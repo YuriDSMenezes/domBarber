@@ -10,6 +10,7 @@ import { Service } from 'models/service';
 import { Schedule } from 'models/schedule';
 import { Professional } from 'models/professional';
 import { Product } from 'models/product';
+import { Kits } from 'models/kits';
 
 interface getSyncProps {
   status: number;
@@ -123,4 +124,5 @@ export const firestoreDb = {
   service: FirestoreDBService(Service, 'company-services'),
   professional: FirestoreDBService(Professional, 'company-professionals'),
   product: FirestoreDBService(Product, 'company-products'),
+  kits: FirestoreDBService(Kits, 'company-kits'),
 };

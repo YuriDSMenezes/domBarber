@@ -15,7 +15,7 @@ import { NewServiceController } from './newservice.controller';
 
 const newservice: React.FC = () => {
   const {
-    state: { services },
+    state: { services, kits },
   } = NewServiceController();
   const {
     states: { company },
@@ -56,7 +56,7 @@ const newservice: React.FC = () => {
           component={HairTabOption}
         />
       ),
-      renderComponentMobile: <KitsAndCombosTabOption list={services} />,
+      renderComponentMobile: <KitsAndCombosTabOption list={kits} />,
     },
   ];
 

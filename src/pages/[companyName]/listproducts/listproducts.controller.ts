@@ -1,12 +1,12 @@
 import { useGlobal } from 'hooks/Global';
 
-export const NewServiceController = () => {
+export const ListProductsController = () => {
   const {
-    states: { services, kits },
+    states: { products },
   } = useGlobal();
 
   return {
-    state: { services, kits },
+    state: { products },
     actions: {},
   };
 };

@@ -18,11 +18,13 @@ import { useCallback, useEffect, useState } from 'react';
 import { Schedule } from 'models/schedule';
 import { getSchedulesByProfessionalIdAndServiceId } from 'cases/schedule/getSchedulesByProfessionalIdAndServiceId';
 import { firestoreDb } from 'services/FirestoreDatabase';
+import { useRouter } from 'next/router';
 
-export const useSchedules = () => {
+export const useSchedulesKit = () => {
   const {
     states: { company },
   } = useGlobal();
+  const { query } = useRouter();
   const [isSelectedFirstHour, setIsSelectedFirstHour] = useState(false);
   const [date, setDate] = useState<Date>(new Date());
   const [hour, setHour] = useState<string>();
@@ -241,13 +243,16 @@ export const useSchedules = () => {
   );
 
   useEffect(() => {
-    // getScheduledTimes();
+    const lastItem = cart[cart.length - 1];
+    const getService = lastItem.service.services.find(
+      (service: any) => service.id === query.kitId,
+    );
     firestoreDb.companySchedules.getSyncWhere({
       wheres: [
         // @ts-ignore
-        ['professionalId', '==', cart[cart.length - 1]?.professionalId],
+        ['professionalId', '==', getService?.professionalId],
         // @ts-ignore
-        ['serviceIds', 'array-contains', cart[cart.length - 1]?.serviceId],
+        ['serviceIds', 'array-contains', '1231231'],
       ],
       callback: response => {
         const parsedSchedulesData = Object.entries(

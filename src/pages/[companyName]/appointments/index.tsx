@@ -3,7 +3,6 @@ import type { NextPage } from 'next';
 import BottomSheetFixedLayout from 'layouts/BottomSheetFixedLayout';
 import Button from 'components/Button';
 import MainLayout from 'layouts/MainLayout';
-import { getSchedules } from 'cases/schedule';
 import AppointmentCard from 'components/AppointmentCard';
 import CardSlide from 'components/CardSlide';
 import * as S from './styles';
@@ -11,12 +10,14 @@ import * as S from './styles';
 import { appointments as mockAppointments } from '../../../../_mocks/appointments';
 
 const appointments: NextPage = () => {
+
   const [selectedIndex, setSelectedIndex] = useState<number | undefined>();
 
   useEffect(() => {
     setTimeout(() => setSelectedIndex(0), 1000);
     setTimeout(() => setSelectedIndex(undefined), 2000);
   }, []);
+    
   return (
     <MainLayout>
       <BottomSheetFixedLayout theme="dark">
