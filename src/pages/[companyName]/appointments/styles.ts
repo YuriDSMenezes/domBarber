@@ -21,4 +21,5 @@ export const AppointmentsContainer = styled.div`
   display: flex;
   flex-direction: column;
   overflow-y: auto;
+  margin-top: 10px;
 `;

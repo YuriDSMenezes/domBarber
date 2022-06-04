@@ -7,12 +7,12 @@ interface AppointmentProps {
 export const Container = styled.div`
   width: 100%;
   display: flex;
-  padding: 10px 0;
-  border-bottom: 2px solid #535353;
+  padding: 5px 0;
+  /* border-bottom: 2px solid #535353; */
 
-  &:nth-last-child(1) {
+  /* &:nth-last-child(1) {
     border-bottom: none;
-  }
+  } */
 `;
 
 export const ContainerDateTime = styled.div`

@@ -49,7 +49,7 @@ const GlobalProvider: React.FC = ({ children }) => {
       callback: res => {
         const parsedCompanyData = Object.entries(res?.data?.docs as {}).map(
           // @ts-ignore
-          ([id, data]) => Company({ ...data, id }),
+          ([id, data]) => Company({ ...data, id, companyId: id }),
         )[0];
         setCompany(parsedCompanyData);
         setTheme(parsedCompanyData?.app?.theme);
