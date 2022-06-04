@@ -17,6 +17,7 @@ export const Container = styled.div`
   width: 100%;
   height: 130px;
   border-radius: 8px;
+  border-bottom: 2px solid #535353;
 `;
 
 export const CardContent = styled.div<StyleProps>`
