@@ -34,6 +34,7 @@ export const TitleContainer = styled.div`
   margin: 0 auto;
   text-align: center;
   grid-area: title;
+  margin-top: 25px;
   @media (min-width: 768px) {
     display: none;
   }
@@ -98,7 +99,6 @@ export const HorizontalListContainer = styled.div`
 export const ServiceContainer = styled.div`
   text-align: center;
   color: #fff;
-  width: 100%;
   grid-area: services;
 
   .showText {
@@ -108,15 +108,30 @@ export const ServiceContainer = styled.div`
     display: none;
   }
 
+  .splide__slide {
+    z-index: 0 !important;
+    margin: 0 20px !important;
+  }
+
+  .splide__track.splide__track--loop.splide__track--ltr.splide__track--draggable {
+    height: 290px !important;
+    padding-top: 40px !important;
+  }
+
   .splide__slide.is-active {
-    width: calc(((100% + 110px) / 3) - 20px) !important;
-    height: 270px !important;
+    transform: scale(1.4) !important;
+    z-index: 999 !important;
+    height: 207px !important;
+    margin: 0px 20px !important;
 
     .showText {
       display: block;
     }
     .showButton {
       display: block;
+    }
+    .item {
+      height: 100% !important;
     }
   }
 `;

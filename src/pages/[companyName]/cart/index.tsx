@@ -53,21 +53,23 @@ const Cart = () => {
       <BottomSheetFixedLayout theme="dark">
         <S.Container>
           <S.Title onClick={handleOpenModal}>Carrinho</S.Title>
-          {cart.map((cItem: any, index: number) => (
-            <>
-              {cItem?.service?.services ? (
-                <KitCard kit={cItem} />
-              ) : (
-                <ItemCollapse
-                  key={index}
-                  professional={cItem?.professional}
-                  service={cItem?.service}
-                  product={cItem?.product}
-                  date={cItem?.start || undefined}
-                />
-              )}
-            </>
-          ))}
+          <div style={{ height: '400px', overflow: 'scroll' }}>
+            {cart.map((cItem: any, index: number) => (
+              <>
+                {cItem?.service?.services ? (
+                  <KitCard kit={cItem} />
+                ) : (
+                  <ItemCollapse
+                    key={index}
+                    professional={cItem?.professional}
+                    service={cItem?.service}
+                    product={cItem?.product}
+                    date={cItem?.start || undefined}
+                  />
+                )}
+              </>
+            ))}
+          </div>
           <S.Total>
             <S.LargeText>Total</S.LargeText>
             <S.LargeText>

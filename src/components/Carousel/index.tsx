@@ -18,7 +18,7 @@ export const Carousel = ({ items, size, services }: CarouselProps) => {
   return (
     <Splide options={{ perPage: 3, pagination: false, slideFocus: true }}>
       {items.map((item, index) => (
-        <SplideSlide>
+        <SplideSlide key={index}>
           <S.Item
             size={size}
             key={index}

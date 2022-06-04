@@ -7,6 +7,7 @@ export const Container = styled.div`
   height: 100%;
   overflow-y: auto;
   padding-bottom: 50px;
+  justify-content: space-between;
 `;
 
 export const Title = styled.h1`
@@ -87,13 +88,14 @@ export const CollapseContainer = styled.div`
   align-items: center;
   justify-content: space-between;
   position: relative;
-  margin: 20px 0;
+  margin: 50px 0;
 `;
 
 export const CollapseDate = styled.div`
   width: 110px;
   text-align: center;
   display: flex;
+  padding-bottom: 20px;
 `;
 
 export const CollapseDescription = styled.div`

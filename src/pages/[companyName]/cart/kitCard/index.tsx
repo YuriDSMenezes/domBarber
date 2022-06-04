@@ -6,7 +6,7 @@ import { ArrowDownIcon } from '../../../../../public/assets';
 import * as S from './styles';
 
 export const KitCard = (item: any) => {
-  const [openCollapse, setOpenCollapse] = useState(true);
+  const [openCollapse, setOpenCollapse] = useState(false);
   const handleOpenCollapse = () => setOpenCollapse(!openCollapse);
 
   const { name } = item?.kit.service;
@@ -50,7 +50,7 @@ export const KitCard = (item: any) => {
             ))}
           </S.Row>
         </S.ItemPhoto>
-        <S.Arrow onClick={handleOpenCollapse}>
+        <S.Arrow onClick={handleOpenCollapse} direction={openCollapse}>
           <img src={ArrowDownIcon.src} alt="Ícone de abrir colapse" />
         </S.Arrow>
       </S.Row>

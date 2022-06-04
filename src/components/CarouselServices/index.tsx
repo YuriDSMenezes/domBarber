@@ -48,6 +48,7 @@ export const CarouselService: React.FC<CarouselProps> = ({
       pathname: `/ps1/chooseprofessional`,
     });
   };
+
   return (
     <Splide
       options={{
@@ -62,14 +63,22 @@ export const CarouselService: React.FC<CarouselProps> = ({
             perPage: 3,
           },
         },
+        type: 'loop',
       }}
     >
       {services?.map((item, index) => (
         <SplideSlide key={index}>
-          <S.Item size={size} srcImage={item?.images[0]?.url} active={active}>
+          <S.Item
+            size={size}
+            srcImage={item?.images[0]?.url}
+            active={active}
+            className="item"
+          >
             {services ? (
               <>
-                <S.BlurContainer srcImage={item.images[0]?.url} />
+                <S.BlurContainer
+                  srcImage={item.images && item?.images[0]?.url}
+                />
                 <S.Texts className="showText">
                   <p>{item.description}</p>
                   <span>{` ${item.description}`}</span>

@@ -1,9 +1,10 @@
 import { ConvertToRem } from 'helpers';
-import styled from 'styled-components';
+import styled, { css, keyframes } from 'styled-components';
 
 export const ItemContainer = styled.div`
   position: relative;
-  margin-bottom: 20px;
+  margin-bottom: 50px;
+  padding-bottom: 20px;
 `;
 
 export const ItemDescription = styled.div`
@@ -52,8 +53,36 @@ export const Photo = styled.div`
   }
 `;
 
-export const Arrow = styled.div`
+interface ArrowProps {
+  direction?: boolean;
+}
+
+export const Arrow = styled.div<ArrowProps>`
+  @keyframes open {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(180deg);
+    }
+  }
+  @keyframes close {
+    0% {
+      transform: rotate(180deg);
+    }
+    100% {
+      transform: rotate(0deg);
+    }
+  }
   margin-top: 20px;
+  ${props =>
+    props.direction
+      ? css`
+          animation: open 0.5s forwards;
+        `
+      : css`
+          animation: close 0.5s forwards;
+        `}
 `;
 
 export const Row = styled.div`

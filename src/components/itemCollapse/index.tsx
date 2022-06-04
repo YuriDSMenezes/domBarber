@@ -20,7 +20,7 @@ export const ItemCollapse = ({
   date,
 }: ItemCollapseProps) => {
   const formatedDate = new Date(date);
-
+  console.log(professional);
   return (
     <S.CollapseContainer>
       <S.CollapseDate>
@@ -84,15 +84,13 @@ export const ItemCollapse = ({
             currencyPrefix: 'R$',
           })}
         </S.MediumText>
-        {/* <S.MediumText>
-          {service?.pointsGenerated || product?.pointsGenerated} Pontos
-        </S.MediumText> */}
+        <S.MediumText>{service?.pointsGenerated} Pontos</S.MediumText>
       </S.CollapseDescription>
       {service && (
         <S.CollapseService>
           <S.MediumText>Profissional</S.MediumText>
           <S.CollapseImage>
-            <img src="https://images.unsplash.com/photo-1599351431202-1e0f0137899a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=988&q=80" />
+            <img src={professional?.image} />
           </S.CollapseImage>
           <S.SmallText>{professional?.name}</S.SmallText>
         </S.CollapseService>
