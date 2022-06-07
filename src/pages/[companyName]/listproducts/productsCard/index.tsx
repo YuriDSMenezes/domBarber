@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useRouter } from 'next/router';
 import { Product } from 'models/types/product';
 import * as S from './styles';
@@ -9,9 +9,30 @@ interface ProductsProps {
 
 const ProductsCard: React.FC<ProductsProps> = ({ list }) => {
   const { push, isReady } = useRouter();
-  const handleClickCard = (professional: Product) => {
+
+  const [cart, setCart] = useState(() => {
+    if (typeof window !== 'undefined') {
+      const cart = localStorage.getItem('@domBarber:cart');
+
+      if (cart) {
+        return JSON.parse(cart);
+      }
+    }
+
+    return [];
+  });
+
+  const handleClickCard = (product: Product) => {
+    const newProduct = {
+      product,
+      productId: product.id,
+    };
+    const newCart = [...cart, newProduct];
+    setCart(newCart);
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('@domBarber:cart', JSON.stringify(newCart));
+    }
     push({
-      query: { id: professional.id },
       pathname: `/ps1/cart`,
     });
   };

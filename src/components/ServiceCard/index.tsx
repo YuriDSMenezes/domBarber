@@ -24,6 +24,7 @@ const ServiceCard: ComponentType<ServiceCardProps> = ({ list, isKit }) => {
         const parsedCart = JSON.parse(cart);
         const lastItemCart = parsedCart[parsedCart.length - 1];
         lastItemCart.professionalId &&
+          lastItemCart.professional &&
           !lastItemCart.serviceId &&
           setHasProfessional(true);
         return parsedCart;
@@ -53,6 +54,7 @@ const ServiceCard: ComponentType<ServiceCardProps> = ({ list, isKit }) => {
       };
       cart.pop();
       const newCart = [...cart, newLastItemCart];
+      setCart(newCart);
       if (typeof window !== 'undefined') {
         localStorage.setItem('@domBarber:cart', JSON.stringify(newCart));
       }

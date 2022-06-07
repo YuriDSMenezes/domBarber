@@ -62,7 +62,7 @@ export const BlurContainer = styled.div`
 
 export const Texts = styled.div`
   position: absolute;
-  bottom: 20px;
+  bottom: 10px;
   width: 90%;
   z-index: 2;
   @media (min-width: 768px) {
@@ -70,7 +70,7 @@ export const Texts = styled.div`
   }
   p {
     font-weight: 500;
-    font-size: ${ConvertToRem(12)};
+    font-size: ${ConvertToRem(16)};
     margin: 0;
   }
 

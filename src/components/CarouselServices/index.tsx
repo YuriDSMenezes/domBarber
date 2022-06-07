@@ -33,21 +33,21 @@ export const CarouselService: React.FC<CarouselProps> = ({
     return [];
   });
 
-  const handleClickCard = (item: Service) => {
-    setCart((oldState: any) => [
-      ...oldState,
-      { service: item, serviceId: item.id, start: undefined },
-    ]);
+  const handleClickCard = (service: Service) => {
+    const newService = {
+      service,
+      serviceId: service.id,
+    };
+    const newCart = [...cart, newService];
+    setCart(newCart);
     if (typeof window !== 'undefined') {
-      localStorage.setItem(
-        '@domBarber:cart',
-        JSON.stringify([...cart, { service: item, serviceId: item.id }]),
-      );
+      localStorage.setItem('@domBarber:cart', JSON.stringify(newCart));
     }
     push({
       pathname: `/ps1/chooseprofessional`,
     });
   };
+
   return (
     <Splide
       options={{
@@ -62,14 +62,23 @@ export const CarouselService: React.FC<CarouselProps> = ({
             perPage: 3,
           },
         },
+        type: 'loop',
       }}
     >
       {services?.map((item, index) => (
         <SplideSlide key={index}>
-          <S.Item size={size} srcImage={item?.images[0]?.url} active={active}>
+          <S.Item
+            size={size}
+            srcImage={item?.images[0]?.url}
+            active={active}
+            className="item"
+            onClick={() => handleClickCard(item)}
+          >
             {services ? (
               <>
-                <S.BlurContainer srcImage={item.images[0]?.url} />
+                <S.BlurContainer
+                  srcImage={item.images && item?.images[0]?.url}
+                />
                 <S.Texts className="showText">
                   <p>{item.description}</p>
                   <span>{` ${item.description}`}</span>

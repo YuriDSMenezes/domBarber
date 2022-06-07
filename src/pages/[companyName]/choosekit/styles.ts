@@ -6,6 +6,8 @@ export const Content = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: space-between;
+  padding-bottom: 30px;
 `;
 
 export const Title = styled.h1`
@@ -29,5 +31,5 @@ export const KitsContainer = styled.div`
   width: 100%;
   height: 50%;
   margin-bottom: 40px;
-  overflow-y: auto;
+  overflow-y: scroll;
 `;

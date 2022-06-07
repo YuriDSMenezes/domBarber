@@ -37,7 +37,7 @@ const chooseprofessional: React.FC = () => {
           professional.serviceIds.includes('XE4iGeaeKZe48FkOVAvk'),
         );
         const getService = services.find(
-          (service: any) => service.id === query.kitId,
+          (service: any) => service.id === query.kitId && !service.start,
         );
         setProfessionalsByService(getProfessionalsByService);
         setService(getService);
@@ -51,7 +51,7 @@ const chooseprofessional: React.FC = () => {
   const handleClickCard = (professional: Professional) => {
     const lastItem = cart.pop();
     const serviceIndex = lastItem.service.services.findIndex(
-      (service: any) => service.id === query.kitId,
+      (service: any) => service.id === query.kitId && !service.start,
     );
 
     lastItem.service.services[serviceIndex] = {

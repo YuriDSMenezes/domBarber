@@ -2,8 +2,9 @@ import Button from 'components/Button';
 import { useGlobal } from 'hooks/Global';
 import BottomSheetFixedLayout from 'layouts/BottomSheetFixedLayout';
 import MainLayout from 'layouts/MainLayout';
+import { KitService } from 'models/types/kit';
 import { useRouter } from 'next/router';
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import KitCard from './KitCard';
 
 import * as S from './styles';
@@ -22,13 +23,23 @@ const choosekit: React.FC = () => {
 
       if (cart) {
         const cartParsed = JSON.parse(cart);
-        setKit(cartParsed);
+        setKit(cartParsed[cartParsed.length - 1]);
         return cartParsed;
       }
     }
 
     return [];
   });
+
+  const canSchedule = useCallback(() => {
+    let isScheduled = true;
+    kit?.service?.services?.forEach(service => {
+      if (!service.start) {
+        isScheduled = false;
+      }
+    });
+    return isScheduled;
+  }, [kit]);
 
   return (
     <MainLayout>
@@ -39,11 +50,25 @@ const choosekit: React.FC = () => {
             Defina a data e hora para cada serviço do seu Kit
           </S.Description>
           <S.KitsContainer>
-            {kit?.map(({ service }: any) => (
-              <KitCard services={service?.services} />
+            {kit?.service?.services?.map((service: KitService) => (
+              <KitCard service={service} />
             ))}
           </S.KitsContainer>
-          <Button text="Confirmar Agendamento" />
+          {canSchedule() ? (
+            <Button
+              text="Confirmar Agendamento"
+              onClick={() =>
+                push({
+                  pathname: `/[companyName]/cart`,
+                  query: {
+                    companyName: company?.app?.name,
+                  },
+                })
+              }
+            />
+          ) : (
+            <Button disabled text="Agende todos os serviços" />
+          )}
         </S.Content>
       </BottomSheetFixedLayout>
     </MainLayout>

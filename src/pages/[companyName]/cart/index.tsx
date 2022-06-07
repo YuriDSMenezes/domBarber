@@ -14,15 +14,14 @@ import { useEffect, useState } from 'react';
 import * as S from './styles';
 import { ArrowDownIcon } from '../../../../public/assets';
 import { ItemCollapse } from '../../../components/itemCollapse';
+import { KitCard } from './kitCard';
 
 const Cart = () => {
   const { push } = useRouter();
   const {
     states: { company },
   } = useGlobal();
-  const [openCollapse, setOpenCollapse] = useState(true);
   const [openModal, setOpenModal] = useState<boolean>(false);
-  const isCombo = false;
   const [cart, setCart] = useState(() => {
     if (typeof window !== 'undefined') {
       const cart = localStorage.getItem('@domBarber:cart');
@@ -35,9 +34,9 @@ const Cart = () => {
     return [];
   });
 
-  const handleOpenCollapse = () => setOpenCollapse(!openCollapse);
   const handleOpenModal = () => setOpenModal(!openModal);
   const handleCloseModal = () => setOpenModal(false);
+  const cartSorted = cart.sort((a, b) => (a.start ? 1 : -1));
 
   return (
     <MainLayout>
@@ -54,78 +53,37 @@ const Cart = () => {
       <BottomSheetFixedLayout theme="dark">
         <S.Container>
           <S.Title onClick={handleOpenModal}>Carrinho</S.Title>
-          <div>
-            {isCombo ? (
-              <S.ItemContainer>
-                <S.ItemDescription>
-                  <S.OrangeTitle>Kit barba total</S.OrangeTitle>
-                  <S.SmallText>Barba Simples + Barboterapia</S.SmallText>
-                  <S.Row>
-                    <div>
-                      <S.MediumText>R$ 19,90</S.MediumText>
-                      <S.SmallText>20 Pontos</S.SmallText>
-                    </div>
-                    <div>
-                      <S.MediumText>R$ 19,90</S.MediumText>
-                      <S.SmallText>20 Pontos</S.SmallText>
-                    </div>
-                  </S.Row>
-                </S.ItemDescription>
-                <S.ItemPhoto>
-                  <S.MediumText>Profissionais</S.MediumText>
-                  <S.Row>
-                    <div>
-                      <S.Photo>
-                        <img src="https://images.unsplash.com/photo-1599351431202-1e0f0137899a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=988&q=80" />
-                      </S.Photo>
-                      <S.SmallText>Paulo R.</S.SmallText>
-                    </div>
-                    <div>
-                      <S.Photo>
-                        <img src="https://images.unsplash.com/photo-1599351431202-1e0f0137899a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=988&q=80" />
-                      </S.Photo>
-                      <S.SmallText>Paulo R.</S.SmallText>
-                    </div>
-                  </S.Row>
-                </S.ItemPhoto>
-                <S.Arrow onClick={handleOpenCollapse}>
-                  <img src={ArrowDownIcon.src} alt="Ícone de abrir colapse" />
-                </S.Arrow>
-                <S.Line />
-                {openCollapse && (
+          <div style={{ height: '400px', overflow: 'scroll' }}>
+            {cartSorted.map((cItem: any, index: number) => (
+              <>
+                {cItem?.service?.services ? (
+                  <KitCard kit={cItem} />
+                ) : (
                   <ItemCollapse
-                    professional={cart[cart.length - 1]?.professional}
-                    service={cart[cart.length - 1]?.service}
-                    date={cart[cart.length - 1]?.start}
+                    key={index}
+                    professional={cItem?.professional}
+                    service={cItem?.service}
+                    product={cItem?.product}
+                    date={cItem?.start || undefined}
                   />
                 )}
-              </S.ItemContainer>
-            ) : (
-              cart.map((cItem: any, index: number) => (
-                <ItemCollapse
-                  key={index}
-                  professional={cItem?.professional}
-                  service={cItem?.service}
-                  product={cItem?.product}
-                  date={cItem?.start || undefined}
-                />
-              ))
-            )}
-            <S.Total>
-              <S.LargeText>Total</S.LargeText>
-              <S.LargeText>
-                {currencyFormat({
-                  value: cart.reduce(
-                    (acc: number, curr: any) =>
-                      (acc += curr?.service?.price || curr?.product?.price),
-                    0,
-                  ),
-                  currencyPrefix: 'R$',
-                })}
-              </S.LargeText>
-              <S.Line />
-            </S.Total>
+              </>
+            ))}
           </div>
+          <S.Total>
+            <S.LargeText>Total</S.LargeText>
+            <S.LargeText>
+              {currencyFormat({
+                value: cart.reduce(
+                  (acc: number, curr: any) =>
+                    (acc += curr?.service?.price || curr?.product?.price),
+                  0,
+                ),
+                currencyPrefix: 'R$',
+              })}
+            </S.LargeText>
+            <S.Line />
+          </S.Total>
           <S.Buttons>
             <S.Row>
               <Button

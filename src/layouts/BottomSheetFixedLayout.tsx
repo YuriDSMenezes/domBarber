@@ -17,15 +17,13 @@ interface StyleProps {
 
 const Container = styled.div<StyleProps>`
   width: 100%;
-  height: calc(100vh - 56px);
+  height: calc(100vh);
   background: #1c1c1c;
   position: relative;
   background-image: url('https://images.unsplash.com/photo-1599351431202-1e0f0137899a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=988&q=80');
   background-position: top;
   background-size: contain;
   background-repeat: no-repeat;
-  padding-top: 100px;
-  overflow-y: scroll;
 
   @media (min-width: 768px) {
     background: none;
@@ -48,12 +46,12 @@ const Container = styled.div<StyleProps>`
 
 const Content = styled.div<StyleProps>`
   position: absolute;
-  overflow-y: scroll;
   background-color: #fff;
   width: 100%;
-  min-height: 100%;
   border-radius: 46px 46px 0px 0px;
   padding: 20px 15px 0px;
+  bottom: 0;
+  top: 200px;
   @media (min-width: 768px) {
     position: initial;
     height: 880px;

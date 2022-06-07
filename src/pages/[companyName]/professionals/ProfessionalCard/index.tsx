@@ -3,7 +3,6 @@ import { Professional } from 'models/types/professional';
 import { useRouter } from 'next/router';
 import StarRatingComponent from 'react-star-rating-component';
 import * as S from './styles';
-import professionals from '..';
 
 interface ProfessionalsProps {
   list: Array<Professional>;
