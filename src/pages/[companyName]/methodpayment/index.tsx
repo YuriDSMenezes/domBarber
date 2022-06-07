@@ -1,4 +1,3 @@
-import { getClientByUserIdAndCompanyId } from 'cases/client/getClientByUserIdAndCompanyId';
 import { getUserIdFromLocalStorage } from 'cases/user/getUserIdFromLocalStorage';
 import { getUserTokenFromLocalStorage } from 'cases/user/getUserTokenFromLocalStorage';
 import Button from 'components/Button';
@@ -19,13 +18,13 @@ const methodpayment: React.FC = () => {
     actions: { encriptCard },
   } = useMethodPaymentController();
 
-  useEffect(() => {
-    getClientByUserIdAndCompanyId(
-      getUserIdFromLocalStorage(),
-      company?.id,
-      getUserTokenFromLocalStorage(),
-    );
-  }, [company]);
+  // useEffect(() => {
+  //   getClientByUserIdAndCompanyId(
+  //     getUserIdFromLocalStorage(),
+  //     company?.id,
+  //     getUserTokenFromLocalStorage(),
+  //   );
+  // }, [company]);
   return (
     <MainLayout>
       <BottomSheetFixedLayout theme="light">
