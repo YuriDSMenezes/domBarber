@@ -20,7 +20,6 @@ export const ItemCollapse = ({
   date,
 }: ItemCollapseProps) => {
   const formatedDate = new Date(date);
-  console.log(professional);
   return (
     <S.CollapseContainer>
       <S.CollapseDate>

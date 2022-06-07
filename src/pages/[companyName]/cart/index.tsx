@@ -22,7 +22,6 @@ const Cart = () => {
     states: { company },
   } = useGlobal();
   const [openModal, setOpenModal] = useState<boolean>(false);
-  const isCombo = false;
   const [cart, setCart] = useState(() => {
     if (typeof window !== 'undefined') {
       const cart = localStorage.getItem('@domBarber:cart');
@@ -37,6 +36,7 @@ const Cart = () => {
 
   const handleOpenModal = () => setOpenModal(!openModal);
   const handleCloseModal = () => setOpenModal(false);
+  const cartSorted = cart.sort((a, b) => (a.start ? 1 : -1));
 
   return (
     <MainLayout>
@@ -54,7 +54,7 @@ const Cart = () => {
         <S.Container>
           <S.Title onClick={handleOpenModal}>Carrinho</S.Title>
           <div style={{ height: '400px', overflow: 'scroll' }}>
-            {cart.map((cItem: any, index: number) => (
+            {cartSorted.map((cItem: any, index: number) => (
               <>
                 {cItem?.service?.services ? (
                   <KitCard kit={cItem} />

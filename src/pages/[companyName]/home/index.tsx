@@ -62,14 +62,9 @@ const Home: NextPage = () => {
         <S.Professional>
           <S.Description>Profissionais</S.Description>
           <Carousel
-            items={globalStates.professionals
-              .filter(prof => !prof.deletedAt)
-              .map(professional => ({
-                image: professional?.image,
-                title: professional.name,
-                description: '',
-              }))}
+            items={globalStates.professionals.filter(prof => !prof.deletedAt)}
             size="sm"
+            professional
           />
           <S.SeeMore
             onClick={() =>
@@ -90,14 +85,7 @@ const Home: NextPage = () => {
         </S.Professional>
         <S.Products>
           <S.Description>Produtos</S.Description>
-          <Carousel
-            items={globalStates.products.map(product => ({
-              image: product?.images[0]?.url,
-              title: product.name,
-              description: product?.description,
-            }))}
-            size="md"
-          />
+          <Carousel items={globalStates.products} size="md" />
           <S.SeeMore
             onClick={() =>
               push({
