@@ -7,12 +7,10 @@ import { currencyFormat } from 'helpers';
 import { useGlobal } from 'hooks/Global';
 import BottomSheetFixedLayout from 'layouts/BottomSheetFixedLayout';
 import MainLayout from 'layouts/MainLayout';
-import { Professional } from 'models/types/professional';
-import { Service } from 'models/types/service';
 import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
+import { createSchedule } from 'cases/schedule/createSchedule';
 import * as S from './styles';
-import { ArrowDownIcon } from '../../../../public/assets';
 import { ItemCollapse } from '../../../components/itemCollapse';
 import { KitCard } from './kitCard';
 
@@ -36,7 +34,9 @@ const Cart = () => {
 
   const handleOpenModal = () => setOpenModal(!openModal);
   const handleCloseModal = () => setOpenModal(false);
-  const cartSorted = cart.sort((a, b) => (a.start ? 1 : -1));
+  const cartSorted = cart.sort((itemA: any, itemB: any) =>
+    itemA.start ? 1 : -1,
+  );
 
   return (
     <MainLayout>
@@ -110,6 +110,7 @@ const Cart = () => {
             <Button
               text="Confirmar Agendamento"
               onClick={() => {
+                createSchedule();
                 push({
                   pathname: `/[companyName]/scheduleconfirmed`,
                   query: { companyName: company?.app?.url },
