@@ -22,7 +22,6 @@ import { getCompanyByUrl } from '../../../cases/company/getCompanyByUrl';
 export const useAppController = () => {
   const { states: globalStates, actions: globalActions } = useGlobal();
   const { actions: loadingActions } = useLoading();
-
   const {
     query: { companyName },
     isReady,

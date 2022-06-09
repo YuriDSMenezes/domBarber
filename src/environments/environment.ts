@@ -5,7 +5,7 @@
 export const environment = {
   production: false,
   projectId: 'dombarber',
-  hostApi: 'https://doms-cloudrun-le6bnrchjq-rj.a.run.app',
+  hostApi: 'https://dev-api.dombarber.app/',
   firebase: {
     apiKey: 'AIzaSyDsyx0zcNEuZAgfonrKRLHKM9VuvEQVgC8',
     authDomain: 'doms-dev.firebaseapp.com',
