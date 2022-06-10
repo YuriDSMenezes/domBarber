@@ -10,6 +10,7 @@ import MainLayout from 'layouts/MainLayout';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
 import { createSchedule } from 'cases/schedule/createSchedule';
+import { getUserIdFromLocalStorage } from 'cases/user/getUserIdFromLocalStorage';
 import * as S from './styles';
 import { ItemCollapse } from '../../../components/itemCollapse';
 import { KitCard } from './kitCard';
@@ -20,6 +21,16 @@ const Cart = () => {
     states: { company },
   } = useGlobal();
   const [openModal, setOpenModal] = useState<boolean>(false);
+  const [clientId, setClientId] = useState(() => {
+    if (typeof window !== 'undefined') {
+      const clientId = localStorage.getItem('@domBarber:client');
+
+      if (clientId) {
+        return JSON.parse(clientId);
+      }
+    }
+    return null;
+  });
   const [cart, setCart] = useState(() => {
     if (typeof window !== 'undefined') {
       const cart = localStorage.getItem('@domBarber:cart');
@@ -110,7 +121,13 @@ const Cart = () => {
             <Button
               text="Confirmar Agendamento"
               onClick={() => {
-                createSchedule();
+                createSchedule({
+                  companyId: company.id,
+                  token: getUserIdFromLocalStorage(),
+                  from: 'pro-app',
+                  clientId: clientId.id,
+                  schedules: cart,
+                });
                 push({
                   pathname: `/[companyName]/scheduleconfirmed`,
                   query: { companyName: company?.app?.url },
