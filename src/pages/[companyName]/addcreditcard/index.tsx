@@ -102,7 +102,11 @@ const addcreditcard: React.FC = () => {
             </S.CreditCardInputContainer>
           </S.CreditCardInputsContainer>
           <S.ActionButtonContainer>
-            <Button text="Confirmar" green />
+            <Button
+              text="Confirmar"
+              green
+              onClick={() => actions.registerCreditCard()}
+            />
           </S.ActionButtonContainer>
         </S.Content>
       </BottomSheetFixedLayout>

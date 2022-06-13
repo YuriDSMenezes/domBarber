@@ -74,6 +74,7 @@ export const signInWithGoogle = async () =>
           authId: user.uid,
           companyId: company.id,
         });
+        delete responseLogin.data.cards;
         if (typeof window !== 'undefined') {
           localStorage.setItem(
             '@domBarber:token',
