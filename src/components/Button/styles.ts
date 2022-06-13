@@ -11,7 +11,7 @@ export const Container = styled.button<StyleProps>`
   border-radius: 10px;
   border: none;
   width: 100%;
-  height: 37px;
+  height: 41px;
   display: flex;
   align-items: center;
   cursor: pointer;
@@ -25,10 +25,6 @@ export const Container = styled.button<StyleProps>`
     color: black;
   }
 
-  @media (max-width: 768px) {
-    height: 41px;
-  }
-
   ${props =>
     props.green &&
     css`
@@ -38,6 +34,6 @@ export const Container = styled.button<StyleProps>`
   ${props =>
     props.smallSize &&
     css`
-      height: 27px;
+      height: 20px;
     `}
 `;
