@@ -10,7 +10,7 @@ import MainLayout from 'layouts/MainLayout';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
 import { createSchedule } from 'cases/schedule/createSchedule';
-import { getUserIdFromLocalStorage } from 'cases/user/getUserIdFromLocalStorage';
+import { getUserTokenFromLocalStorage } from 'cases/user/getUserTokenFromLocalStorage';
 import * as S from './styles';
 import { ItemCollapse } from '../../../components/itemCollapse';
 import { KitCard } from './kitCard';
@@ -123,7 +123,7 @@ const Cart = () => {
               onClick={() => {
                 createSchedule({
                   companyId: company.id,
-                  token: getUserIdFromLocalStorage(),
+                  token: getUserTokenFromLocalStorage(),
                   from: 'pro-app',
                   clientId: clientId.id,
                   schedules: cart,

@@ -19,44 +19,57 @@ export const createSchedule = async ({
   schedules,
 }: scheduleCreateProps) => {
   try {
-    const schedulesFormatted = schedules.map(item => ({
-      start: item.start,
-      serviceId: item.serviceId,
-      professionalId: item.professionalId,
-    }));
+    const schedulesFormatted = schedules.map(
+      item =>
+        !item.service.services && {
+          companyId,
+          from,
+          clientId,
+          start: item?.start,
+          serviceIds: [item.serviceId],
+          professionalId: item?.professionalId,
+        },
+    );
+    const schedulesKitFormatted = schedules.map(
+      item =>
+        item?.service?.services && {
+          from,
+          kitId: item.service.id,
+          clientId,
+          services: item?.service?.services?.map(subItem => ({
+            serviceId: subItem.id,
+            start: subItem.start,
+            professionalId: subItem.professionalId,
+          })),
+        },
+    );
 
-    const schedulesKitFormatted = schedules.map(item => ({
-      kitId: item.id,
-      services: item.services.map(subItem => ({
-        serviceId: subItem.id,
-        start: subItem.start,
-        professionalId: subItem.professionalId,
-      })),
-    }));
+    // console.log(schedulesFormatted);
 
-    const body = {
-      companyId,
-      from,
-      clientId,
-      schedules: schedulesFormatted,
-    };
-    let response;
-    schedules.map(async item => {
-      if (item.service.services) {
-        response = await api.post(
-          'schedule/kit',
-          { ...body, schedules: schedulesKitFormatted },
-          {
-            headers: {
-              ProjectId: environment.projectId,
-              CompanyId: companyId,
-              Authorization: `Bearer ${token}`,
-            },
+    if (schedulesFormatted) {
+      return schedulesFormatted.forEach(async schedule => {
+        await api.post('schedule', schedule, {
+          headers: {
+            ProjectId: environment.projectId,
+            CompanyId: companyId,
+            Authorization: `Bearer ${token}`,
           },
-        );
-      }
-    });
-    return response.data.docs;
+        });
+      });
+    }
+
+    if (schedulesKitFormatted) {
+      return schedulesKitFormatted.forEach(async schedule => {
+        await api.post('schedule/kit', schedule, {
+          headers: {
+            ProjectId: environment.projectId,
+            CompanyId: companyId,
+            Authorization: `Bearer ${token}`,
+          },
+        });
+      });
+    }
+    return [];
   } catch (error) {
     return console.error('erro', error);
   }
