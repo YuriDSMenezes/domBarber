@@ -10,9 +10,8 @@ import { getUserTokenFromLocalStorage } from 'cases/user/getUserTokenFromLocalSt
 import { useGlobal } from 'hooks/Global';
 import { deleteScheduledByScheduleId } from 'cases/schedule/deleteScheduledByScheduleId';
 import { useRouter } from 'next/router';
+import { getUserIdFromLocalStorage } from 'cases/user/getUserIdFromLocalStorage';
 import * as S from './styles';
-
-import { appointments as mockAppointments } from '../../../../_mocks/appointments';
 
 const appointments: NextPage = () => {
   const [selectedIndex, setSelectedIndex] = useState<number | undefined>();
@@ -25,8 +24,8 @@ const appointments: NextPage = () => {
   const getSchedules = async () => {
     const response = await getClientSchedulesByClientId(
       getUserTokenFromLocalStorage(),
-      'oVbVdUz0Y2COMwNjj5NJ',
-      'T3IET5GcdVVAqUJkub6C',
+      getUserIdFromLocalStorage(),
+      company.id,
     );
     setSchedules(response);
   };
