@@ -5,13 +5,16 @@ import * as S from './styles';
 interface CardSlideProps extends HTMLAttributes<HTMLDivElement> {
   swiped?: boolean;
   handleSwipe?: (state: boolean) => void;
+  firstAction?: (props: any) => void;
+  secondAction?: (props: any) => void;
 }
 
 const CardSlide: React.FC<CardSlideProps> = ({
   swiped = false,
   children,
   onClick,
-  ...rest
+  firstAction,
+  secondAction,
 }) => {
   const actions = [
     { description: 'Excluir', color: '#FF3D57' },
@@ -30,21 +33,27 @@ const CardSlide: React.FC<CardSlideProps> = ({
         onClick={onClick}
         open={swiped}
         actionsQuantity={actions.length}
-        {...rest}
       >
         {children}
       </S.CardContent>
-      {actions.map((action, index) => (
-        <S.OptionsContainer
-          actionOrder={index}
-          actionsQuantity={actions.length}
-          actionColor={action.color}
-        >
-          <S.ActionButton onClick={() => console.log(action.description)}>
-            {action.description}
-          </S.ActionButton>
-        </S.OptionsContainer>
-      ))}
+      <S.OptionsContainer
+        actionOrder={0}
+        actionsQuantity={2}
+        actionColor="#FF3D57"
+      >
+        <S.ActionButton onClick={props => firstAction && firstAction(props)}>
+          Excluir
+        </S.ActionButton>
+      </S.OptionsContainer>
+      <S.OptionsContainer
+        actionOrder={1}
+        actionsQuantity={2}
+        actionColor="#FF9933"
+      >
+        <S.ActionButton onClick={props => secondAction && secondAction(props)}>
+          Editar
+        </S.ActionButton>
+      </S.OptionsContainer>
     </S.Container>
   );
 };

@@ -1,5 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React from 'react';
+import { getProfessionalById } from 'cases/professional/getProfessionalById';
+import { deleteScheduledByScheduleId } from 'cases/schedule/deleteScheduledByScheduleId';
+import { getServiceByServiceId } from 'cases/service/getServiceByServiceId';
+import { getUserTokenFromLocalStorage } from 'cases/user/getUserTokenFromLocalStorage';
+import { useGlobal } from 'hooks/Global';
+import React, { useEffect, useState } from 'react';
 import * as S from './styles';
 
 interface AppointmentCardProps {
@@ -48,32 +53,55 @@ const AppointmentCard: React.FC<AppointmentCardProps> = ({
   appointment,
   theme,
 }) => {
-  const formatedDate = new Date(appointment.date);
+  const {
+    states: { company },
+  } = useGlobal();
+  const formatedDate = new Date(appointment.start);
+  const [service, setService] = useState({});
+  const [professional, setProfessional] = useState({});
+  const getServiceAndProfessional = async () => {
+    const service = await getServiceByServiceId(
+      getUserTokenFromLocalStorage(),
+      appointment?.serviceIds[0],
+      company.id,
+    );
+    setService(service);
+    const professional = await getProfessionalById(appointment?.professionalId);
+    setProfessional(professional);
+  };
+
+  useEffect(() => {
+    getServiceAndProfessional();
+  }, []);
   return (
     <S.Container>
       <S.ContainerDateTime>
         <S.DayText theme={theme}>{stringDays[formatedDate.getDay()]}</S.DayText>
         <S.MonthText theme={theme}>
-          {stringDays[formatedDate.getMonth()]}
+          {stringMonths[formatedDate.getMonth()]}
         </S.MonthText>
         <S.DayNumber theme={theme}>{formatedDate.getDate()}</S.DayNumber>
         <S.Time theme={theme}>
-          {`${formatedDate.getHours()}:${formatedDate.getMinutes()}`}
+          {`${formatedDate.getHours()}:${
+            formatedDate.getMinutes() < 10
+              ? `0${formatedDate.getMinutes()}`
+              : formatedDate.getMinutes()
+          }`}
         </S.Time>
       </S.ContainerDateTime>
       <S.ContentAppointmentDescription>
         <S.ContentAppointmentDescriptionInformationContainer>
           <S.AppointmentDescription theme={theme}>
-            {appointment.description}
+            {service.description}
           </S.AppointmentDescription>
           <S.AppointmentValue theme={theme}>
             {currencyFormat({
-              value: Number(appointment.value),
+              value: Number(service.price),
               currencyPrefix: 'R$',
             })}
           </S.AppointmentValue>
           <S.AppointmentPoints theme={theme}>
-            {`${appointment.points} Pontos`}
+            {`${service.pointsGenerated} Pontos`}
           </S.AppointmentPoints>
           <S.AppointmentPaymentStatus theme={theme}>
             {appointment.paymentStatus}
@@ -84,10 +112,10 @@ const AppointmentCard: React.FC<AppointmentCardProps> = ({
             Profissional
           </S.DescriptionImageProfessional>
           <S.ProfessionalImage>
-            <img src={appointment.avatar} alt={appointment.professional} />
+            <img src={professional?.image} alt={professional?.name} />
           </S.ProfessionalImage>
           <S.ProfessionalName theme={theme}>
-            {appointment.professional}
+            {professional?.name}
           </S.ProfessionalName>
         </S.ContentAppointmentDescriptionImageContainer>
       </S.ContentAppointmentDescription>

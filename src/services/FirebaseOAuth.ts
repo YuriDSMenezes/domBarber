@@ -1,4 +1,3 @@
-import { getClientByUserIdAndCompanyId } from 'cases/client/getClientByUserIdAndCompanyId';
 import { useGlobal } from 'hooks/Global';
 /* eslint-disable no-return-assign */
 import firebase from 'firebase/compat/app';

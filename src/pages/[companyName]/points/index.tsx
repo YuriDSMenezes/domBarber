@@ -1,30 +1,54 @@
+import { getClientFromLocalStorage } from 'cases/client/getClientFromLocalStorage';
+import { getUserTokenFromLocalStorage } from 'cases/user/getUserTokenFromLocalStorage';
+import { environment } from 'environments/environment.prod';
+import { useGlobal } from 'hooks/Global';
 import BottomSheetFixedLayout from 'layouts/BottomSheetFixedLayout';
 import MainLayout from 'layouts/MainLayout';
-import React from 'react';
+import { Client } from 'models/client';
+import React, { useEffect, useState } from 'react';
+import api from 'services/api';
 import RegisterPointCard from './RegisterPointCard';
 
 import * as S from './styles';
 
 const points: React.FC = () => {
+  const {
+    states: { company },
+  } = useGlobal();
+
+  const [points, setPoints] = useState('');
+
+  const getClientPoints = async () => {
+    try {
+      const client = getClientFromLocalStorage();
+      if (!client) throw new Error('Cliente não localizado no Local Storage');
+      const response = await api.get(`client/point/${client.id}`, {
+        headers: {
+          ProjectId: environment.projectId,
+          CompanyId: company.id,
+          Authorization: `Bearer ${getUserTokenFromLocalStorage()}`,
+        },
+      });
+      setPoints(response.data.total);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  useEffect(() => {
+    getClientPoints();
+  }, []);
+
   return (
     <MainLayout>
       <BottomSheetFixedLayout theme="dark">
         <S.Content>
           <S.Title>Pontuação</S.Title>
           <S.AvaliablePointsText>Pontos Disponíveis:</S.AvaliablePointsText>
-          <S.AvaliablePointsValue>80 Pontos</S.AvaliablePointsValue>
+          <S.AvaliablePointsValue>
+            {points === '' ? '0' : points} Pontos
+          </S.AvaliablePointsValue>
           <S.PointsHistoryContainer>
-            <RegisterPointCard />
-            <RegisterPointCard />
-            <RegisterPointCard />
-            <RegisterPointCard />
-            <RegisterPointCard />
-            <RegisterPointCard />
-            <RegisterPointCard />
-            <RegisterPointCard />
-            <RegisterPointCard />
-            <RegisterPointCard />
-            <RegisterPointCard />
             <RegisterPointCard />
           </S.PointsHistoryContainer>
         </S.Content>
