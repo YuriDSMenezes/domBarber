@@ -62,7 +62,7 @@ const Home: NextPage = () => {
         <S.Professional>
           <S.Description>Profissionais</S.Description>
           <Carousel
-            items={globalStates.professionals.filter(prof => !prof.deletedAt)}
+            items={globalStates?.professionals}
             size="sm"
             professional
           />

@@ -39,15 +39,17 @@ export const Carousel = ({ items, size, professional }: CarouselProps) => {
         pathname: `/ps1/newservice`,
       });
     }
-    const newCart = [...cart];
-    newCart.push({ product: item, productId: item.id });
-    setCart(newCart);
-    if (typeof window !== 'undefined') {
-      localStorage.setItem('@domBarber:cart', JSON.stringify(newCart));
+    if (!professional) {
+      const newCart = [...cart];
+      newCart.push({ product: item, productId: item.id });
+      setCart(newCart);
+      if (typeof window !== 'undefined') {
+        localStorage.setItem('@domBarber:cart', JSON.stringify(newCart));
+      }
+      push({
+        pathname: `/ps1/cart`,
+      });
     }
-    push({
-      pathname: `/ps1/cart`,
-    });
   };
 
   return (
@@ -57,7 +59,7 @@ export const Carousel = ({ items, size, professional }: CarouselProps) => {
           <S.Item
             size={size}
             key={index}
-            srcImage={item?.image || item?.images[0].url}
+            srcImage={item?.image || (item.images && item?.images[0]?.url)}
             onClick={() => handleClickCard(item)}
           >
             <S.Texts>
