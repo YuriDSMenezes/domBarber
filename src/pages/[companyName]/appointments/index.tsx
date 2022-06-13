@@ -8,6 +8,8 @@ import CardSlide from 'components/CardSlide';
 import { getClientSchedulesByClientId } from 'cases/schedule/getClientSchedulesByClientId';
 import { getUserTokenFromLocalStorage } from 'cases/user/getUserTokenFromLocalStorage';
 import { useGlobal } from 'hooks/Global';
+import { deleteScheduledByScheduleId } from 'cases/schedule/deleteScheduledByScheduleId';
+import { useRouter } from 'next/router';
 import * as S from './styles';
 
 import { appointments as mockAppointments } from '../../../../_mocks/appointments';
@@ -18,6 +20,7 @@ const appointments: NextPage = () => {
   const {
     states: { company },
   } = useGlobal();
+  const { push } = useRouter();
 
   const getSchedules = async () => {
     const response = await getClientSchedulesByClientId(
@@ -28,14 +31,24 @@ const appointments: NextPage = () => {
     setSchedules(response);
   };
 
+  const deleteSchedule = async (id: string) => {
+    await deleteScheduledByScheduleId(
+      id,
+      company.id,
+      getUserTokenFromLocalStorage(),
+    );
+  };
+
   useEffect(() => {
-    setTimeout(() => setSelectedIndex(0), 1000);
-    setTimeout(() => setSelectedIndex(undefined), 2000);
-    getSchedules();
+    setTimeout(() => setSelectedIndex(0), 500);
+    setTimeout(() => setSelectedIndex(undefined), 1000);
   }, []);
 
-  // oVbVdUz0Y2COMwNjj5NJ
+  useEffect(() => {
+    getSchedules();
+  }, [selectedIndex]);
 
+  // oVbVdUz0Y2COMwNjj5NJ
   return (
     <MainLayout>
       <BottomSheetFixedLayout theme="dark">
@@ -54,6 +67,12 @@ const appointments: NextPage = () => {
                     setSelectedIndex(index);
                   }
                 }}
+                firstAction={() => deleteSchedule(appointment.id)}
+                secondAction={() =>
+                  push({
+                    pathname: `/ps1/scheduleedit/${appointment.id}`,
+                  })
+                }
               >
                 <AppointmentCard appointment={appointment} />
               </CardSlide>

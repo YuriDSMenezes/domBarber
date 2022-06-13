@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { getProfessionalById } from 'cases/professional/getProfessionalById';
+import { deleteScheduledByScheduleId } from 'cases/schedule/deleteScheduledByScheduleId';
 import { getServiceByServiceId } from 'cases/service/getServiceByServiceId';
 import { getUserTokenFromLocalStorage } from 'cases/user/getUserTokenFromLocalStorage';
 import { useGlobal } from 'hooks/Global';
@@ -81,7 +82,11 @@ const AppointmentCard: React.FC<AppointmentCardProps> = ({
         </S.MonthText>
         <S.DayNumber theme={theme}>{formatedDate.getDate()}</S.DayNumber>
         <S.Time theme={theme}>
-          {`${formatedDate.getHours()}:${formatedDate.getMinutes()}`}
+          {`${formatedDate.getHours()}:${
+            formatedDate.getMinutes() < 10
+              ? `0${formatedDate.getMinutes()}`
+              : formatedDate.getMinutes()
+          }`}
         </S.Time>
       </S.ContainerDateTime>
       <S.ContentAppointmentDescription>
