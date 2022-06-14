@@ -24,6 +24,8 @@ const appointments: NextPage = () => {
   const getSchedules = async () => {
     const response = await getClientSchedulesByClientId(
       getUserTokenFromLocalStorage(),
+      // 'oVbVdUz0Y2COMwNjj5NJ',
+      // 'T3IET5GcdVVAqUJkub6C',
       getUserIdFromLocalStorage(),
       company.id,
     );
@@ -36,6 +38,7 @@ const appointments: NextPage = () => {
       company.id,
       getUserTokenFromLocalStorage(),
     );
+    await getSchedules();
   };
 
   useEffect(() => {
@@ -55,27 +58,29 @@ const appointments: NextPage = () => {
           <S.Title>Minha Agenda</S.Title>
           <Button text="Novo Agendamento" />
           <S.AppointmentsContainer>
-            {schedules.map((appointment, index) => (
-              <CardSlide
-                key={index}
-                swiped={selectedIndex === index}
-                onClick={() => {
-                  if (selectedIndex === index) {
-                    setSelectedIndex(undefined);
-                  } else {
-                    setSelectedIndex(index);
+            {schedules.map((appointment, index) =>
+              !appointment?.canceled ? (
+                <CardSlide
+                  key={index}
+                  swiped={selectedIndex === index}
+                  onClick={() => {
+                    if (selectedIndex === index) {
+                      setSelectedIndex(undefined);
+                    } else {
+                      setSelectedIndex(index);
+                    }
+                  }}
+                  firstAction={() => deleteSchedule(appointment.id)}
+                  secondAction={() =>
+                    push({
+                      pathname: `/ps1/scheduleedit/${appointment.id}`,
+                    })
                   }
-                }}
-                firstAction={() => deleteSchedule(appointment.id)}
-                secondAction={() =>
-                  push({
-                    pathname: `/ps1/scheduleedit/${appointment.id}`,
-                  })
-                }
-              >
-                <AppointmentCard appointment={appointment} />
-              </CardSlide>
-            ))}
+                >
+                  <AppointmentCard appointment={appointment} />
+                </CardSlide>
+              ) : null,
+            )}
           </S.AppointmentsContainer>
         </S.Content>
       </BottomSheetFixedLayout>
