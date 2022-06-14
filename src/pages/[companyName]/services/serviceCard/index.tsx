@@ -10,13 +10,13 @@ interface ServiceProps {
 
 const ServiceCard: React.FC<ServiceProps> = () => {
   const {
-    states: { services },
+    states: { services, company },
   } = useGlobal();
   const { push } = useRouter();
   const handleClickCard = (service: Service) => {
     push({
-      query: { id: service.id },
-      pathname: `/ps1/confirmservice`,
+      query: { id: service.id, companyName: company?.app?.url },
+      pathname: `/[companyName]/confirmservice`,
     });
   };
 

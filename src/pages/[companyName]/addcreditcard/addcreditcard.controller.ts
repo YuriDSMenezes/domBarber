@@ -1,3 +1,4 @@
+import { getCompanyFromLocalStorage } from 'cases/company/getCompanyFromLocalStorage';
 import { getUserTokenFromLocalStorage } from 'cases/user/getUserTokenFromLocalStorage';
 import { environment } from 'environments/environment.prod';
 import { useGlobal } from 'hooks/Global';
@@ -72,8 +73,7 @@ export const useAddCreditCard = () => {
   const registerCreditCard = async () => {
     try {
       const encryptedCard = encriptCard({
-        publicKey:
-          'MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAr+ZqgD892U9/HXsa7XqBZUayPquAfh9xx4iwUbTSUAvTlmiXFQNTp0Bvt/5vK2FhMj39qSv1zi2OuBjvW38q1E374nzx6NNBL5JosV0+SDINTlCG0cmigHuBOyWzYmjgca+mtQu4WczCaApNaSuVqgb8u7Bd9GCOL4YJotvV5+81frlSwQXralhwRzGhj/A57CGPgGKiuPT+AOGmykIGEZsSD9RKkyoKIoc0OS8CPIzdBOtTQCIwrLn2FxI83Clcg55W8gkFSOS6rWNbG5qFZWMll6yl02HtunalHmUlRUL66YeGXdMDC2PuRcmZbGO5a/2tbVppW6mfSWG3NPRpgwIDAQAB',
+        publicKey: getCompanyFromLocalStorage()?.pagseguro?.publicKey,
         holder: creditCardData.name,
         number: creditCardData.number,
         securityCode: Number(creditCardData.cvc),
@@ -88,8 +88,7 @@ export const useAddCreditCard = () => {
         headers: {
           ProjectId: environment.projectId,
           CompanyId: company.id,
-          publickey:
-            'MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAr+ZqgD892U9/HXsa7XqBZUayPquAfh9xx4iwUbTSUAvTlmiXFQNTp0Bvt/5vK2FhMj39qSv1zi2OuBjvW38q1E374nzx6NNBL5JosV0+SDINTlCG0cmigHuBOyWzYmjgca+mtQu4WczCaApNaSuVqgb8u7Bd9GCOL4YJotvV5+81frlSwQXralhwRzGhj/A57CGPgGKiuPT+AOGmykIGEZsSD9RKkyoKIoc0OS8CPIzdBOtTQCIwrLn2FxI83Clcg55W8gkFSOS6rWNbG5qFZWMll6yl02HtunalHmUlRUL66YeGXdMDC2PuRcmZbGO5a/2tbVppW6mfSWG3NPRpgwIDAQAB',
+          publicKey: getCompanyFromLocalStorage()?.pagseguro?.publicKey,
           Authorization: `Bearer ${getUserTokenFromLocalStorage()}`,
         },
       });

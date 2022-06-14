@@ -73,7 +73,8 @@ const appointments: NextPage = () => {
                   firstAction={() => deleteSchedule(appointment.id)}
                   secondAction={() =>
                     push({
-                      pathname: `/ps1/scheduleedit/${appointment.id}`,
+                      pathname: `/[companyName]/professionals/${appointment.id}`,
+                      query: { companyName: company?.app?.url },
                     })
                   }
                 >

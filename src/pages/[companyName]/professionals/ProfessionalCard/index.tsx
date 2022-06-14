@@ -2,6 +2,7 @@ import React from 'react';
 import { Professional } from 'models/types/professional';
 import { useRouter } from 'next/router';
 import StarRatingComponent from 'react-star-rating-component';
+import { useGlobal } from 'hooks/Global';
 import * as S from './styles';
 
 interface ProfessionalsProps {
@@ -10,10 +11,13 @@ interface ProfessionalsProps {
 
 const ProfessionalCard: React.FC<ProfessionalsProps> = ({ list }) => {
   const { push, isReady } = useRouter();
+  const {
+    states: { company },
+  } = useGlobal();
   const handleClickCard = (professional: Professional) => {
     push({
-      query: { id: professional.id },
-      pathname: `/ps1/confirmprofessional`,
+      query: { id: professional.id, companyName: company?.app?.url },
+      pathname: `/[companyName]/confirmprofessional`,
     });
   };
 

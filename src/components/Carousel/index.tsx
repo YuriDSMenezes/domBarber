@@ -36,7 +36,8 @@ export const Carousel = ({ items, size, professional }: CarouselProps) => {
         localStorage.setItem('@domBarber:cart', JSON.stringify(newCart));
       }
       push({
-        pathname: `/ps1/newservice`,
+        pathname: `/[companyName]/newservice`,
+        query: { companyName: company?.app?.url },
       });
     }
     const newCart = [...cart];
@@ -46,7 +47,8 @@ export const Carousel = ({ items, size, professional }: CarouselProps) => {
       localStorage.setItem('@domBarber:cart', JSON.stringify(newCart));
     }
     push({
-      pathname: `/ps1/cart`,
+      pathname: `/[companyName]/cart`,
+      query: { companyName: company?.app?.url },
     });
   };
 
@@ -57,7 +59,7 @@ export const Carousel = ({ items, size, professional }: CarouselProps) => {
           <S.Item
             size={size}
             key={index}
-            srcImage={item?.image || item?.images[0].url}
+            srcImage={item?.image || (item?.images && item?.images[0]?.url)}
             onClick={() => handleClickCard(item)}
           >
             <S.Texts>

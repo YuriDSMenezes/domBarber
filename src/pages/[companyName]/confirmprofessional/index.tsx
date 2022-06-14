@@ -13,7 +13,7 @@ import * as S from './styles';
 
 const confirmprofessional: React.FC = () => {
   const {
-    states: { professionals, services },
+    states: { professionals, services, company },
   } = useGlobal();
   const {
     isReady,
@@ -67,7 +67,8 @@ const confirmprofessional: React.FC = () => {
       localStorage.setItem('@domBarber:cart', JSON.stringify(newCart));
     }
     push({
-      pathname: `/ps1/schedule`,
+      pathname: `/[companyName]/schedule`,
+      query: { companyName: company?.app?.url },
     });
   };
 

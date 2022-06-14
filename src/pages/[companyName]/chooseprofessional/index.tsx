@@ -10,6 +10,9 @@ import ChooseProfessionalCard from '../../../components/ChooseProfessionalCard';
 import * as S from './styles';
 
 const chooseprofessional: React.FC = () => {
+  const {
+    states: { company },
+  } = useGlobal();
   const { push } = useRouter();
   const {
     states: { professionals },
@@ -48,7 +51,8 @@ const chooseprofessional: React.FC = () => {
       localStorage.setItem('@domBarber:cart', JSON.stringify(newCart));
     }
     push({
-      pathname: `/ps1/schedule`,
+      pathname: `/[companyName]/schedule`,
+      query: { companyName: company?.app?.url },
     });
   };
 
