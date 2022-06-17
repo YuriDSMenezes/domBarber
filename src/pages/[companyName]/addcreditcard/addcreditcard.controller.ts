@@ -1,8 +1,12 @@
+import { getClientByClientId } from 'cases/client/getClientByClientId';
+import { getClientFromLocalStorage } from 'cases/client/getClientFromLocalStorage';
+import { updateClientByClientId } from 'cases/client/updateClientByClientId';
 import { getCompanyFromLocalStorage } from 'cases/company/getCompanyFromLocalStorage';
 import { getUserTokenFromLocalStorage } from 'cases/user/getUserTokenFromLocalStorage';
 import { environment } from 'environments/environment.prod';
 import { useGlobal } from 'hooks/Global';
-import { useCallback, useState } from 'react';
+import { useRouter } from 'next/router';
+import { useCallback, useEffect, useState } from 'react';
 import api from 'services/api';
 
 interface CreditCardData {
@@ -10,6 +14,7 @@ interface CreditCardData {
   expiry: string;
   name: string;
   cvc: string;
+  brand: string | undefined;
   fieldFocused: 'number' | 'expiry' | 'name' | 'cvc';
 }
 
@@ -26,6 +31,9 @@ export const useAddCreditCard = () => {
   const {
     states: { company },
   } = useGlobal();
+  const { push } = useRouter();
+  const [client, setClient] = useState();
+  const [cards, setCards] = useState([]);
 
   const PagSeguro = useCallback((): any => {
     if (typeof window !== 'undefined') {
@@ -67,6 +75,7 @@ export const useAddCreditCard = () => {
     expiry: '',
     name: '',
     cvc: '',
+    brand: '',
     fieldFocused: 'number',
   });
 
@@ -80,30 +89,43 @@ export const useAddCreditCard = () => {
         expMonth: Number(creditCardData.expiry.split('/')[0]),
         expYear: Number(creditCardData.expiry.split('/')[1]),
       });
-      const params = new URLSearchParams([
-        ['cardBin', creditCardData.number.substring(0, 6)],
-      ]);
-      const responseBrandCard = await api.get(`pagseguro/card/brand`, {
-        params,
-        headers: {
-          ProjectId: environment.projectId,
-          CompanyId: company.id,
-          publicKey: getCompanyFromLocalStorage()?.pagseguro?.publicKey,
-          Authorization: `Bearer ${getUserTokenFromLocalStorage()}`,
-        },
-      });
-      console.log(responseBrandCard);
       const creditCard = {
+        id: creditCardData.number,
         main: true,
         token: encryptedCard,
-        brand: 'visa',
+        brand: creditCardData.brand,
         name: creditCardData.name,
         number: creditCardData.number,
         month: Number(creditCardData.expiry.split('/')[0]),
         year: Number(creditCardData.expiry.split('/')[1]),
       };
-    } catch (error) {}
+      await updateClientByClientId(
+        client.id,
+        { ...client, cards: [...client.cards, creditCard] },
+        company.id,
+      );
+      push({
+        pathname: `/[companyName]/methodpayment`,
+        query: { companyName: company?.app?.url },
+      });
+    } catch (error) {
+      console.error(error);
+    }
   };
+
+  const getClient = async () => {
+    const client = await getClientByClientId(
+      getClientFromLocalStorage().id,
+      company.id,
+      getUserTokenFromLocalStorage(),
+    );
+    setClient(client);
+    setCards(client.cards);
+  };
+
+  useEffect(() => {
+    getClient();
+  }, []);
 
   return {
     states: { creditCardData },

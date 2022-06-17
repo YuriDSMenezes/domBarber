@@ -53,8 +53,10 @@ const methodpayment: React.FC = () => {
             />
             {cards.map(card => (
               <MethodPaymentItem
+                card={card}
                 methodPaymentName="Cartão de Crédito"
                 paymentMethod="card"
+                onClick={() => console.log('Cartão Clicado')}
               />
             ))}
           </S.PaymentMethodsContainer>
