@@ -1,25 +1,43 @@
+import CardSlide from 'components/CardSlide';
 import { ItemCollapse } from 'components/itemCollapse';
 import { currencyFormat } from 'helpers';
-import { Kit } from 'models/types/kit';
+import { useGlobal } from 'hooks/Global';
+import { useRouter } from 'next/router';
 import { useState } from 'react';
 import { ArrowDownIcon } from '../../../../../public/assets';
 import * as S from './styles';
 
-export const KitCard = (item: any) => {
+interface KitCardProps {
+  item: any;
+  index: number;
+}
+
+export const KitCard = ({ index, item }: KitCardProps) => {
+  const { push } = useRouter();
+  const {
+    states: { company },
+  } = useGlobal();
+
   const [openCollapse, setOpenCollapse] = useState(false);
+  const [selectedIndex, setSelectedIndex] = useState<number | undefined>();
+
   const handleOpenCollapse = () => setOpenCollapse(!openCollapse);
 
-  const { name } = item?.kit.service;
-  const { services } = item?.kit?.service;
+  const editKit = () => {
+    push({
+      pathname: `/[companyName]/choosekit/edit/[index]`,
+      query: { companyName: company?.app?.url, index },
+    });
+  };
 
   return (
     <S.ItemContainer>
       <S.Row>
         <S.ItemDescription>
           <S.Column>
-            <S.OrangeTitle>{name}</S.OrangeTitle>
+            <S.OrangeTitle>{item?.service?.name}</S.OrangeTitle>
             <S.Row>
-              {services.map(service => (
+              {item?.service.services?.map(service => (
                 <S.Row>
                   <S.SmallText>{service.name}</S.SmallText>
                 </S.Row>
@@ -28,7 +46,7 @@ export const KitCard = (item: any) => {
             <S.MediumText>
               Valor total:{' '}
               {currencyFormat({
-                value: services.reduce(
+                value: item?.service.services?.reduce(
                   (prev, curr) => prev + curr.customPrice,
                   0,
                 ),
@@ -40,7 +58,7 @@ export const KitCard = (item: any) => {
         <S.ItemPhoto>
           <S.MediumText>Profissionais</S.MediumText>
           <S.Row>
-            {services.map(service => (
+            {item?.service.services?.map(service => (
               <div>
                 <S.Photo>
                   <img src={service?.professional?.image} />
@@ -51,21 +69,32 @@ export const KitCard = (item: any) => {
           </S.Row>
         </S.ItemPhoto>
         <S.Arrow onClick={handleOpenCollapse} direction={openCollapse}>
-          <img src={ArrowDownIcon.src} alt="Ícone de abrir colapse" />
+          <img src={ArrowDownIcon.src} alt="Mostrar serviços deste kit" />
         </S.Arrow>
       </S.Row>
-      {!openCollapse && <S.Line />}
-      {openCollapse && (
-        <>
-          {services.map(service => (
-            <ItemCollapse
-              professional={service?.professional}
-              service={service}
-              date={service?.start}
-            />
-          ))}
-        </>
-      )}
+      {openCollapse &&
+        item?.service.services?.map((service: any) => (
+          <div style={{ marginTop: '20px' }} key={index}>
+            <CardSlide
+              swiped={selectedIndex === index}
+              onClick={() => {
+                if (selectedIndex === index) {
+                  setSelectedIndex(undefined);
+                } else {
+                  setSelectedIndex(index);
+                }
+              }}
+              firstAction={() => editKit()}
+              secondAction={() => editKit()}
+            >
+              <ItemCollapse
+                professional={service?.professional}
+                service={service}
+                date={service?.start}
+              />
+            </CardSlide>
+          </div>
+        ))}
     </S.ItemContainer>
   );
 };

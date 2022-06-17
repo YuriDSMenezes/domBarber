@@ -88,7 +88,6 @@ export const CollapseContainer = styled.div`
   align-items: center;
   justify-content: space-between;
   position: relative;
-  margin: 50px 0;
 `;
 
 export const CollapseDate = styled.div`
@@ -139,4 +138,27 @@ export const Buttons = styled.div`
   display: flex;
   flex-direction: column;
   gap: 20px;
+`;
+
+export const ModalTitle = styled.div`
+  font-weight: 500;
+  font-size: 18px;
+  margin-bottom: 10px;
+`;
+export const ModalText = styled.div`
+  font-weight: 400;
+  font-size: 14px;
+  margin-bottom: 20px;
+`;
+export const ModalQuestion = styled.div`
+  font-weight: 400;
+  font-size: 14px;
+  margin-bottom: 10px;
+`;
+
+export const ModalRow = styled.div`
+  display: flex;
+  align-items: center;
+  margin-top: 10px;
+  gap: 10px;
 `;

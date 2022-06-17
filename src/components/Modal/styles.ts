@@ -13,6 +13,7 @@ export const Container = styled.div<ContainerProps>`
   height: 100%;
   background: rgba(0, 0, 0, 0.6);
   z-index: 999;
+  color: #fff;
 `;
 
 export const Content = styled.div`

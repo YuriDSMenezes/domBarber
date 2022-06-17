@@ -50,7 +50,6 @@ const appointments: NextPage = () => {
     getSchedules();
   }, [selectedIndex]);
 
-  // oVbVdUz0Y2COMwNjj5NJ
   return (
     <MainLayout>
       <BottomSheetFixedLayout theme="dark">

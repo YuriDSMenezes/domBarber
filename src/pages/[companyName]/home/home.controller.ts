@@ -70,37 +70,45 @@ export const useAppController = () => {
 
   const getServicesCompany = useCallback(async (companyId: string) => {
     const servicesData = await getAllServicesByCompanyId(companyId);
-    const parsedServicesData = Object.entries(servicesData as {}).map(
-      // @ts-ignore
-      ([id, data]) => Service({ ...data, id }),
-    );
+    const parsedServicesData = servicesData
+      ? Object.entries(servicesData as {}).map(
+          // @ts-ignore
+          ([id, data]) => Service({ ...data, id }),
+        )
+      : [];
     globalActions.setServices(parsedServicesData);
   }, []);
 
   const getProfessionalsCompany = useCallback(async (companyId: string) => {
     const professionalsData = await getAllProfessionalsByCompanyId(companyId);
-    const parsedProfessionalsData = Object.entries(professionalsData as {}).map(
-      // @ts-ignore
-      ([id, data]) => Professional({ ...data, id }),
-    );
+    const parsedProfessionalsData = professionalsData
+      ? Object.entries(professionalsData as {}).map(
+          // @ts-ignore
+          ([id, data]) => Professional({ ...data, id }),
+        )
+      : [];
     globalActions.setProfessionals(parsedProfessionalsData);
   }, []);
 
   const getKitsCompany = useCallback(async (companyId: string) => {
     const kitsData = await getAllKitsByCompanyId(companyId);
-    const parsedKitsData = Object.entries(kitsData as {}).map(
-      // @ts-ignore
-      ([id, data]) => Kits({ ...data, id }),
-    );
+    const parsedKitsData = kitsData
+      ? Object.entries(kitsData as {}).map(
+          // @ts-ignore
+          ([id, data]) => Kits({ ...data, id }),
+        )
+      : [];
     globalActions.setKits(parsedKitsData);
   }, []);
 
   const getProductsCompany = useCallback(async (companyId: string) => {
     const productsData = await getProductsByCompanyId(companyId);
-    const parsedProductsData = Object.entries(productsData as {}).map(
-      // @ts-ignore
-      ([id, data]) => Product({ ...data, id }),
-    );
+    const parsedProductsData = productsData
+      ? Object.entries(productsData as {}).map(
+          // @ts-ignore
+          ([id, data]) => Product({ ...data, id }),
+        )
+      : [];
     globalActions.setProducts(parsedProductsData);
   }, []);
 
