@@ -6,6 +6,7 @@ import { Professional as ProfessionalType } from 'models/types/professional';
 import { Product as ProductType } from 'models/types/product';
 import { firestoreDb } from 'services/FirestoreDatabase';
 import { Company } from 'models/company';
+import { useRouter } from 'next/router';
 import { setTheme } from './Theme';
 
 interface GlobalContextProps {
@@ -37,12 +38,18 @@ const GlobalProvider: React.FC = ({ children }) => {
   const [professionals, setProfessionals] = useState<ProfessionalType[]>(
     [] as ProfessionalType[],
   );
-
+  const {
+    query: { companyName },
+    isReady,
+    pathname,
+  } = useRouter();
   useEffect(() => {
+    if (!isReady) return;
+    if (pathname === '/auth/login') return;
     firestoreDb.company.getSyncWhere({
       wheres: [
         // @ts-ignore
-        ['app.url', '==', 'ps1'],
+        ['app.url', '==', companyName],
         // @ts-ignore
         ['projectId', '==', 'dombarber'],
       ],
@@ -61,7 +68,7 @@ const GlobalProvider: React.FC = ({ children }) => {
         }
       },
     });
-  }, []);
+  }, [isReady]);
 
   return (
     <GlobalContext.Provider

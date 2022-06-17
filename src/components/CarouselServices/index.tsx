@@ -44,7 +44,8 @@ export const CarouselService: React.FC<CarouselProps> = ({
       localStorage.setItem('@domBarber:cart', JSON.stringify(newCart));
     }
     push({
-      pathname: `/ps1/chooseprofessional`,
+      pathname: `/[companyName]/chooseprofessional`,
+      query: { companyName: company?.app?.url },
     });
   };
 
