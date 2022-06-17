@@ -85,7 +85,7 @@ export const CarouselService: React.FC<CarouselProps> = ({
                   <span>{` ${item.description}`}</span>
                 </S.Texts>
                 <S.ButtonContainer className="showButton">
-                  <Button text="Agendar" />
+                  <Button smallSize text="Agendar" />
                 </S.ButtonContainer>
               </>
             ) : (

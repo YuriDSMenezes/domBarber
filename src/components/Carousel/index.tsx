@@ -40,16 +40,17 @@ export const Carousel = ({ items, size, professional }: CarouselProps) => {
         query: { companyName: company?.app?.url },
       });
     }
-    const newCart = [...cart];
-    newCart.push({ product: item, productId: item.id });
-    setCart(newCart);
-    if (typeof window !== 'undefined') {
-      localStorage.setItem('@domBarber:cart', JSON.stringify(newCart));
+    if (!professional) {
+      const newCart = [...cart];
+      newCart.push({ product: item, productId: item.id });
+      setCart(newCart);
+      if (typeof window !== 'undefined') {
+        localStorage.setItem('@domBarber:cart', JSON.stringify(newCart));
+      }
+      push({
+        pathname: `/ps1/cart`,
+      });
     }
-    push({
-      pathname: `/[companyName]/cart`,
-      query: { companyName: company?.app?.url },
-    });
   };
 
   return (

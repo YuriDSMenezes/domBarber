@@ -125,7 +125,7 @@ const Cart = () => {
                   companyId: company.id,
                   token: getUserTokenFromLocalStorage(),
                   from: 'pro-app',
-                  clientId: clientId.id,
+                  clientId: clientId?.id,
                   schedules: cart,
                 });
                 push({

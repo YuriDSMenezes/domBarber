@@ -129,7 +129,7 @@ export const ButtonContainer = styled.div`
   position: absolute;
   left: 50%;
   transform: translate(-50%, 0%);
-  bottom: 10px;
+  bottom: 20px;
   width: 100px;
 
   @media (min-width: 768px) {

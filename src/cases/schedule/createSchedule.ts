@@ -19,35 +19,18 @@ export const createSchedule = async ({
   schedules,
 }: scheduleCreateProps) => {
   try {
-    const schedulesFormatted = schedules.map(
-      item =>
-        !item.service.services && {
-          companyId,
-          from,
-          clientId,
-          start: item?.start,
-          serviceIds: [item.serviceId],
-          professionalId: item?.professionalId,
-        },
-    );
-    const schedulesKitFormatted = schedules.map(
-      item =>
-        item?.service?.services && {
-          from,
-          kitId: item.service.id,
-          clientId,
-          services: item?.service?.services?.map(subItem => ({
-            serviceId: subItem.id,
-            start: subItem.start,
-            professionalId: subItem.professionalId,
-          })),
-        },
-    );
+    const verifySchedule = schedules?.filter(item => !item?.service?.services);
+    const schedulesFormatted = verifySchedule?.map(item => ({
+      companyId,
+      from,
+      clientId,
+      start: item?.start,
+      serviceIds: [item.serviceId],
+      professionalId: item?.professionalId,
+    }));
 
-    // console.log(schedulesFormatted);
-
-    if (schedulesFormatted) {
-      return schedulesFormatted.forEach(async schedule => {
+    if (schedulesFormatted.length > 0) {
+      schedulesFormatted.forEach(async schedule => {
         await api.post('schedule', schedule, {
           headers: {
             ProjectId: environment.projectId,
@@ -58,8 +41,23 @@ export const createSchedule = async ({
       });
     }
 
-    if (schedulesKitFormatted) {
-      return schedulesKitFormatted.forEach(async schedule => {
+    const verifyScheduleKit = schedules?.filter(
+      item => item?.service?.services,
+    );
+
+    const schedulesKitFormatted = verifyScheduleKit.map(item => ({
+      from,
+      kitId: item.service.id,
+      clientId,
+      services: item?.service?.services?.map(subItem => ({
+        serviceId: subItem.id,
+        start: subItem.start,
+        professionalId: subItem.professionalId,
+      })),
+    }));
+
+    if (schedulesKitFormatted.length > 0) {
+      schedulesKitFormatted.forEach(async schedule => {
         await api.post('schedule/kit', schedule, {
           headers: {
             ProjectId: environment.projectId,
@@ -69,7 +67,8 @@ export const createSchedule = async ({
         });
       });
     }
-    return [];
+
+    return null;
   } catch (error) {
     return console.error('erro', error);
   }

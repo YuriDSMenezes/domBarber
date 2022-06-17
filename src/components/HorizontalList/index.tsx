@@ -35,6 +35,10 @@ export const HorizontalList = () => {
       item: 'Profissionais',
       url: '/chooseprofessionals',
     },
+    {
+      item: 'Carrinho',
+      url: '/cart',
+    },
   ];
 
   const handleClick = (url: string) =>
