@@ -31,4 +31,6 @@ export const TextArea = styled.textarea`
   outline: none;
   border-radius: 7px;
   resize: none;
+  padding: 10px;
+  color: #fff;
 `;

@@ -62,7 +62,7 @@ const AppointmentCard: React.FC<AppointmentCardProps> = ({
   const getServiceAndProfessional = async () => {
     const service = await getServiceByServiceId(
       getUserTokenFromLocalStorage(),
-      appointment?.serviceIds[0],
+      appointment?.serviceId,
       company.id,
     );
     setService(service);
@@ -73,6 +73,7 @@ const AppointmentCard: React.FC<AppointmentCardProps> = ({
   useEffect(() => {
     getServiceAndProfessional();
   }, []);
+
   return (
     <S.Container>
       <S.ContainerDateTime>
@@ -92,19 +93,19 @@ const AppointmentCard: React.FC<AppointmentCardProps> = ({
       <S.ContentAppointmentDescription>
         <S.ContentAppointmentDescriptionInformationContainer>
           <S.AppointmentDescription theme={theme}>
-            {service.description}
+            {service?.description || ''}
           </S.AppointmentDescription>
           <S.AppointmentValue theme={theme}>
             {currencyFormat({
-              value: Number(service.price),
+              value: Number(service?.price || ''),
               currencyPrefix: 'R$',
             })}
           </S.AppointmentValue>
           <S.AppointmentPoints theme={theme}>
-            {`${service.pointsGenerated} Pontos`}
+            {`${service?.pointsGenerated} Pontos` || ''}
           </S.AppointmentPoints>
           <S.AppointmentPaymentStatus theme={theme}>
-            {appointment.paymentStatus}
+            {appointment?.paymentStatus}
           </S.AppointmentPaymentStatus>
         </S.ContentAppointmentDescriptionInformationContainer>
         <S.ContentAppointmentDescriptionImageContainer>
@@ -112,10 +113,13 @@ const AppointmentCard: React.FC<AppointmentCardProps> = ({
             Profissional
           </S.DescriptionImageProfessional>
           <S.ProfessionalImage>
-            <img src={professional?.image} alt={professional?.name} />
+            <img
+              src={professional?.image || ''}
+              alt={professional?.name || ''}
+            />
           </S.ProfessionalImage>
           <S.ProfessionalName theme={theme}>
-            {professional?.name}
+            {professional?.name || ''}
           </S.ProfessionalName>
         </S.ContentAppointmentDescriptionImageContainer>
       </S.ContentAppointmentDescription>

@@ -13,15 +13,17 @@ import {
 } from 'date-fns';
 import { WorkDay } from 'models/types/company';
 import { useCallback, useEffect, useState } from 'react';
-import { Schedule } from 'models/schedule';
-import { firestoreDb } from 'services/FirestoreDatabase';
+import { useRouter } from 'next/router';
 
-export const useSchedules = () => {
+export const useEditSchedules = () => {
   const {
     states: { company },
   } = useGlobal();
+  const { query, isReady } = useRouter();
 
   const [isSelectedFirstHour, setIsSelectedFirstHour] = useState(false);
+  const [cartSelected, setCartSelected] = useState([]);
+  const [indexItem, setIndexItem] = useState<number>();
   const [date, setDate] = useState<Date>(new Date());
   const [hour, setHour] = useState<string>();
   const [cart, setCart] = useState(() => {
@@ -34,6 +36,15 @@ export const useSchedules = () => {
 
     return [];
   });
+
+  useEffect(() => {
+    if (query.index) {
+      const { index } = query;
+      setIndexItem(Number(index));
+      const getCart = cart[Number(index)];
+      setCartSelected(getCart);
+    }
+  }, [isReady, query, cart]);
 
   const [confirmedSchedules, setConfirmedSchedules] = useState<Date[]>([]);
   const handleSelectDate = (getMonth: Date) => {
@@ -64,7 +75,7 @@ export const useSchedules = () => {
     const daysNW: Array<Date> = [];
     days?.forEach(day => {
       if (new Date(day) < new Date()) daysNW.push(day);
-      cart[cart.length - 1]?.professional?.days?.forEach((dw: WorkDay) => {
+      cartSelected?.professional?.days?.forEach((dw: WorkDay) => {
         if (dw.weekId === new Date(day).getDay()) daysNW.push(day);
       });
     });
@@ -75,13 +86,13 @@ export const useSchedules = () => {
       ];
     }
     return [];
-  }, [date]);
+  }, [date, cartSelected]);
 
   const setInitalDateWork = () => {
     const daysNW: Array<Date> = [];
     days?.forEach(day => {
       if (new Date(day) < new Date()) daysNW.push(day);
-      cart[cart.length - 1]?.professional?.days?.forEach((dw: WorkDay) => {
+      cartSelected?.professional?.days?.forEach((dw: WorkDay) => {
         if (dw.weekId === new Date(day).getDay()) daysNW.push(day);
       });
     });
@@ -139,12 +150,12 @@ export const useSchedules = () => {
       if (isAfter(date, initOpen) && isBefore(date, endOpen)) return true;
       return false;
     },
-    [hour],
+    [hour, cartSelected],
   );
 
   const verifyWorkTime = useCallback(
     (date: Date, workTime: number) => {
-      const rulesOfDay = cart[cart.length - 1]?.professional?.days?.filter(
+      const rulesOfDay = cartSelected?.professional?.days?.filter(
         (d: WorkDay) => d.weekId === date?.getDay(),
       )[0];
       const initWork = new Date(
@@ -168,13 +179,13 @@ export const useSchedules = () => {
         return true;
       return false;
     },
-    [hour],
+    [hour, cartSelected],
   );
 
   const verifyIntervalTime = useCallback(
     (date: Date, workTime: number) => {
       let isIntervalTime = true;
-      const rulesOfDay = cart[cart.length - 1]?.professional?.days?.filter(
+      const rulesOfDay = cartSelected?.professional?.days?.filter(
         (d: WorkDay) => d.weekId === date?.getDay(),
       )[0];
       const intervalsOfDay = rulesOfDay?.intervals?.map(
@@ -205,13 +216,13 @@ export const useSchedules = () => {
       });
       return isIntervalTime;
     },
-    [hour],
+    [hour, cartSelected],
   );
 
   // const getScheduledTimes = async () => {
   //   const response = await getSchedulesByProfessionalIdAndServiceId(
-  //     cart?.professionalId,
-  //     cart?.serviceId,
+  //     cartSelected?.professionalId,
+  //     cartSelected?.serviceId,
   //   );
   //   const parsedSchedulesData = Object.entries(response as {}).map(
   //     // @ts-ignore
@@ -238,30 +249,32 @@ export const useSchedules = () => {
     [confirmedSchedules],
   );
 
-  useEffect(() => {
-    // getScheduledTimes();
-    firestoreDb.companySchedules.getSyncWhere({
-      wheres: [
-        // @ts-ignore
-        ['professionalId', '==', cart[cart.length - 1]?.professionalId],
-        // @ts-ignore
-        ['serviceIds', 'array-contains', cart[cart.length - 1]?.serviceId],
-      ],
-      callback: response => {
-        const parsedSchedulesData = Object.entries(
-          response?.data?.docs as {},
-        ).map(
-          // @ts-ignore
-          ([id, data]) => Schedule({ ...data, id }),
-        );
-        const confirmedSchedules = parsedSchedulesData.map(
-          // @ts-ignore
-          schedule => new Date(schedule.start?.seconds * 1000),
-        );
-        setConfirmedSchedules(confirmedSchedules);
-      },
-    });
-  }, []);
+  // useEffect(() => {
+  //   // getScheduledTimes();
+  //   if (!query.index) {
+  //     firestoreDb.companySchedules.getSyncWhere({
+  //       wheres: [
+  //         // @ts-ignore
+  //         ['professionalId', '==', cartSelected?.professionalId],
+  //         // @ts-ignore
+  //         ['serviceIds', 'array-contains', cartSelected?.serviceId],
+  //       ],
+  //       callback: response => {
+  //         const parsedSchedulesData = Object.entries(
+  //           response?.data?.docs as {},
+  //         ).map(
+  //           // @ts-ignore
+  //           ([id, data]) => Schedule({ ...data, id }),
+  //         );
+  //         const confirmedSchedules = parsedSchedulesData.map(
+  //           // @ts-ignore
+  //           schedule => new Date(schedule.start?.seconds * 1000),
+  //         );
+  //         setConfirmedSchedules(confirmedSchedules);
+  //       },
+  //     });
+  //   }
+  // }, []);
 
   useEffect(() => {
     return () => setInitalDateWork();
@@ -288,8 +301,10 @@ export const useSchedules = () => {
       date,
       hour,
       cart,
+      cartSelected,
       confirmedSchedules,
       isSelectedFirstHour,
+      indexItem,
     },
   };
 };

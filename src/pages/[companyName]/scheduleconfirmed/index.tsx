@@ -39,23 +39,7 @@ const scheduleconfirmed: React.FC = () => {
           <S.MessageText>Você pode realizar o pagamento no Local</S.MessageText>
           <S.AppointmentsContainer>
             {cart.map(itemCart => (
-              <AppointmentCard
-                appointment={{
-                  date: itemCart?.start ? itemCart?.start : new Date(),
-                  description:
-                    itemCart?.service?.description ||
-                    itemCart?.product?.description,
-                  value: itemCart?.service?.price || itemCart?.product?.price,
-                  points:
-                    itemCart?.service?.pointsGenerated ||
-                    itemCart?.product?.pointsGenerated,
-                  paymentStatus: 'Pagamento Pendente',
-                  professional:
-                    itemCart?.profissional?.name ||
-                    itemCart?.profissional?.name,
-                  avatar: itemCart?.professional?.image,
-                }}
-              />
+              <AppointmentCard appointment={itemCart} />
             ))}
           </S.AppointmentsContainer>
           <S.TotalAppointmentContainer>

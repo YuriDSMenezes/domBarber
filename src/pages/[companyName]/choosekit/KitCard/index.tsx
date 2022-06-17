@@ -8,16 +8,11 @@ import { OutlinedCheckIcon } from '../../../../../public/assets';
 
 import * as S from './styles';
 
-interface KitCardProps {
-  name: KitService;
-}
-
-const KitCard: React.FC<KitCardProps> = ({ service }: KitCardProps) => {
+const KitCard = ({ service, edit }) => {
   const { push } = useRouter();
   const {
     states: { company },
   } = useGlobal();
-
   return (
     <S.Container>
       <S.KitCardTitle>{service?.name || 'Nome do serviço'}</S.KitCardTitle>

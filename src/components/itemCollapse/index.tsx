@@ -94,7 +94,6 @@ export const ItemCollapse = ({
           <S.SmallText>{professional?.name}</S.SmallText>
         </S.CollapseService>
       )}
-      <S.Line />
     </S.CollapseContainer>
   );
 };

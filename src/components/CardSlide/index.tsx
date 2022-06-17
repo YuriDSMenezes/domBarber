@@ -1,4 +1,4 @@
-import React, { useState, HTMLAttributes } from 'react';
+import React, { HTMLAttributes } from 'react';
 
 import * as S from './styles';
 
