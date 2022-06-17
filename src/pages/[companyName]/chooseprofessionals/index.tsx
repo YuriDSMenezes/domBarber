@@ -11,7 +11,7 @@ import * as S from './styles';
 
 const chooseprofessionals: React.FC = () => {
   const {
-    states: { professionals },
+    states: { professionals, company },
   } = useGlobal();
   const { push } = useRouter();
   const [cart, setCart] = useState(() => {
@@ -37,7 +37,8 @@ const chooseprofessionals: React.FC = () => {
       localStorage.setItem('@domBarber:cart', JSON.stringify(newCart));
     }
     push({
-      pathname: `/ps1/newservice`,
+      pathname: `/[companyName]/newservice`,
+      query: { companyName: company?.app?.url },
     });
   };
 

@@ -21,6 +21,12 @@ const addcreditcard: React.FC = () => {
               focused={states.creditCardData.fieldFocused}
               name={states.creditCardData.name}
               number={states.creditCardData.number}
+              callback={props => {
+                actions.setCreditCardData({
+                  ...states.creditCardData,
+                  brand: props.issuer,
+                });
+              }}
             />
           </S.CreditCardContainer>
           <S.CreditCardInputsContainer>
@@ -102,7 +108,11 @@ const addcreditcard: React.FC = () => {
             </S.CreditCardInputContainer>
           </S.CreditCardInputsContainer>
           <S.ActionButtonContainer>
-            <Button text="Confirmar" green />
+            <Button
+              text="Confirmar"
+              green
+              onClick={() => actions.registerCreditCard()}
+            />
           </S.ActionButtonContainer>
         </S.Content>
       </BottomSheetFixedLayout>

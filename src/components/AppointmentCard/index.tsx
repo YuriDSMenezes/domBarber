@@ -105,7 +105,7 @@ const AppointmentCard: React.FC<AppointmentCardProps> = ({
             {`${service?.pointsGenerated} Pontos` || ''}
           </S.AppointmentPoints>
           <S.AppointmentPaymentStatus theme={theme}>
-            {appointment?.paymentStatus}
+            {appointment?.payed ? 'Pagamento Confirmado' : 'Pagamento Pendente'}
           </S.AppointmentPaymentStatus>
         </S.ContentAppointmentDescriptionInformationContainer>
         <S.ContentAppointmentDescriptionImageContainer>

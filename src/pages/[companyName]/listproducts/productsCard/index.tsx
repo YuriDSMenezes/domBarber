@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useRouter } from 'next/router';
 import { Product } from 'models/types/product';
+import { useGlobal } from 'hooks/Global';
 import * as S from './styles';
 
 interface ProductsProps {
@@ -9,7 +10,9 @@ interface ProductsProps {
 
 const ProductsCard: React.FC<ProductsProps> = ({ list }) => {
   const { push, isReady } = useRouter();
-
+  const {
+    states: { company },
+  } = useGlobal();
   const [cart, setCart] = useState(() => {
     if (typeof window !== 'undefined') {
       const cart = localStorage.getItem('@domBarber:cart');
@@ -32,8 +35,10 @@ const ProductsCard: React.FC<ProductsProps> = ({ list }) => {
     if (typeof window !== 'undefined') {
       localStorage.setItem('@domBarber:cart', JSON.stringify(newCart));
     }
+
     push({
-      pathname: `/ps1/cart`,
+      pathname: `/[companyName]/cart`,
+      query: { companyName: company?.app?.url },
     });
   };
 

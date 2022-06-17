@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import { useGlobal } from 'hooks/Global';
 import { Product } from 'models/types/product';
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
@@ -11,6 +12,9 @@ interface ProductCardProps {
 
 const ProductCard: React.FC<ProductCardProps> = ({ list }) => {
   const { push } = useRouter();
+  const {
+    states: { company },
+  } = useGlobal();
   const [cart, setCart] = useState(() => {
     if (typeof window !== 'undefined') {
       const cart = localStorage.getItem('@domBarber:cart');
@@ -34,7 +38,8 @@ const ProductCard: React.FC<ProductCardProps> = ({ list }) => {
       localStorage.setItem('@domBarber:cart', JSON.stringify(newCart));
     }
     push({
-      pathname: `/ps1/cart`,
+      pathname: `/[companyName]/cart`,
+      query: { companyName: company?.app?.url },
     });
   };
 
