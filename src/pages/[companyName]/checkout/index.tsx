@@ -6,13 +6,14 @@ import MainLayout from 'layouts/MainLayout';
 import { useRouter } from 'next/router';
 import React, { useState } from 'react';
 import { PagSeguroLogo, SecureOrderLogo } from '../../../../public/assets';
+import MethodPaymentItem from './MethodPaymentItem';
 
 import * as S from './styles';
 
 const checkout: React.FC = () => {
   const { push } = useRouter();
   const {
-    states: { company },
+    states: { company, selectedCardPayment },
   } = useGlobal();
 
   const [cart, setCart] = useState(() => {
@@ -72,7 +73,17 @@ const checkout: React.FC = () => {
             </S.ContainerRow>
             <S.ContainerRow>
               <S.Column>
-                <S.PaymentMethodTitle>Forma de Pagamento</S.PaymentMethodTitle>
+                {selectedCardPayment ? (
+                  <MethodPaymentItem
+                    card={selectedCardPayment}
+                    methodPaymentName="Cartão de Crédito"
+                    paymentMethod="card"
+                  />
+                ) : (
+                  <S.PaymentMethodTitle>
+                    Forma de Pagamento
+                  </S.PaymentMethodTitle>
+                )}
               </S.Column>
               <S.Column>
                 <S.ActionChangePaymentMethod
@@ -83,7 +94,7 @@ const checkout: React.FC = () => {
                     })
                   }
                 >
-                  Trocar
+                  {selectedCardPayment ? 'Trocar' : 'Selecionar'}
                 </S.ActionChangePaymentMethod>
               </S.Column>
             </S.ContainerRow>
