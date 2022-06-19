@@ -8,6 +8,7 @@ import { firestoreDb } from 'services/FirestoreDatabase';
 import { Company } from 'models/company';
 import { useRouter } from 'next/router';
 import { Category } from 'models/category';
+import { ClientCard } from 'models/types/client';
 import { setTheme } from './Theme';
 
 interface GlobalContextProps {
@@ -18,6 +19,7 @@ interface GlobalContextProps {
     professionals: ProfessionalType[];
     products: ProductType[];
     categories: Category[];
+    selectedCardPayment: ClientCard;
   };
   actions: {
     setCompany: (company: CompanyType) => void;
@@ -26,6 +28,7 @@ interface GlobalContextProps {
     setProfessionals: (professionals: ProfessionalType[]) => void;
     setProducts: (products: ProductType[]) => void;
     setCategories: (category: Category[]) => void;
+    setSelectedCardPayment: (card: ClientCard) => void;
   };
 }
 
@@ -42,6 +45,7 @@ const GlobalProvider: React.FC = ({ children }) => {
   const [professionals, setProfessionals] = useState<ProfessionalType[]>(
     [] as ProfessionalType[],
   );
+  const [selectedCardPayment, setSelectedCardPayment] = useState<ClientCard>();
   const {
     query: { companyName },
     isReady,
@@ -84,6 +88,7 @@ const GlobalProvider: React.FC = ({ children }) => {
           products,
           kits,
           categories,
+          selectedCardPayment,
         },
         actions: {
           setCompany,
@@ -92,6 +97,7 @@ const GlobalProvider: React.FC = ({ children }) => {
           setProducts,
           setKits,
           setCategories,
+          setSelectedCardPayment,
         },
       }}
     >

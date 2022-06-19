@@ -178,7 +178,7 @@ const Cart = () => {
             <Button
               text="Confirmar Agendamento"
               onClick={() => {
-                ({
+                createSchedule({
                   companyId: company.id,
                   token: getUserTokenFromLocalStorage(),
                   from: 'pro-app',

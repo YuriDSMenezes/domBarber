@@ -16,6 +16,7 @@ import * as S from './styles';
 const methodpayment: React.FC = () => {
   const {
     states: { company },
+    actions: { setSelectedCardPayment },
   } = useGlobal();
   const { push } = useRouter();
 
@@ -56,7 +57,13 @@ const methodpayment: React.FC = () => {
                 card={card}
                 methodPaymentName="Cartão de Crédito"
                 paymentMethod="card"
-                onClick={() => console.log('Cartão Clicado')}
+                onClick={() => {
+                  setSelectedCardPayment(card);
+                  push({
+                    pathname: `/[companyName]/checkout`,
+                    query: { companyName: company?.app?.url },
+                  });
+                }}
               />
             ))}
           </S.PaymentMethodsContainer>
