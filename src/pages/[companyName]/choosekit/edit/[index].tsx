@@ -63,8 +63,14 @@ const choosekit: React.FC = () => {
           </S.Description>
           <S.KitsContainer>
             {cartSelected?.service?.services?.map(
-              (service: KitService, index) => (
-                <KitCard service={service} key={index} edit index={indexItem} />
+              (service: KitService, index: number) => (
+                <KitCard
+                  service={service}
+                  key={index}
+                  edit
+                  index={indexItem}
+                  serviceIndex={index}
+                />
               ),
             )}
           </S.KitsContainer>

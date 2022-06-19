@@ -25,37 +25,16 @@ const newservice: React.FC = () => {
     {
       key: 'Cabelo',
       description: 'Cabelo',
-      renderComponentDesktop: (
-        <PaginatedItems
-          itemsPerPage={5}
-          items={services}
-          component={HairTabOption}
-        />
-      ),
       renderComponentMobile: <BarberShopTabOption list={services} />,
     },
     {
       key: 'Barba',
       description: 'Barba',
-      renderComponentDesktop: (
-        <PaginatedItems
-          itemsPerPage={5}
-          items={services}
-          component={HairTabOption}
-        />
-      ),
       renderComponentMobile: <BeardTabOption list={services} />,
     },
     {
       key: 'Kits/Combo',
       description: 'Kits/Combo',
-      renderComponentDesktop: (
-        <PaginatedItems
-          itemsPerPage={5}
-          items={services}
-          component={HairTabOption}
-        />
-      ),
       renderComponentMobile: <KitsAndCombosTabOption list={kits} />,
     },
   ];

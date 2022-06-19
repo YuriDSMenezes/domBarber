@@ -5,6 +5,8 @@ export const ListProductsController = () => {
     states: { products },
   } = useGlobal();
 
+  console.log(products);
+
   return {
     state: { products },
     actions: {},

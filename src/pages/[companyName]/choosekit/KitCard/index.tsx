@@ -1,18 +1,17 @@
 import Button from 'components/Button';
 import { currencyFormat } from 'helpers';
 import { useGlobal } from 'hooks/Global';
-import { KitService } from 'models/types/kit';
 import { useRouter } from 'next/router';
 import React from 'react';
-import { OutlinedCheckIcon } from '../../../../../public/assets';
 
 import * as S from './styles';
 
-const KitCard = ({ service, edit }) => {
+const KitCard = ({ service, edit, index, serviceIndex }) => {
   const { push } = useRouter();
   const {
     states: { company },
   } = useGlobal();
+
   return (
     <S.Container>
       <S.KitCardTitle>{service?.name || 'Nome do serviço'}</S.KitCardTitle>
@@ -33,14 +32,27 @@ const KitCard = ({ service, edit }) => {
             : ' Escolha a data e hora desse serviço'}
         </S.DescriptionKit>
         <S.ActionButtonContainer>
-          {service?.professional ? (
-            <img src={OutlinedCheckIcon.src} />
-          ) : (
+          {edit ? (
             <Button
-              text="Agendar"
+              text="Editar"
               smallSize
               onClick={() =>
-                !service?.professional &&
+                push({
+                  pathname: `/[companyName]/chooseprofessionalKit/[kitId]/[index]`,
+                  query: {
+                    companyName: company?.app?.url,
+                    kitId: service?.id,
+                    index,
+                    serviceIndex,
+                  },
+                })
+              }
+            />
+          ) : (
+            <Button
+              text={service?.start ? 'Agendado' : 'Agendar'}
+              smallSize
+              onClick={() =>
                 push({
                   pathname: `/[companyName]/chooseprofessionalKit/[kitId]`,
                   query: {

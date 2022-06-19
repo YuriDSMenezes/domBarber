@@ -21,7 +21,7 @@ export const HorizontalList = () => {
     },
     {
       item: 'Agenda',
-      url: '/schedule',
+      url: '/appointments',
     },
     {
       item: 'Serviços',

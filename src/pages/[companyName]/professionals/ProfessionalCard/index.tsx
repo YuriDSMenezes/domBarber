@@ -14,6 +14,7 @@ const ProfessionalCard: React.FC<ProfessionalsProps> = ({ list }) => {
   const {
     states: { company },
   } = useGlobal();
+
   const handleClickCard = (professional: Professional) => {
     push({
       query: { id: professional.id, companyName: company?.app?.url },

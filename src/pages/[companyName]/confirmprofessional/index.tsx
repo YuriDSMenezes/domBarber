@@ -52,15 +52,12 @@ const confirmprofessional: React.FC = () => {
   };
 
   const handleClickCard = () => {
-    const lastItemCart = cart[cart.length - 1];
     const newProfessional = {
-      ...lastItemCart,
       professional,
       professionalId: professional?.id,
       service: selectedService,
       serviceId: selectedService?.id,
     };
-    cart.pop();
     const newCart = [...cart, newProfessional];
     setCart(newCart);
     if (typeof window !== 'undefined') {

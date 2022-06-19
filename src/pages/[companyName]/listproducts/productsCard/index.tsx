@@ -25,7 +25,7 @@ const ProductsCard: React.FC<ProductsProps> = ({ list }) => {
     return [];
   });
 
-  const handleClickCard = (product: Product) => {
+  const handleClickCard = (product: Product, index: number) => {
     const newProduct = {
       product,
       productId: product.id,
@@ -37,16 +37,16 @@ const ProductsCard: React.FC<ProductsProps> = ({ list }) => {
     }
 
     push({
-      pathname: `/[companyName]/cart`,
-      query: { companyName: company?.app?.url },
+      pathname: `/[companyName]/chooseproduct/[index]`,
+      query: { companyName: company?.app?.url, index },
     });
   };
 
   return (
     <S.Container>
       {list?.map((product: Product, index: number) => (
-        <S.Content key={index} onClick={() => handleClickCard(product)}>
-          <img src={product.images[0]} alt={product.name} />
+        <S.Content key={index} onClick={() => handleClickCard(product, index)}>
+          <img src={product.images[0]?.url} alt={product.name} />
           <S.ServiceInformationContainer>
             <S.ServiceDescription>
               <S.ServiceName>{product.name}</S.ServiceName>

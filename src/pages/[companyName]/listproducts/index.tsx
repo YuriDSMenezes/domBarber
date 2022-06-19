@@ -1,4 +1,3 @@
-import ChooseProfessionalCard from 'components/ChooseProfessionalCard';
 import { PaginatedItems } from 'components/Pagination';
 import BottomSheetFixedLayout from 'layouts/BottomSheetFixedLayout';
 import MainLayout from 'layouts/MainLayout';

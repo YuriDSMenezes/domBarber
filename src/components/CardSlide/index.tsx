@@ -21,11 +21,6 @@ const CardSlide: React.FC<CardSlideProps> = ({
     { description: 'Editar', color: '#FF9933' },
   ];
 
-  // useEffect(() => {
-  //   setTimeout(() => setOpen(true), 1000);
-  //   setTimeout(() => setOpen(false), 2000);
-  // }, []);
-
   return (
     <S.Container>
       <S.CardContent

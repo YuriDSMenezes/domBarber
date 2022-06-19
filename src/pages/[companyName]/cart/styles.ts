@@ -99,6 +99,7 @@ export const CollapseDate = styled.div`
 
 export const CollapseDescription = styled.div`
   margin-bottom: 30px;
+  width: 150px;
 `;
 
 export const CollapseDay = styled.div`
@@ -122,6 +123,24 @@ export const CollapseImage = styled.div`
     object-fit: cover;
     border-radius: 8px;
   }
+`;
+
+export const CollapseImageProduct = styled.div`
+  width: 70px;
+  height: 70px;
+  border-radius: 8px;
+  margin: 4px auto;
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 8px;
+  }
+`;
+
+export const Quantity = styled.div`
+  color: #fff;
+  margin-top: 10px;
 `;
 
 export const Total = styled.div`

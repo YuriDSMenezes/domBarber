@@ -25,18 +25,6 @@ const confirmservice: React.FC = () => {
   const [professionalsByService, setProfessionalByService] =
     useState<Array<Professional>>();
 
-  useEffect(() => {
-    if (isReady) {
-      const getService = services.find((service: Service) => service.id === id);
-      setService(getService);
-      const getProfessionalsByService = professionals.filter(
-        (professional: Professional) =>
-          professional.serviceIds.includes(getService?.id),
-      );
-      setProfessionalByService(getProfessionalsByService);
-    }
-  }, [isReady]);
-
   const [cart, setCart] = useState(() => {
     if (typeof window !== 'undefined') {
       const cart = localStorage.getItem('@domBarber:cart');
@@ -49,6 +37,18 @@ const confirmservice: React.FC = () => {
     return [];
   });
 
+  useEffect(() => {
+    if (isReady) {
+      const getService = services.find((service: Service) => service.id === id);
+      setService(getService);
+      const getProfessionalsByService = professionals.filter(
+        (professional: Professional) =>
+          professional.serviceIds.includes(getService?.id),
+      );
+      setProfessionalByService(getProfessionalsByService);
+    }
+  }, [isReady]);
+
   const handleGetService = (value: Professional) => {
     const getProfessional = professionals.find(
       (professional: Professional) => professional.id === value.id,
@@ -57,19 +57,16 @@ const confirmservice: React.FC = () => {
   };
 
   const handleClickCard = () => {
-    const lastItemCart = cart[cart.length - 1];
     const newProfessional = {
-      ...lastItemCart,
       professional: selectedProfessional,
       professionalId: selectedProfessional?.id,
       service,
       serviceId: service?.id,
     };
-    cart.pop();
-    const newCart = [...cart, newProfessional];
-    setCart(newCart);
+    cart.push(newProfessional);
+    setCart(cart);
     if (typeof window !== 'undefined') {
-      localStorage.setItem('@domBarber:cart', JSON.stringify(newCart));
+      localStorage.setItem('@domBarber:cart', JSON.stringify(cart));
     }
 
     push({

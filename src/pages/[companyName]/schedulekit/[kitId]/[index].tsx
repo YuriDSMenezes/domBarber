@@ -8,12 +8,12 @@ import 'react-calendar/dist/Calendar.css';
 import { useGlobal } from 'hooks/Global';
 import { DayPicker } from 'react-day-picker';
 import 'react-day-picker/dist/style.css';
-import * as S from './styles';
-import { useSchedules } from './schedules.controller';
+import * as S from '../styles';
+import { useSchedulesIndexKit } from './schedulekit.index.controller';
 // import { getSchedulesByProfessionalId } from 'cases/schedule';
 
 const Schedule = () => {
-  const { push } = useRouter();
+  const { push, query } = useRouter();
   const {
     states: { company, services },
   } = useGlobal();
@@ -24,6 +24,8 @@ const Schedule = () => {
       hour: selectedHour,
       confirmedSchedules,
       isSelectedFirstHour,
+      cartProfessional,
+      selectedKit,
     },
     actions: {
       setCart,
@@ -39,16 +41,27 @@ const Schedule = () => {
       itsScheduled,
       setIsSelectedFirstHour,
     },
-  } = useSchedules();
-
+  } = useSchedulesIndexKit();
+  const { index, serviceIndex } = query;
   const handleNext = (date: Date) => {
-    const lastItem = cart[cart.length - 1];
-    const newItem = { ...lastItem, start: date };
-    cart.pop();
-    const newCart = [...cart, newItem];
+    cart.splice(Number(index));
+    selectedKit.service.services[serviceIndex] = {
+      ...selectedKit?.service?.services[serviceIndex],
+      start: date,
+    };
+
+    const newCart = [...cart, selectedKit];
     setCart(newCart);
-    localStorage.setItem('@domBarber:cart', JSON.stringify(newCart));
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('@domBarber:cart', JSON.stringify(newCart));
+    }
   };
+
+  const imageService = services.find(
+    service => selectedKit?.service?.id === service.id,
+  );
+
+  const hasProfessional = cartProfessional?.professional;
 
   const YearCalendarComponent = () => (
     <YearView
@@ -79,24 +92,21 @@ const Schedule = () => {
     ),
     [date, confirmedSchedules],
   );
+  const runTimeService = selectedKit?.service?.services?.find(
+    (service: any) => service.id === query.kitId,
+  );
 
   const HoursComponent = useCallback(
     (): any =>
-      TimesOfDayBasedInTimeService(cart[cart.length - 1]?.service?.runtime).map(
+      TimesOfDayBasedInTimeService(selectedKit?.service?.runtime).map(
         (hour: Date) =>
           verifyOpeningCompanyTime(hour) ? (
             <S.Hour
               onClick={() => {
                 if (
                   !itsScheduled(hour) &&
-                  verifyWorkTime(
-                    hour,
-                    cart[cart.length - 1]?.service?.runtime,
-                  ) &&
-                  verifyIntervalTime(
-                    hour,
-                    cart[cart.length - 1]?.service?.runtime,
-                  )
+                  verifyWorkTime(hour, selectedKit?.service?.runtime) &&
+                  verifyIntervalTime(hour, selectedKit?.service?.runtime)
                 ) {
                   handleSelectHour(hour.toISOString());
                   setIsSelectedFirstHour(true);
@@ -106,23 +116,14 @@ const Schedule = () => {
               active={
                 selectedHour === hour.toISOString() &&
                 !itsScheduled(hour) &&
-                verifyWorkTime(hour, cart[cart.length - 1]?.service?.runtime) &&
-                verifyIntervalTime(
-                  hour,
-                  cart[cart.length - 1]?.service?.runtime,
-                )
+                verifyWorkTime(hour, selectedKit?.service?.runtime) &&
+                verifyIntervalTime(hour, selectedKit?.service?.runtime)
               }
               disabled={
                 itsScheduled(hour) ||
                 !verifyOpeningCompanyTime(hour) ||
-                !verifyWorkTime(
-                  hour,
-                  cart[cart.length - 1]?.service?.runtime,
-                ) ||
-                !verifyIntervalTime(
-                  hour,
-                  cart[cart.length - 1]?.service?.runtime,
-                )
+                !verifyWorkTime(hour, selectedKit?.service?.runtime) ||
+                !verifyIntervalTime(hour, selectedKit?.service?.runtime)
               }
             >
               <p>{hour.toLocaleTimeString('pt-br', { timeStyle: 'short' })}</p>
@@ -130,10 +131,6 @@ const Schedule = () => {
           ) : null,
       ),
     [selectedHour, date, confirmedSchedules],
-  );
-
-  const imageService = services.find(
-    service => cart[cart.length - 1]?.service?.id === service.id,
   );
 
   return (
@@ -154,24 +151,15 @@ const Schedule = () => {
           <S.ServiceContainer>
             <S.Service>
               <S.Image>
-                <img
-                  src={
-                    imageService?.images[0].url ||
-                    'https://cdn.neemo.com.br/uploads/settings_webdelivery/logo/3957/image-not-found.jpg'
-                  }
-                  alt="logo"
-                />
+                <img src={selectedKit?.service?.images?.[0]?.url} alt="logo" />
               </S.Image>
               <S.ServiceDescription>
-                <S.ServiceTitle>
-                  {cart[cart.length - 1]?.service?.description}
-                </S.ServiceTitle>
+                <S.ServiceTitle>{runTimeService?.name}</S.ServiceTitle>
                 <S.ServiceDescription>
-                  R$ {cart[cart.length - 1]?.service?.price}
+                  R$ {runTimeService?.customPrice}
                 </S.ServiceDescription>
                 <S.ServiceText>
-                  {cart[cart.length - 1]?.service?.pointsGenerated} Pontos
-                  Tempo: {cart[cart.length - 1]?.service?.runtime}
+                  Tempo: {runTimeService?.customRuntime}
                 </S.ServiceText>
               </S.ServiceDescription>
             </S.Service>
@@ -179,7 +167,8 @@ const Schedule = () => {
               <S.Image>
                 <img
                   src={
-                    cart[cart.length - 1]?.professional?.image ||
+                    runTimeService?.professional?.image ||
+                    imageService ||
                     'https://cdn.neemo.com.br/uploads/settings_webdelivery/logo/3957/image-not-found.jpg'
                   }
                   alt="logo"
@@ -190,7 +179,7 @@ const Schedule = () => {
                   Profissional
                 </S.ServiceDescription>
                 <S.ServiceText>
-                  {cart[cart.length - 1]?.professional?.name}
+                  {runTimeService?.professional?.name}
                 </S.ServiceText>
               </S.ServiceDescription>
             </S.Service>
@@ -202,10 +191,17 @@ const Schedule = () => {
             <S.NextButton
               onClick={() => {
                 handleNext(date);
-                push({
-                  pathname: `/[companyName]/cart`,
-                  query: { companyName: company?.app?.url },
-                });
+                push(
+                  selectedKit?.service?.services?.length >= serviceIndex
+                    ? {
+                        pathname: `/[companyName]/choosekit/edit/[index]`,
+                        query: { companyName: company?.app?.url, index },
+                      }
+                    : {
+                        pathname: `/[companyName]/cart`,
+                        query: { companyName: company?.app?.url },
+                      },
+                );
               }}
             >
               Próximo

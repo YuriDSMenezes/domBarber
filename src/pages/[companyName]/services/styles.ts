@@ -27,6 +27,7 @@ export const Title = styled.h1`
   line-height: 21px;
   color: #ffffff;
   display: block;
+  margin-bottom: 30px;
   @media (min-width: 768px) {
     display: none;
   }

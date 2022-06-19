@@ -11,6 +11,7 @@ interface ItemCollapseProps {
   service?: Service;
   product?: Product;
   date: Date;
+  quantity?: number;
 }
 
 export const ItemCollapse = ({
@@ -18,6 +19,7 @@ export const ItemCollapse = ({
   service,
   product,
   date,
+  quantity,
 }: ItemCollapseProps) => {
   const formatedDate = new Date(date);
   return (
@@ -83,7 +85,10 @@ export const ItemCollapse = ({
             currencyPrefix: 'R$',
           })}
         </S.MediumText>
-        <S.MediumText>{service?.pointsGenerated} Pontos</S.MediumText>
+        <S.MediumText>
+          {service?.pointsGenerated || product?.pointsGenerated} Pontos
+        </S.MediumText>
+        {product && <S.Quantity>Quantidade: {quantity || 1}</S.Quantity>}
       </S.CollapseDescription>
       {service && (
         <S.CollapseService>
@@ -92,6 +97,13 @@ export const ItemCollapse = ({
             <img src={professional?.image} />
           </S.CollapseImage>
           <S.SmallText>{professional?.name}</S.SmallText>
+        </S.CollapseService>
+      )}
+      {product && (
+        <S.CollapseService>
+          <S.CollapseImageProduct>
+            <img src={product?.images[0]?.url} />
+          </S.CollapseImageProduct>
         </S.CollapseService>
       )}
     </S.CollapseContainer>

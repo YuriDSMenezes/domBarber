@@ -19,37 +19,16 @@ const products: React.FC = () => {
     {
       key: 'Produtos',
       description: 'Produtos',
-      renderComponentDesktop: (
-        <PaginatedItems
-          itemsPerPage={5}
-          items={products}
-          component={ProductsTabOption}
-        />
-      ),
       renderComponentMobile: <ProductsTabOption list={products} />,
     },
     {
       key: 'Higiene',
       description: 'Higiene',
-      renderComponentDesktop: (
-        <PaginatedItems
-          itemsPerPage={5}
-          items={products}
-          component={HygieneTabOption}
-        />
-      ),
       renderComponentMobile: <HygieneTabOption list={products} />,
     },
     {
       key: 'Barbearia',
       description: 'Barbearia',
-      renderComponentDesktop: (
-        <PaginatedItems
-          itemsPerPage={5}
-          items={products}
-          component={BarberShopTabOption}
-        />
-      ),
       renderComponentMobile: <BarberShopTabOption list={products} />,
     },
   ];

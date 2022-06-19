@@ -16,7 +16,7 @@ module.exports = withImages({
 module.exports = withPlugins([
   {
     images: {
-      domains: ['www.montarumnegocio.com']
+      domains: ['www.montarumnegocio.com','firebasestorage.googleapis.com']
     },
     distDir: 'build',
     future: {webpack5:true},

@@ -8,11 +8,12 @@ interface StyleProps {
 
 export const Container = styled.button<StyleProps>`
   background: ${props => (props.white ? '#fff' : 'var(--color-primary)')};
-  border-radius: 10px;
+  border-radius: 6px;
   border: none;
   width: 100%;
   height: 41px;
   display: flex;
+  color: var(--color-primary-contrast);
   align-items: center;
   cursor: pointer;
   gap: 16px;
@@ -24,12 +25,6 @@ export const Container = styled.button<StyleProps>`
     background-color: #1c1c1c;
     color: black;
   }
-
-  ${props =>
-    props.green &&
-    css`
-      background: #34ed91;
-    `}
 
   ${props =>
     props.smallSize &&

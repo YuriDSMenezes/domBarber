@@ -23,6 +23,18 @@ export const ImgContainer = styled.div`
     height: 100%;
     border-radius: 10px 0px 0px 10px;
   }
+
+  span {
+    width: 100% !important;
+    height: 100% !important;
+    img {
+      position: relative;
+      object-fit: cover;
+      width: 100%;
+      height: 100%;
+      border-radius: 10px 0px 0px 10px;
+    }
+  }
 `;
 
 export const InformationContainer = styled.div`

@@ -62,18 +62,26 @@ const Cart = () => {
     setCart(cart);
   };
 
-  const editSchedule = (item: any, index: string) => {
+  const editSchedule = (item: any, index: number) => {
     if (item.professional) {
       push({
         pathname: `/[companyName]/schedule/editcart/[index]`,
         query: { companyName: company?.app?.url, index },
       });
-    } else {
+    }
+    if (!item.professional) {
       push({
-        pathname: `/[companyName]/confirmkit/edit/[index]`,
+        pathname: `/[companyName]/chooseprofessional/edit/[index]`,
         query: { companyName: company?.app?.url, index },
       });
     }
+    if (item.product) {
+      push({
+        pathname: `/[companyName]/chooseproduct/[index]`,
+        query: { companyName: company?.app?.url, index },
+      });
+    }
+    return null;
   };
 
   return (
@@ -124,6 +132,7 @@ const Cart = () => {
                       professional={cItem?.professional}
                       service={cItem?.service}
                       product={cItem?.product}
+                      quantity={cItem?.quantity}
                       date={cItem?.start || undefined}
                     />
                   </CardSlide>
@@ -148,17 +157,15 @@ const Cart = () => {
           <S.Buttons>
             <S.Row>
               <Button
-                white
                 text="Adicionar Produto"
                 onClick={() =>
                   push({
-                    pathname: `/[companyName]/products`,
+                    pathname: `/[companyName]/listproducts`,
                     query: { companyName: company?.app?.url },
                   })
                 }
               />
               <Button
-                white
                 text="Adicionar Serviço"
                 onClick={() => {
                   push({

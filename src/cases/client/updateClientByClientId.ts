@@ -16,7 +16,6 @@ export const updateClientByClientId = async (
         Authorization: `Bearer ${getUserTokenFromLocalStorage()}`,
       },
     });
-    console.log(response);
   } catch (error) {
     console.error('Erro ao Atualizar dados do cliente', error);
   }

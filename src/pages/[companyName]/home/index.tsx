@@ -34,7 +34,10 @@ const Home: NextPage = () => {
           <Input search secondary />
         </S.InputContainer>
         <S.BannerContainer
-          bannerUrl={globalStates.company?.image?.cover?.desktop}
+          bannerUrl={
+            globalStates.company?.image?.cover?.desktop ||
+            globalStates?.company?.image?.cover?.app
+          }
         />
         <S.HorizontalListContainer>
           <HorizontalList />
@@ -45,7 +48,7 @@ const Home: NextPage = () => {
           <S.SeeMore
             onClick={() =>
               push({
-                pathname: `/[companyName]/newservice`,
+                pathname: `/[companyName]/services`,
                 query: { companyName: company?.app?.url },
               })
             }

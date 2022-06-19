@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useGlobal } from 'hooks/Global';
 import { Service } from 'models/types/service';
+import Image from 'next/image';
 import { useRouter } from 'next/router';
 import React, { ComponentType, useState } from 'react';
 
@@ -13,7 +14,7 @@ interface ServiceCardProps {
 
 const ServiceCard: ComponentType<ServiceCardProps> = ({ list, isKit }) => {
   const {
-    states: { company },
+    states: { company, services },
   } = useGlobal();
   const { push } = useRouter();
   const [hasProfessional, setHasProfessional] = useState(false);
@@ -23,8 +24,8 @@ const ServiceCard: ComponentType<ServiceCardProps> = ({ list, isKit }) => {
       if (cart) {
         const parsedCart = JSON.parse(cart);
         const lastItemCart = parsedCart[parsedCart.length - 1];
-        lastItemCart.professionalId &&
-          lastItemCart.professional &&
+        lastItemCart?.professionalId &&
+          lastItemCart?.professional &&
           !lastItemCart.serviceId &&
           setHasProfessional(true);
         return parsedCart;
@@ -85,9 +86,13 @@ const ServiceCard: ComponentType<ServiceCardProps> = ({ list, isKit }) => {
       {list?.map((item, index) => (
         <S.Container key={index} onClick={() => handleClickCard(item)}>
           <S.ImgContainer>
-            <img
-              src="https://img.freepik.com/fotos-gratis/cliente-fazendo-o-corte-de-cabelo-em-um-salao-de-barbearia_1303-20861.jpg?size=626&ext=jpg&ga=GA1.2.1657761803.1635638400"
+            <Image
+              src={(item.images && item?.images[0]?.url) || ''}
               alt="Imagem do Serviço"
+              width={170}
+              height={130}
+              placeholder="blur"
+              blurDataURL={item.images && item?.images[0]?.url}
             />
           </S.ImgContainer>
           <S.InformationContainer>

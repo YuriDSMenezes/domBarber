@@ -16,8 +16,7 @@ const chooseprofessional: React.FC = () => {
   const {
     states: { company },
   } = useGlobal();
-  const { kitId } = query;
-  const { index } = query;
+  const { kitId, index, serviceIndex } = query;
   const {
     states: { professionals },
   } = useGlobal();
@@ -47,10 +46,9 @@ const chooseprofessional: React.FC = () => {
   });
 
   const handleClickCard = (professional: Professional) => {
-    cart.splice(index, 1);
-    console.log(cart, selectedItemCart);
-    selectedItemCart.service.services = {
-      ...selectedItemCart?.service?.services,
+    cart.splice(Number(index), 1);
+    selectedItemCart.service.services[serviceIndex] = {
+      ...selectedItemCart?.service?.services[serviceIndex],
       professional,
       professionalId: professional.id,
     };
@@ -62,10 +60,12 @@ const chooseprofessional: React.FC = () => {
     }
     if (isReady) {
       push({
-        pathname: `/[companyName]/schedulekit/[kitId]`,
+        pathname: `/[companyName]/schedulekit/[kitId]/[index]`,
         query: {
           companyName: company?.app?.name,
           kitId,
+          index,
+          serviceIndex,
         },
       });
     }

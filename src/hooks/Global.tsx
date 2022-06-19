@@ -7,6 +7,7 @@ import { Product as ProductType } from 'models/types/product';
 import { firestoreDb } from 'services/FirestoreDatabase';
 import { Company } from 'models/company';
 import { useRouter } from 'next/router';
+import { Category } from 'models/category';
 import { setTheme } from './Theme';
 
 interface GlobalContextProps {
@@ -16,6 +17,7 @@ interface GlobalContextProps {
     kits: KitType[];
     professionals: ProfessionalType[];
     products: ProductType[];
+    categories: Category[];
   };
   actions: {
     setCompany: (company: CompanyType) => void;
@@ -23,6 +25,7 @@ interface GlobalContextProps {
     setKits: (services: KitType[]) => void;
     setProfessionals: (professionals: ProfessionalType[]) => void;
     setProducts: (products: ProductType[]) => void;
+    setCategories: (category: Category[]) => void;
   };
 }
 
@@ -35,6 +38,7 @@ const GlobalProvider: React.FC = ({ children }) => {
   const [services, setServices] = useState<ServiceType[]>([] as ServiceType[]);
   const [kits, setKits] = useState<KitType[]>([] as KitType[]);
   const [products, setProducts] = useState<ProductType[]>([] as ProductType[]);
+  const [categories, setCategories] = useState<Category[]>([] as Category[]);
   const [professionals, setProfessionals] = useState<ProfessionalType[]>(
     [] as ProfessionalType[],
   );
@@ -73,13 +77,21 @@ const GlobalProvider: React.FC = ({ children }) => {
   return (
     <GlobalContext.Provider
       value={{
-        states: { company, services, professionals, products, kits },
+        states: {
+          company,
+          services,
+          professionals,
+          products,
+          kits,
+          categories,
+        },
         actions: {
           setCompany,
           setServices,
           setProfessionals,
           setProducts,
           setKits,
+          setCategories,
         },
       }}
     >

@@ -9,7 +9,7 @@ export const Container = styled.div<ContainerProps>`
   height: 56px;
   display: flex;
   justify-content: space-between;
-  background-color: #1c1c1c;
+  background-color: var(--color-secondary);
   position: fixed;
   z-index: 999;
   top: 0;
@@ -134,6 +134,7 @@ export const UserLoginDesktop = styled.div`
 export const SidebarImage = styled.div`
   width: 25px;
   margin-left: 50px;
+  color: black;
 
   @media (max-width: 768px) {
     margin-left: 10px;

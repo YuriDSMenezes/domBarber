@@ -13,6 +13,8 @@ import { Service } from 'models/service';
 import { getProductsByCompanyId } from 'cases/product';
 import { setTheme } from 'hooks/Theme';
 import { ManifestConfig } from 'hooks/ManifestConfig';
+import { getAllServiceCategories } from 'cases/service/getAllCategorys';
+import { getUserTokenFromLocalStorage } from 'cases/user/getUserTokenFromLocalStorage';
 import { getAllProfessionalsByCompanyId } from '../../../cases/professional/getProfessionalsByCompanyId';
 import { getAllKitsByCompanyId } from '../../../cases/kit/getAllKitByService';
 import { getCompanyByUrl } from '../../../cases/company/getCompanyByUrl';
@@ -22,6 +24,7 @@ import { getCompanyByUrl } from '../../../cases/company/getCompanyByUrl';
 export const useAppController = () => {
   const { states: globalStates, actions: globalActions } = useGlobal();
   const { actions: loadingActions } = useLoading();
+  const token = getUserTokenFromLocalStorage();
   const {
     query: { companyName },
     isReady,
@@ -79,6 +82,17 @@ export const useAppController = () => {
     globalActions.setServices(parsedServicesData);
   }, []);
 
+  const getCategories = useCallback(async (companyId: string) => {
+    const servicesData = await getAllServiceCategories(token, companyId);
+    const parsedServicesData = servicesData
+      ? Object.entries(servicesData as {}).map(
+          // @ts-ignore
+          ([id, data]) => Service({ ...data, id }),
+        )
+      : [];
+    globalActions.setCategories(parsedServicesData);
+  }, []);
+
   const getProfessionalsCompany = useCallback(async (companyId: string) => {
     const professionalsData = await getAllProfessionalsByCompanyId(companyId);
     const parsedProfessionalsData = professionalsData
@@ -121,6 +135,7 @@ export const useAppController = () => {
       await getProfessionalsCompany(companyResponse.id);
       await getProductsCompany(companyResponse.id);
       await getKitsCompany(companyResponse.id);
+      await getCategories(companyResponse.id);
     }
   }, [isReady]);
 

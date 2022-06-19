@@ -6,9 +6,10 @@ interface StyleProps {
 }
 
 export const Container = styled.div`
-  width: 95%;
+  width: 100%;
+  padding: 0 16px;
   margin: 0 auto;
-  background: #1c1c1c;
+  background: var(--background-color);
   height: 100%;
   padding-top: 50px;
   display: flex;
@@ -29,7 +30,7 @@ export const Container = styled.div`
 `;
 
 export const TitleContainer = styled.div`
-  color: #fff;
+  color: var(--text-color);
   width: 220px;
   margin: 0 auto;
   text-align: center;

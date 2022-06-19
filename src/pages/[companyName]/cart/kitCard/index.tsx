@@ -37,9 +37,9 @@ export const KitCard = ({ index, item }: KitCardProps) => {
           <S.Column>
             <S.OrangeTitle>{item?.service?.name}</S.OrangeTitle>
             <S.Row>
-              {item?.service.services?.map(service => (
+              {item?.service?.services?.map(service => (
                 <S.Row>
-                  <S.SmallText>{service.name}</S.SmallText>
+                  <S.SmallText>{service?.name}</S.SmallText>
                 </S.Row>
               ))}
             </S.Row>
@@ -73,7 +73,7 @@ export const KitCard = ({ index, item }: KitCardProps) => {
         </S.Arrow>
       </S.Row>
       {openCollapse &&
-        item?.service.services?.map((service: any) => (
+        item?.service.services?.map((service: any, index: number) => (
           <div style={{ marginTop: '20px' }} key={index}>
             <CardSlide
               swiped={selectedIndex === index}

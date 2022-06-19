@@ -1,5 +1,6 @@
 import { Splide, SplideSlide } from '@splidejs/react-splide';
 import '@splidejs/react-splide/css';
+import { useGlobal } from 'hooks/Global';
 import { Product } from 'models/types/product';
 import { Professional } from 'models/types/professional';
 import { useRouter } from 'next/router';
@@ -15,6 +16,9 @@ interface CarouselProps {
 
 export const Carousel = ({ items, size, professional }: CarouselProps) => {
   const { push } = useRouter();
+  const {
+    states: { company },
+  } = useGlobal();
   const [cart, setCart] = useState(() => {
     if (typeof window !== 'undefined') {
       const cart = localStorage.getItem('@domBarber:cart');

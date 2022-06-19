@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Splide, SplideSlide } from '@splidejs/react-splide';
+import { useGlobal } from 'hooks/Global';
 
 import Button from 'components/Button';
 import { Service } from 'models/types/service';
@@ -21,6 +22,9 @@ export const CarouselService: React.FC<CarouselProps> = ({
   const [active, setActive] = useState<boolean>(false);
 
   const { push } = useRouter();
+  const {
+    states: { company },
+  } = useGlobal();
   const [cart, setCart] = useState<Array<{}>>(() => {
     if (typeof window !== 'undefined') {
       const cart = localStorage.getItem('@domBarber:cart');
@@ -70,7 +74,7 @@ export const CarouselService: React.FC<CarouselProps> = ({
         <SplideSlide key={index}>
           <S.Item
             size={size}
-            srcImage={item?.images[0]?.url}
+            srcImage={item.images && item?.images[0]?.url}
             active={active}
             className="item"
             onClick={() => handleClickCard(item)}

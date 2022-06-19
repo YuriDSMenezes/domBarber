@@ -24,9 +24,8 @@ export const Item = styled.div<ItemProps>`
   cursor: pointer;
   width: fit-content;
   height: 24px;
-  color: ${props => (props.active ? '#1C1C1C' : '#fff')};
+  color: var(--text-color);
   font-weight: 500;
-  background-color: ${props => props.active && '#FF9933'};
   border-radius: 14px;
   display: flex;
   align-items: center;

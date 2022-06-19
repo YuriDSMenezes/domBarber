@@ -12,7 +12,6 @@ export const Container = styled.div<StyleProps>`
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 0 20px;
   overflow-y: scroll;
 `;
 
@@ -63,6 +62,7 @@ export const ContainerTabRenderedComponentMobile = styled.div`
   height: 100%;
   margin-top: 25px;
   display: block;
+  overflow-y: scroll;
   @media (min-width: 768px) {
     display: none;
   }

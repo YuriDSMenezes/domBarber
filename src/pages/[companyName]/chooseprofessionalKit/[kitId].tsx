@@ -34,7 +34,7 @@ const chooseprofessional: React.FC = () => {
           service: { services, serviceIds },
         } = parsedCart[parsedCart.length - 1];
         const getProfessionalsByService = professionals.filter(professional =>
-          professional.serviceIds.includes('XE4iGeaeKZe48FkOVAvk'),
+          professional.serviceIds.filter(item => serviceIds.includes(item)),
         );
         const getService = services.find(
           (service: any) => service.id === query.kitId && !service.start,

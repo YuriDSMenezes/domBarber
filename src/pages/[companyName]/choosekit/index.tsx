@@ -50,9 +50,11 @@ const choosekit: React.FC = () => {
             Defina a data e hora para cada serviço do seu Kit
           </S.Description>
           <S.KitsContainer>
-            {kit?.service?.services?.map((service: KitService) => (
-              <KitCard service={service} />
-            ))}
+            {kit?.service?.services?.map(
+              (service: KitService, index: number) => (
+                <KitCard service={service} />
+              ),
+            )}
           </S.KitsContainer>
           {canSchedule() ? (
             <Button
