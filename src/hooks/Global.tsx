@@ -20,6 +20,7 @@ interface GlobalContextProps {
     products: ProductType[];
     categories: Category[];
     selectedCardPayment: ClientCard;
+    cardInfos: { id: string; key: string };
   };
   actions: {
     setCompany: (company: CompanyType) => void;
@@ -29,6 +30,7 @@ interface GlobalContextProps {
     setProducts: (products: ProductType[]) => void;
     setCategories: (category: Category[]) => void;
     setSelectedCardPayment: (card: ClientCard) => void;
+    setCardInfos: (value: any) => void;
   };
 }
 
@@ -42,6 +44,7 @@ const GlobalProvider: React.FC = ({ children }) => {
   const [kits, setKits] = useState<KitType[]>([] as KitType[]);
   const [products, setProducts] = useState<ProductType[]>([] as ProductType[]);
   const [categories, setCategories] = useState<Category[]>([] as Category[]);
+  const [cardInfos, setCardInfos] = useState();
   const [professionals, setProfessionals] = useState<ProfessionalType[]>(
     [] as ProfessionalType[],
   );
@@ -89,6 +92,7 @@ const GlobalProvider: React.FC = ({ children }) => {
           kits,
           categories,
           selectedCardPayment,
+          cardInfos,
         },
         actions: {
           setCompany,
@@ -98,6 +102,7 @@ const GlobalProvider: React.FC = ({ children }) => {
           setKits,
           setCategories,
           setSelectedCardPayment,
+          setCardInfos,
         },
       }}
     >

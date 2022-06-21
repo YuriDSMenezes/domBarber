@@ -31,8 +31,8 @@ export const createCommandFromSchedule = async (
         },
       },
     );
-    console.log(response);
+    return response?.data[0];
   } catch (error) {
-    console.error(error);
+    return console.error(error);
   }
 };

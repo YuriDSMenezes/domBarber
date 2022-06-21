@@ -104,6 +104,10 @@ button {
 
 div#__next,
   div#__next > div {
-    min-height: 100vh;
+    /* min-height: 100vh; */
+}
+
+.Toastify {
+  height: 0px !important;
 }
 `;

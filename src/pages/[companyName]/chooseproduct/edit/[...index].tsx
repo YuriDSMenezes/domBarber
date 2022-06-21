@@ -2,11 +2,13 @@ import Button from 'components/Button';
 import BottomSheetFixedLayout from 'layouts/BottomSheetFixedLayout';
 import MainLayout from 'layouts/MainLayout';
 import { useRouter } from 'next/router';
-import { useState } from 'react';
-import * as S from './styles';
+import { useEffect, useState } from 'react';
+import * as S from '../styles';
 
 const ChooseProduct = () => {
   const { query, push } = useRouter();
+  const indexQuery = query.index;
+  const [selectedProduct, setSelectedProduct] = useState({});
   const [quantity, setQuantity] = useState(1);
 
   const [cart, setCart] = useState(() => {
@@ -23,11 +25,11 @@ const ChooseProduct = () => {
   });
 
   const handleAdd = () => {
+    cart.splice(indexQuery, 1);
     const newProduct = {
-      ...cart[cart.length - 1],
+      ...selectedProduct,
       quantity,
     };
-    cart.pop();
     const newCart = [...cart, newProduct];
     if (typeof window !== 'undefined') {
       localStorage.setItem('@domBarber:cart', JSON.stringify(newCart));
@@ -36,6 +38,11 @@ const ChooseProduct = () => {
       pathname: `/ps1/cart`,
     });
   };
+
+  useEffect(() => {
+    setSelectedProduct(cart[Number(indexQuery)]);
+    setQuantity(cart[Number(indexQuery)]?.quantity || 1);
+  }, [query]);
 
   const handleMore = () => {
     setQuantity(quantity + 1);
@@ -52,11 +59,9 @@ const ChooseProduct = () => {
     <MainLayout>
       <BottomSheetFixedLayout theme="dark">
         <S.Content>
-          <S.Title>{cart[cart.length - 1]?.product?.name}</S.Title>
-          <S.Value>R$ {cart[cart.length - 1]?.product?.price}</S.Value>
-          <S.Description>
-            {cart[cart.length - 1]?.product?.description}
-          </S.Description>
+          <S.Title>{selectedProduct?.product?.name}</S.Title>
+          <S.Value>R$ {selectedProduct?.product?.price}</S.Value>
+          <S.Description>{selectedProduct?.product?.description}</S.Description>
 
           <S.Quantity>
             <S.More onClick={handleMore}> + </S.More>

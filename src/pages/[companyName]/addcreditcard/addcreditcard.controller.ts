@@ -30,6 +30,7 @@ interface iEncryptCard {
 export const useAddCreditCard = () => {
   const {
     states: { company },
+    actions: { setCardInfos },
   } = useGlobal();
   const { push } = useRouter();
   const [client, setClient] = useState();
@@ -62,10 +63,8 @@ export const useAddCreditCard = () => {
       if (encrypt?.errors?.lenght > 0 && encrypt?.hasErrors) {
         throw new Error('Cartão de Credito Inválido.');
       }
-      console.log(encrypt);
       return encrypt.encryptedCard;
     } catch (error) {
-      console.error(error);
       return undefined;
     }
   };
@@ -89,6 +88,7 @@ export const useAddCreditCard = () => {
         expMonth: Number(creditCardData.expiry.split('/')[0]),
         expYear: Number(creditCardData.expiry.split('/')[1]),
       });
+      setCardInfos(encryptedCard);
       const creditCard = {
         id: creditCardData.number,
         main: true,

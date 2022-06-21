@@ -13,7 +13,7 @@ import * as S from './styles';
 const scheduleconfirmed: React.FC = () => {
   const { push } = useRouter();
   const {
-    states: { company },
+    states: { company, commandId },
   } = useGlobal();
 
   const [cart, setCart] = useState(() => {

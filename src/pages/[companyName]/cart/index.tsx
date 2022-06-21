@@ -20,6 +20,7 @@ const Cart = () => {
   const { push } = useRouter();
   const {
     states: { company },
+    actions: { setCommandId },
   } = useGlobal();
   const [openModal, setOpenModal] = useState<boolean>(false);
   const [indexItem, setIndexItem] = useState<number | undefined>();
@@ -77,11 +78,15 @@ const Cart = () => {
     }
     if (item.product) {
       push({
-        pathname: `/[companyName]/chooseproduct/[index]`,
+        pathname: `/[companyName]/chooseproduct/edit/[index]`,
         query: { companyName: company?.app?.url, index },
       });
     }
     return null;
+  };
+
+  const handleClick = () => {
+    createSchedule({});
   };
 
   return (

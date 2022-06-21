@@ -9,7 +9,7 @@ import * as S from './styles';
 
 interface MethodPaymentItemProps extends HTMLAttributes<HTMLDivElement> {
   methodPaymentName: string;
-  paymentMethod?: 'pix' | 'card' | 'money';
+  paymentMethod?: 'pix' | 'creditCard' | 'money';
   card?: any;
 }
 

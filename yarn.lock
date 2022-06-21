@@ -1878,6 +1878,13 @@
   dependencies:
     "@types/react" "*"
 
+"@types/react-toastify@^4.1.0":
+  version "4.1.0"
+  resolved "https://registry.yarnpkg.com/@types/react-toastify/-/react-toastify-4.1.0.tgz#604e712855dd677916d5c66af595d3b590f5d95d"
+  integrity sha512-u7Ie/7LHBsPVz/iJxi/WlRDS7Gh9csCJACTDXx+pSLuZCm94xpkwzhM3jV1L5ZxP/in0Gp2tFbJ91VrSGr1gyQ==
+  dependencies:
+    react-toastify "*"
+
 "@types/react@*", "@types/react@17.0.43":
   version "17.0.43"
   resolved "https://registry.yarnpkg.com/@types/react/-/react-17.0.43.tgz#4adc142887dd4a2601ce730bc56c3436fdb07a55"
@@ -2945,6 +2952,11 @@ clone@^1.0.2:
   version "1.0.4"
   resolved "https://registry.yarnpkg.com/clone/-/clone-1.0.4.tgz#da309cc263df15994c688ca902179ca3c7cd7c7e"
   integrity sha1-2jCcwmPfFZlMaIypAheco8fNfH4=
+
+clsx@^1.1.1:
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/clsx/-/clsx-1.1.1.tgz#98b3134f9abbdf23b2663491ace13c5c03a73188"
+  integrity sha512-6/bPho624p3S2pMyvP5kKBPXnI3ufHLObBFCfgx+LkeR5lg2XYy2hqZqUf45ypD8COn2bhgGJSUE+l5dhNBieA==
 
 color-convert@^1.9.0, color-convert@^1.9.3:
   version "1.9.3"
@@ -7035,6 +7047,13 @@ react-star-rating-component@^1.4.1:
   dependencies:
     classnames "^2.2.5"
     prop-types "^15.6.1"
+
+react-toastify@*, react-toastify@^9.0.4:
+  version "9.0.4"
+  resolved "https://registry.yarnpkg.com/react-toastify/-/react-toastify-9.0.4.tgz#016d0f3dae2f6e9c01eb36bd1d2c31b0a6de4434"
+  integrity sha512-MYmJ1V5F6DEU+TFxBb+pGGsveFPt4tjr4yK+TopXkU3sXPD9F2tFhX+G2HBLZpqObT2O6Z9jbXSg3JpaxuWtWw==
+  dependencies:
+    clsx "^1.1.1"
 
 react@18.0.0:
   version "18.0.0"

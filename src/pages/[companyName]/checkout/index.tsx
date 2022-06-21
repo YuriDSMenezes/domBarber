@@ -1,3 +1,4 @@
+import { createPayment } from 'cases/pagseguro/createPayment';
 import Button from 'components/Button';
 import { currencyFormat } from 'helpers';
 import { useGlobal } from 'hooks/Global';
@@ -13,7 +14,7 @@ import * as S from './styles';
 const checkout: React.FC = () => {
   const { push } = useRouter();
   const {
-    states: { company, selectedCardPayment },
+    states: { company, selectedCardPayment, cardInfos },
   } = useGlobal();
 
   const [cart, setCart] = useState(() => {
@@ -27,6 +28,54 @@ const checkout: React.FC = () => {
 
     return [];
   });
+
+  const [commandsIds, setCommandsIds] = useState(() => {
+    if (typeof window !== 'undefined') {
+      const commandsIds = localStorage.getItem('@domBarber:command');
+      if (commandsIds) {
+        return JSON.parse(commandsIds);
+      }
+    }
+
+    return [];
+  });
+
+  const [client, setClient] = useState(() => {
+    if (typeof window !== 'undefined') {
+      const client = localStorage.getItem('@domBarber:client');
+
+      if (client) {
+        return JSON.parse(client);
+      }
+    }
+
+    return [];
+  });
+
+  const [token, setToken] = useState(() => {
+    if (typeof window !== 'undefined') {
+      const token = localStorage.getItem('@domBarber:token');
+
+      if (token) {
+        return JSON.parse(token);
+      }
+    }
+
+    return [];
+  });
+
+  const handleCreatePayment = async () => {
+    await createPayment(
+      client.id,
+      'a6cH3W86dmhy6Fl1djF8Vsy4TLPKlEpUk0wIYJhr/vFP3vzskzMaMg4jnDX0DLMNrKWeh5Nry8mTiDr/S/wbRDZoOvkd5K503W1+2kPw2l0WYxDUSsVvX7ONoxQlRe9QBjr2QdPq3xUCEflQ55gHfvXMMJYMNVpx1PEq8+pt6eIap8Ezkhop2qRX8VIZWQsuPtxeRosyRM7+5H3lwOynd8G++iXdJ1l7vke5xHQttO7UKJwwCNosRrx6ESLAmvFZoDBdmjTelGBPyZDImNl+SidVidVb1wTRCzCZiZTnQg/GXH1hiBAL0XsuEDmE4z6LF6/cLiITXbZIOIwCkPjVBw==',
+      'creditCard',
+      10,
+      1,
+      company?.id,
+      token,
+      commandsIds,
+    );
+  };
 
   return (
     <MainLayout>
@@ -77,7 +126,7 @@ const checkout: React.FC = () => {
                   <MethodPaymentItem
                     card={selectedCardPayment}
                     methodPaymentName="Cartão de Crédito"
-                    paymentMethod="card"
+                    paymentMethod="creditCard"
                   />
                 ) : (
                   <S.PaymentMethodTitle>
@@ -121,7 +170,7 @@ const checkout: React.FC = () => {
               </S.Column>
             </S.ContainerRow>
           </S.DeatailPaymentContainer>
-          <Button text="Confirmar" green />
+          <Button text="Confirmar" onClick={handleCreatePayment} />
         </S.Content>
       </BottomSheetFixedLayout>
     </MainLayout>

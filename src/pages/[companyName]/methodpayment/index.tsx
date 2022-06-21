@@ -1,6 +1,6 @@
 import { getClientByClientId } from 'cases/client/getClientByClientId';
 import { getClientFromLocalStorage } from 'cases/client/getClientFromLocalStorage';
-import { getUserIdFromLocalStorage } from 'cases/user/getUserIdFromLocalStorage';
+import { getInstallments } from 'cases/installments/getInstallments';
 import { getUserTokenFromLocalStorage } from 'cases/user/getUserTokenFromLocalStorage';
 import Button from 'components/Button';
 import { useGlobal } from 'hooks/Global';
@@ -15,7 +15,7 @@ import * as S from './styles';
 
 const methodpayment: React.FC = () => {
   const {
-    states: { company },
+    states: { company, cardInfos },
     actions: { setSelectedCardPayment },
   } = useGlobal();
   const { push } = useRouter();
@@ -24,7 +24,7 @@ const methodpayment: React.FC = () => {
   const [cards, setCards] = useState([]);
 
   const {
-    actions: { encriptCard },
+    states: { encrypty },
   } = useMethodPaymentController();
 
   const getClient = async () => {
@@ -37,9 +37,28 @@ const methodpayment: React.FC = () => {
     setCards(client.cards);
   };
 
+  const getAllInstallments = async () => {
+    const response = await getInstallments(
+      company?.id,
+      getClientFromLocalStorage().id,
+      getUserTokenFromLocalStorage(),
+      'creditCard',
+      '5',
+    );
+    if (window !== 'undefined') {
+      localStorage.setItem('@domBarber:installments', response);
+    }
+  };
+
   useEffect(() => {
     getClient();
   }, []);
+
+  useEffect(() => {
+    Object.keys(company).length > 0 && getAllInstallments();
+  }, [client, company]);
+
+  console.log(cardInfos, 'aaaa');
 
   return (
     <MainLayout>

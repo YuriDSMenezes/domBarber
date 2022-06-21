@@ -21,8 +21,8 @@ export const deleteScheduledByScheduleId = async (
         },
       },
     );
-    console.log(response);
+    return response;
   } catch (error) {
-    console.error(error);
+    return console.error(error);
   }
 };

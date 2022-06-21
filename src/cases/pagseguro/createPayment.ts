@@ -1,24 +1,27 @@
 import { environment } from 'environments/environment';
 import api from 'services/api';
 
-export const userLoginOnInternalApi = async (
-  userId: string,
-  authType: string,
+export const createPayment = async (
+  clientId: string,
+  cardToken: string,
+  paymentType: 'creditCard',
+  installmentValue: number,
+  installmentQuantity: number,
   companyId: string,
   token: string,
+  commandItemIds: string[],
 ) => {
   try {
-    // const params = new URLSearchParams([
-    //   ['authId', userId],
-    //   ['authType', authType],
-    //   ['companyId', companyId],
-    // ]);
     const response = await api.post(
-      `client/auth/login;authId=${userId};authType=${authType};companyId=${companyId}`,
+      `pagseguro/transaction
+`,
       {
-        authId: userId,
-        authType,
-        companyId,
+        clientId,
+        cardToken,
+        paymentType,
+        installmentValue,
+        installmentQuantity,
+        commandItemIds,
       },
       {
         headers: {
@@ -28,9 +31,8 @@ export const userLoginOnInternalApi = async (
         },
       },
     );
-
     return response;
   } catch (error) {
-    return console.log(error);
+    console.error(error);
   }
 };

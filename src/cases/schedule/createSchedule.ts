@@ -3,6 +3,7 @@
 import { environment } from 'environments/environment.prod';
 import api from 'services/api';
 import { createCommandFromSchedule } from 'cases/command/createCommandFromSchedule';
+import { useGlobal } from 'hooks/Global';
 import { ScheduleCanceled } from '../../models/types/schedule/canceled.d';
 
 interface scheduleCreateProps {
@@ -74,30 +75,37 @@ export const createSchedule = async ({
         ScheduledKits.push(r.data);
       });
     }
-    const waithSeconds =
+    const waitSeconds =
       schedulesFormatted.length + schedulesKitFormatted.length;
-
     setTimeout(async () => {
-      await createCommandFromSchedule(companyId, token, clientId, [
-        ...ScheduledServices.map((ss: any) => ({
-          id: ss.serviceIds[0],
-          scheduleIds: [ss.id],
-          quantity: 1,
-          type: 'service',
-          discount: 0,
-          pointUsed: false,
-        })),
-        ...ScheduledKits.map(sk => ({
-          id: sk.serviceIds[0],
-          scheduleIds: [sk.id],
-          quantity: 1,
-          type: 'kit',
-          discount: 0,
-          pointUsed: false,
-        })),
-      ]);
-    }, Number(`${waithSeconds}000`));
-    return null;
+      const response = await createCommandFromSchedule(
+        companyId,
+        token,
+        clientId,
+        [
+          ...ScheduledServices.map((ss: any) => ({
+            id: ss?.serviceIds && ss?.serviceIds[0],
+            scheduleIds: [ss.id],
+            quantity: 1,
+            type: 'service',
+            discount: 0,
+            pointUsed: false,
+          })),
+          ...ScheduledKits.map(sk => ({
+            id: sk?.serviceIds && sk?.serviceIds[0],
+            scheduleIds: [sk.id],
+            quantity: 1,
+            type: 'kit',
+            discount: 0,
+            pointUsed: false,
+          })),
+        ],
+      );
+      if (typeof window !== 'undefined') {
+        localStorage.setItem('@domBarber:command', JSON.stringify(response));
+      }
+    }, Number(`${waitSeconds}000`));
+    return response;
   } catch (error) {
     return console.error('erro', error);
   }
