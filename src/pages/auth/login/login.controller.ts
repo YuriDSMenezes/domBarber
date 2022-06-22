@@ -7,7 +7,7 @@ import {
 } from 'services/FirebaseOAuth';
 
 export const LoginController = () => {
-  const [email, setEmail] = useState<string>('');
+  const [email, setEmail] = useState<string>('asd');
   const [password, setPassword] = useState<string>('');
   const [error, setError] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
@@ -21,11 +21,11 @@ export const LoginController = () => {
   };
 
   const handleLoginWithEmail = async () => {
-    await singIn(email, password, () => null);
+    await singIn(email, password);
   };
 
-  const handleEmail = () => setEmail(email);
-  const handlePassword = () => setPassword(password);
+  const handleEmail = e => setEmail(e.target.value);
+  const handlePassword = e => setPassword(e.target.value);
 
   return {
     state: {

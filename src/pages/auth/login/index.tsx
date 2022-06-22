@@ -23,41 +23,39 @@ const Login: NextPage = () => {
   return (
     <S.Container>
       <SEO title="Login" />
-      <S.Form onSubmit={handleLoginWithEmail}>
-        <S.Content>
-          <S.LogoContainer>
-            <img
-              src={LogoBlackIcon.src}
-              alt="Logotipo da Dom Barber"
-              width="100%"
-              height="100%"
-            />
-          </S.LogoContainer>
-          <S.FormTitle>Login</S.FormTitle>
-          <Input label="E-mail" onChange={handleEmail} />
-          <Input label="Senha" onChange={handlePassword} />
-          <S.IndicativeTextOptionsLogin>ou</S.IndicativeTextOptionsLogin>
-          <S.ActionsSocialButtons>
-            <SocialConnectionActionButton
-              socialConnectionType="google"
-              onClick={handleLoginWithGoogle}
-            />
-            <SocialConnectionActionButton
-              socialConnectionType="facebook"
-              onClick={handleLoginWithFacebook}
-            />
-          </S.ActionsSocialButtons>
-          <Button text="Continuar" onClick={handleLoginWithEmail} />
-          <S.RegisterSuggestionContainer>
-            <S.RegisterSuggestionText>
-              Não tem Cadastro?
-            </S.RegisterSuggestionText>
-            <S.RegisterSuggestionLink href="#">
-              Cadastre-se
-            </S.RegisterSuggestionLink>
-          </S.RegisterSuggestionContainer>
-        </S.Content>
-      </S.Form>
+      {/* <S.Form> */}
+      <S.Content>
+        <S.LogoContainer>
+          <img
+            src={LogoBlackIcon.src}
+            alt="Logotipo da Dom Barber"
+            width="100%"
+            height="100%"
+          />
+        </S.LogoContainer>
+        <S.FormTitle>Login</S.FormTitle>
+        <Input label="E-mail" onChange={e => handleEmail(e)} />
+        <Input label="Senha" onChange={e => handlePassword(e)} />
+        <S.IndicativeTextOptionsLogin>ou</S.IndicativeTextOptionsLogin>
+        <S.ActionsSocialButtons>
+          <SocialConnectionActionButton
+            socialConnectionType="google"
+            onClick={handleLoginWithGoogle}
+          />
+          <SocialConnectionActionButton
+            socialConnectionType="facebook"
+            onClick={handleLoginWithFacebook}
+          />
+        </S.ActionsSocialButtons>
+        <Button text="Continuar" onClick={handleLoginWithEmail} />
+        <S.RegisterSuggestionContainer>
+          <S.RegisterSuggestionText>Não tem Cadastro?</S.RegisterSuggestionText>
+          <S.RegisterSuggestionLink href="#">
+            Cadastre-se
+          </S.RegisterSuggestionLink>
+        </S.RegisterSuggestionContainer>
+      </S.Content>
+      {/* </S.Form> */}
     </S.Container>
   );
 };

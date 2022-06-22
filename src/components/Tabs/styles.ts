@@ -63,7 +63,4 @@ export const ContainerTabRenderedComponentMobile = styled.div`
   margin-top: 25px;
   display: block;
   overflow-y: scroll;
-  @media (min-width: 768px) {
-    display: none;
-  }
 `;

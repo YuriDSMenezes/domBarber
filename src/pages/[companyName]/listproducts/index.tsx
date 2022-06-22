@@ -20,11 +20,7 @@ const ListProducts: React.FC = () => {
           <S.Title>Lista de Produtos</S.Title>
           <S.ProfissionalsContainer>
             <S.DesktopProfessionals>
-              <PaginatedItems
-                items={products}
-                itemsPerPage={5}
-                component={ProductCard}
-              />
+              <ProductCard list={products} />
             </S.DesktopProfessionals>
             <S.MobileProfessionals>
               <ProductCard list={products} />

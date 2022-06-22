@@ -16,7 +16,8 @@ export const Container = styled.div`
   flex-direction: column;
   @media (min-width: 768px) {
     width: 100%;
-    padding-top: 0;
+    background: none;
+    padding: 0;
     display: grid;
     grid-template-columns: 65% 35%;
     grid-template-areas:
@@ -117,6 +118,10 @@ export const ServiceContainer = styled.div`
   .splide__track.splide__track--loop.splide__track--ltr.splide__track--draggable {
     height: 290px !important;
     padding-top: 40px !important;
+
+    @media (min-width: 768px) {
+      height: 100% !important;
+    }
   }
 
   .splide__slide.is-active {
@@ -124,6 +129,10 @@ export const ServiceContainer = styled.div`
     z-index: 999 !important;
     height: 207px !important;
     margin: 0px 20px !important;
+
+    @media (min-width: 768px) {
+      height: 420px !important;
+    }
 
     .showText {
       display: block;

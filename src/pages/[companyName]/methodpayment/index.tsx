@@ -58,8 +58,6 @@ const methodpayment: React.FC = () => {
     Object.keys(company).length > 0 && getAllInstallments();
   }, [client, company]);
 
-  console.log(cardInfos, 'aaaa');
-
   return (
     <MainLayout>
       <BottomSheetFixedLayout theme="light">

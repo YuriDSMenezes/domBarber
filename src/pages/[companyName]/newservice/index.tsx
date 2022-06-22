@@ -41,7 +41,8 @@ const newservice: React.FC = () => {
 
   return (
     <MainLayout>
-      <SEO company={company} />
+      {/* <SEO company={company} /> */}
+      <S.TitleOut>Escolha um Serviço</S.TitleOut>
       <BottomSheetFixedLayout theme="dark">
         <S.Content>
           <S.Title>Escolha um Serviço</S.Title>

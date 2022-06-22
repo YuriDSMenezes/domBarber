@@ -1,11 +1,12 @@
 import { createPayment } from 'cases/pagseguro/createPayment';
 import Button from 'components/Button';
 import { currencyFormat } from 'helpers';
+import { encryptCard } from 'helpers/encriptCard';
 import { useGlobal } from 'hooks/Global';
 import BottomSheetFixedLayout from 'layouts/BottomSheetFixedLayout';
 import MainLayout from 'layouts/MainLayout';
 import { useRouter } from 'next/router';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { PagSeguroLogo, SecureOrderLogo } from '../../../../public/assets';
 import MethodPaymentItem from './MethodPaymentItem';
 
@@ -13,8 +14,9 @@ import * as S from './styles';
 
 const checkout: React.FC = () => {
   const { push } = useRouter();
+  const [card, setCard] = useState();
   const {
-    states: { company, selectedCardPayment, cardInfos },
+    states: { company, selectedCardPayment },
   } = useGlobal();
 
   const [cart, setCart] = useState(() => {
@@ -64,16 +66,23 @@ const checkout: React.FC = () => {
     return [];
   });
 
+  useEffect(() => {
+    const getCardToken = client?.cards?.find(
+      (card: any) => card?.number === selectedCardPayment?.number,
+    );
+    setCard(getCardToken);
+  }, [selectedCardPayment]);
+
   const handleCreatePayment = async () => {
     await createPayment(
       client.id,
-      'a6cH3W86dmhy6Fl1djF8Vsy4TLPKlEpUk0wIYJhr/vFP3vzskzMaMg4jnDX0DLMNrKWeh5Nry8mTiDr/S/wbRDZoOvkd5K503W1+2kPw2l0WYxDUSsVvX7ONoxQlRe9QBjr2QdPq3xUCEflQ55gHfvXMMJYMNVpx1PEq8+pt6eIap8Ezkhop2qRX8VIZWQsuPtxeRosyRM7+5H3lwOynd8G++iXdJ1l7vke5xHQttO7UKJwwCNosRrx6ESLAmvFZoDBdmjTelGBPyZDImNl+SidVidVb1wTRCzCZiZTnQg/GXH1hiBAL0XsuEDmE4z6LF6/cLiITXbZIOIwCkPjVBw==',
+      card?.token,
       'creditCard',
       10,
       1,
       company?.id,
       token,
-      commandsIds,
+      [commandsIds.commandId],
     );
   };
 

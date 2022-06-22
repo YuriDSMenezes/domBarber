@@ -9,7 +9,7 @@ export const updateClientByClientId = async (
   companyId: string,
 ) => {
   try {
-    const response = await api.put(`client/${clientId}`, client, {
+    await api.put(`client/${clientId}`, client, {
       headers: {
         ProjectId: environment.projectId,
         CompanyId: companyId,

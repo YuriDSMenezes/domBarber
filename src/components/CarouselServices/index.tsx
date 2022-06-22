@@ -61,7 +61,7 @@ export const CarouselService: React.FC<CarouselProps> = ({
         focus: 'center',
         snap: true,
         gap: 20,
-        perPage: 4,
+        perPage: 5,
         breakpoints: {
           400: {
             perPage: 3,

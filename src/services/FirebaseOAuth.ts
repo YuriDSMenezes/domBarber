@@ -122,13 +122,15 @@ export const signInWithFacebook = () =>
       const credential = GoogleAuthProvider.credentialFromError(error);
     });
 
-export const singIn = (email: string, password: string, call: () => void) => {
-  fireAuth
-    .signInWithEmailAndPassword(email, password)
-    .then(response => console.log(response))
-    .catch(() => {
-      call();
-    });
+export const singIn = async (email: string, password: string) => {
+  const company = getCompanyFromLocalStorage();
+  const data = {
+    authType: 'email',
+    companyId: company.id,
+    email,
+    password,
+  };
+  await api.post('user/auth/login', data);
 };
 
 export const createUser = (

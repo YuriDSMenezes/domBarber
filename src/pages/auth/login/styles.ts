@@ -4,7 +4,6 @@ export const Container = styled.div`
   width: 100%;
   height: 100%;
   background: #1c1c1c;
-  position: relative;
   padding-top: 20%;
   @media (min-width: 768px) {
     padding-top: 0;
@@ -18,7 +17,6 @@ export const Form = styled.form`
   background-color: #fff;
   border-radius: 46px 46px 0px 0px;
   padding: 39px 44px 0px;
-  position: absolute;
   bottom: 0;
   width: 100%;
   height: 600px;

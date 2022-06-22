@@ -1,5 +1,6 @@
-import { ConvertToRem } from 'helpers';
 import styled from 'styled-components';
+
+export const Container = styled.div``;
 
 export const Content = styled.div`
   position: relative;
@@ -8,7 +9,6 @@ export const Content = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  overflow-y: hidden;
 `;
 
 export const Title = styled.h1`
@@ -16,20 +16,8 @@ export const Title = styled.h1`
   font-size: 18px;
   line-height: 21px;
   color: #ffffff;
+  display: block;
   @media (min-width: 768px) {
     display: none;
-  }
-`;
-
-export const TitleOut = styled.div`
-  font-weight: 500;
-  font-size: ${ConvertToRem(36)};
-  line-height: 21px;
-  color: #ffffff;
-  text-align: center;
-  margin-bottom: 100px;
-  display: none;
-  @media (min-width: 768px) {
-    display: block;
   }
 `;

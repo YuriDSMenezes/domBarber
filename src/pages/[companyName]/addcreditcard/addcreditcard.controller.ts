@@ -88,7 +88,6 @@ export const useAddCreditCard = () => {
         expMonth: Number(creditCardData.expiry.split('/')[0]),
         expYear: Number(creditCardData.expiry.split('/')[1]),
       });
-      setCardInfos(encryptedCard);
       const creditCard = {
         id: creditCardData.number,
         main: true,
@@ -99,6 +98,25 @@ export const useAddCreditCard = () => {
         month: Number(creditCardData.expiry.split('/')[0]),
         year: Number(creditCardData.expiry.split('/')[1]),
       };
+      if (typeof window !== 'undefined') {
+        const clientLocal = localStorage.getItem('@domBarber:client');
+        if (clientLocal) {
+          const parsedClient = JSON.parse(clientLocal);
+          if (!parsedClient.cards) {
+            parsedClient.cards = [];
+          }
+          const allCards = parsedClient?.cards;
+          allCards.push(creditCard);
+          const newClientCard = {
+            ...parsedClient,
+            cards: [parsedClient.cards, allCards],
+          };
+          localStorage.setItem(
+            '@domBarber:client',
+            JSON.stringify(newClientCard),
+          );
+        }
+      }
       await updateClientByClientId(
         client.id,
         { ...client, cards: [...client.cards, creditCard] },
