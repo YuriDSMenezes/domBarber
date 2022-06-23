@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { ArrowDownIcon } from '../../../../../public/assets';
 import * as S from './styles';
 
-export const Open = () => {
+const Open = () => {
   const [openCollapse, setOpenCollapse] = useState(false);
 
   const handleOpenCollapse = () => setOpenCollapse(!openCollapse);
@@ -98,3 +98,5 @@ export const Open = () => {
     </S.Container>
   );
 };
+
+export default Open;

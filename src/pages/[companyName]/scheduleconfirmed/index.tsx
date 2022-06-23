@@ -7,6 +7,7 @@ import MainLayout from 'layouts/MainLayout';
 import { useRouter } from 'next/router';
 import React, { useState } from 'react';
 import { OutlinedCheckIcon } from '../../../../public/assets';
+import KitCard from '../cart/kitCard';
 
 import * as S from './styles';
 
@@ -38,9 +39,15 @@ const scheduleconfirmed: React.FC = () => {
           <S.Title>Agendamento Confirmado!</S.Title>
           <S.MessageText>Você pode realizar o pagamento no Local</S.MessageText>
           <S.AppointmentsContainer>
-            {cart.map(itemCart => (
-              <AppointmentCard appointment={itemCart} />
-            ))}
+            {cart.map((itemCart, index) =>
+              itemCart?.service?.services ? (
+                <div>
+                  <KitCard item={itemCart} key={index} noCollapse />
+                </div>
+              ) : (
+                <AppointmentCard appointment={itemCart} key={index} />
+              ),
+            )}
           </S.AppointmentsContainer>
           <S.TotalAppointmentContainer>
             <S.TotalText>Total</S.TotalText>

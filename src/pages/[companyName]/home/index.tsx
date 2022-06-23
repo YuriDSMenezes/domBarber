@@ -13,12 +13,11 @@ import { useAppController } from './home.controller';
 
 const Home: NextPage = () => {
   const { states: globalStates } = useGlobal();
+  const { push } = useRouter();
   useAppController();
   const {
     states: { company },
   } = useGlobal();
-
-  const { push } = useRouter();
 
   return (
     <MainLayout>

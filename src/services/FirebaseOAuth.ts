@@ -4,6 +4,7 @@ import firebase from 'firebase/compat/app';
 import cookie from 'js-cookie';
 import Router from 'next/router';
 import 'firebase/compat/auth';
+import { setCookies } from 'cookies-next';
 import {
   getAuth,
   signInWithPopup,
@@ -75,24 +76,24 @@ export const signInWithGoogle = async () =>
           companyId: company.id,
         });
         delete responseLogin.data.cards;
-        if (typeof window !== 'undefined') {
-          localStorage.setItem(
-            '@domBarber:token',
-            JSON.stringify(responseLogin.data.token),
-          );
-          localStorage.setItem('@domBarber:user', JSON.stringify(user));
-          localStorage.setItem(
-            '@domBarber:client',
-            JSON.stringify(responseLogin.data),
-          );
-        }
-      }
+        localStorage.setItem(
+          '@domBarber:token',
+          JSON.stringify(responseLogin.data.token),
+        );
+        setCookies(
+          '@domBarber:token',
+          JSON.stringify(responseLogin.data.token),
+        );
 
-      if (token) {
-        cookie.set('user-cookie', token, {
-          expires: 1,
-        });
-        Router.push('/app');
+        localStorage.setItem('@domBarber:user', JSON.stringify(user));
+        setCookies('@domBarber:user', JSON.stringify(user));
+
+        localStorage.setItem(
+          '@domBarber:client',
+          JSON.stringify(responseLogin.data),
+        );
+        setCookies('@domBarber:client', responseLogin.data);
+        setCookies('@domBarber:company', JSON.stringify(company.id));
       }
     })
     .catch(error => {

@@ -5,7 +5,7 @@ import { useGlobal } from 'hooks/Global';
 import { useRouter } from 'next/router';
 import * as S from './styles';
 
-export const EditKitCard = ({ service, index, serviceIndex }: any) => {
+const EditKitCard = ({ service, index, serviceIndex }: any) => {
   const {
     states: { services, company },
   } = useGlobal();
@@ -33,22 +33,22 @@ export const EditKitCard = ({ service, index, serviceIndex }: any) => {
       <S.CollapseDate>
         <div>
           <S.SmallText>
-            {stringDays[service.start && formatedDate.getDay()]}
+            {stringDays[service?.start && formatedDate.getDay()]}
             {
               stringMonths[
-                service.start
+                service?.start
                   ? formatedDate.getMonth()
-                  : service.start
+                  : service?.start
                   ? new Date().getMonth()
                   : -1
               ]
             }
           </S.SmallText>
           <S.CollapseDay>
-            {service.start && formatedDate.getDate()}
+            {service?.start && formatedDate.getDate()}
           </S.CollapseDay>
           <S.LargeText>
-            {service.start &&
+            {service?.start &&
               formatedDate.toLocaleTimeString('pt-br', { timeStyle: 'short' })}
           </S.LargeText>
         </div>
@@ -78,12 +78,13 @@ export const EditKitCard = ({ service, index, serviceIndex }: any) => {
         <S.CollapseService>
           <S.MediumText>Profissional</S.MediumText>
           <S.CollapseImage>
-            <img src={service.professional?.image} />
+            <img src={service?.professional?.image} />
           </S.CollapseImage>
-          <S.SmallText>{service.professional?.name}</S.SmallText>
+          <S.SmallText>{service?.professional?.name}</S.SmallText>
         </S.CollapseService>
       )}
       <S.Change onClick={handleChange}>Trocar</S.Change>
     </S.CollapseContainer>
   );
 };
+export default EditKitCard;

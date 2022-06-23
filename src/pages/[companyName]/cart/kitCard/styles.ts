@@ -41,7 +41,6 @@ export const LargeText = styled.div`
 export const ItemPhoto = styled.div``;
 
 export const Photo = styled.div`
-  width: 30px;
   height: 27px;
   border-radius: 6px;
   margin-bottom: 4px;

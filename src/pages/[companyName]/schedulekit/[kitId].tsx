@@ -9,7 +9,7 @@ import { useGlobal } from 'hooks/Global';
 import { DayPicker } from 'react-day-picker';
 import 'react-day-picker/dist/style.css';
 import * as S from './styles';
-import { useSchedulesKit } from './schedulekit.controller';
+import useSchedulesKit from './schedulekit.controller';
 // import { getSchedulesByProfessionalId } from 'cases/schedule';
 
 const Schedule = () => {

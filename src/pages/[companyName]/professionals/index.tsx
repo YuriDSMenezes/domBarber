@@ -1,18 +1,14 @@
-import ChooseProfessionalCard from 'components/ChooseProfessionalCard';
-import { PaginatedItems } from 'components/Pagination';
 import BottomSheetFixedLayout from 'layouts/BottomSheetFixedLayout';
 import MainLayout from 'layouts/MainLayout';
+import { GetServerSideProps } from 'next';
 import React from 'react';
+import { getCookies } from 'cookies-next';
+import api from 'services/api';
 import ProfessionalCard from './ProfessionalCard';
-import { ProfessionalsController } from './professionals.controller';
 
 import * as S from './styles';
 
-const professionals: React.FC = () => {
-  const {
-    state: { professionals },
-  } = ProfessionalsController();
-
+const professionals: React.FC = ({ professionals }) => {
   return (
     <MainLayout>
       <S.TitleOut>Lista de Profissionais</S.TitleOut>
@@ -31,6 +27,27 @@ const professionals: React.FC = () => {
       </BottomSheetFixedLayout>
     </MainLayout>
   );
+};
+
+export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
+  const cookies = getCookies({ req, res });
+  const token = cookies['@domBarber:token'];
+  const client = cookies['@domBarber:client'];
+  const company = cookies['@domBarber:company'];
+  const parsedClient = JSON.parse(client);
+  const companyId = company.replace(/"/g, '');
+  const paramsGetAuth = new URLSearchParams([['companyId', companyId]]);
+  const professionals = await api.get(`service`, {
+    headers: {
+      Authoriazation: `Bearer ${token}`,
+      ProjectId: parsedClient?.projectId,
+    },
+    params: paramsGetAuth,
+  });
+
+  return {
+    props: { professionals: professionals.data },
+  };
 };
 
 export default professionals;

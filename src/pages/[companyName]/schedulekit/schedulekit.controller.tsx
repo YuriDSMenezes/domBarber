@@ -1,5 +1,4 @@
 import { useGlobal } from 'hooks/Global';
-import { getSchedulesByProfessionalId } from 'cases/schedule';
 import {
   addDays,
   addMinutes,
@@ -8,7 +7,6 @@ import {
   format,
   isAfter,
   isBefore,
-  isSameMinute,
   startOfDay,
   startOfMonth,
   subMinutes,
@@ -16,11 +14,10 @@ import {
 import { WorkDay } from 'models/types/company';
 import { useCallback, useEffect, useState } from 'react';
 import { Schedule } from 'models/schedule';
-import { getSchedulesByProfessionalIdAndServiceId } from 'cases/schedule/getSchedulesByProfessionalIdAndServiceId';
 import { firestoreDb } from 'services/FirestoreDatabase';
 import { useRouter } from 'next/router';
 
-export const useSchedulesKit = () => {
+const useSchedulesKit = () => {
   const {
     states: { company },
   } = useGlobal();
@@ -50,8 +47,8 @@ export const useSchedulesKit = () => {
       date?.getFullYear(),
       date?.getMonth(),
       date?.getDate(),
-      new Date(hour).getHours(),
-      new Date(hour).getMinutes(),
+      new Date(hour)?.getHours(),
+      new Date(hour)?.getMinutes(),
       0,
     );
     setDate(newDate);
@@ -64,8 +61,8 @@ export const useSchedulesKit = () => {
       end: endOfMonth(date),
     });
 
-  const cartProfessional = cart[cart.length - 1]?.service?.services.find(
-    (service: any) => service.id === query.kitId,
+  const cartProfessional = cart[cart.length - 1]?.service?.services?.find(
+    (service: any) => service?.id === query?.kitId,
   );
 
   const daysNotWork = useCallback(() => {
@@ -88,13 +85,13 @@ export const useSchedulesKit = () => {
   const setInitalDateWork = () => {
     const daysNW: Array<Date> = [];
     days?.forEach(day => {
-      if (new Date(day) < new Date()) daysNW.push(day);
+      if (new Date(day) < new Date()) daysNW?.push(day);
       cartProfessional?.professional?.days?.forEach((dw: WorkDay) => {
-        if (dw.weekId === new Date(day).getDay()) daysNW.push(day);
+        if (dw?.weekId === new Date(day).getDay()) daysNW?.push(day);
       });
     });
-    setDate(daysNW.filter(d => new Date(d) > new Date())[0]);
-    setHour(daysNW.filter(d => new Date(d) > new Date())[0]?.toISOString());
+    setDate(daysNW?.filter(d => new Date(d) > new Date())[0]);
+    setHour(daysNW?.filter(d => new Date(d) > new Date())[0]?.toISOString());
   };
 
   const formatExibitionDate = (date: Date, locale: Locale) =>
@@ -125,23 +122,23 @@ export const useSchedulesKit = () => {
   const verifyOpeningCompanyTime = useCallback(
     (date: Date) => {
       const rulesOfDay = company?.openingHours?.filter(
-        (d: WorkDay) => d.weekId === date?.getDay(),
+        (d: WorkDay) => d?.weekId === date?.getDay(),
       )[0];
 
       const initOpen = new Date(
         date?.getFullYear(),
         date?.getMonth(),
         date?.getDate(),
-        Number(rulesOfDay?.init.split(':')[0]),
-        Number(rulesOfDay?.init.split(':')[1]),
+        Number(rulesOfDay?.init?.split(':')[0]),
+        Number(rulesOfDay?.init?.split(':')[1]),
       );
 
       const endOpen = new Date(
         date?.getFullYear(),
         date?.getMonth(),
         date?.getDate(),
-        Number(rulesOfDay?.end.split(':')[0]),
-        Number(rulesOfDay?.end.split(':')[1]),
+        Number(rulesOfDay?.end?.split(':')[0]),
+        Number(rulesOfDay?.end?.split(':')[1]),
       );
 
       if (isAfter(date, initOpen) && isBefore(date, endOpen)) return true;
@@ -159,15 +156,15 @@ export const useSchedulesKit = () => {
         date?.getFullYear(),
         date?.getMonth(),
         date?.getDate(),
-        Number(rulesOfDay?.init.split(':')[0]),
-        Number(rulesOfDay?.init.split(':')[1]),
+        Number(rulesOfDay?.init?.split(':')[0]),
+        Number(rulesOfDay?.init?.split(':')[1]),
       );
       const endWork = new Date(
         date?.getFullYear(),
         date?.getMonth(),
         date?.getDate(),
-        Number(rulesOfDay?.end.split(':')[0]),
-        Number(rulesOfDay?.end.split(':')[1]),
+        Number(rulesOfDay?.end?.split(':')[0]),
+        Number(rulesOfDay?.end?.split(':')[1]),
       );
       if (
         isAfter(date, subMinutes(initWork, workTime)) &&
@@ -183,7 +180,7 @@ export const useSchedulesKit = () => {
     (date: Date, workTime: number) => {
       let isIntervalTime = true;
       const rulesOfDay = cartProfessional?.days?.filter(
-        (d: WorkDay) => d.weekId === date?.getDay(),
+        (d: WorkDay) => d?.weekId === date?.getDay(),
       )[0];
       const intervalsOfDay = rulesOfDay?.intervals?.map(
         (i: { init: string; end: string }) => ({
@@ -191,15 +188,15 @@ export const useSchedulesKit = () => {
             date?.getFullYear(),
             date?.getMonth(),
             date?.getDate(),
-            Number(i?.init.split(':')[0]),
-            Number(i?.init.split(':')[1]),
+            Number(i?.init?.split(':')[0]),
+            Number(i?.init?.split(':')[1]),
           ),
           end: new Date(
             date?.getFullYear(),
             date?.getMonth(),
             date?.getDate(),
-            Number(i?.end.split(':')[0]),
-            Number(i?.end.split(':')[1]),
+            Number(i?.end?.split(':')[0]),
+            Number(i?.end?.split(':')[1]),
           ),
         }),
       );
@@ -219,7 +216,7 @@ export const useSchedulesKit = () => {
   const itsScheduled = useCallback(
     (date: Date) => {
       let isScheduled = false;
-      confirmedSchedules.forEach(schedule => {
+      confirmedSchedules?.forEach(schedule => {
         if (date?.toISOString() === schedule?.toISOString()) {
           isScheduled = true;
         }
@@ -231,8 +228,8 @@ export const useSchedulesKit = () => {
 
   useEffect(() => {
     const lastItem = cart[cart.length - 1];
-    const getService = lastItem.service.services.find(
-      (service: any) => service.id === query.kitId,
+    const getService = lastItem?.service?.services.find(
+      (service: any) => service?.id === query?.kitId,
     );
     firestoreDb.companySchedules.getSyncWhere({
       wheres: [
@@ -243,6 +240,7 @@ export const useSchedulesKit = () => {
       ],
       callback: response => {
         const parsedSchedulesData = Object.entries(
+          // @ts-ignore
           response?.data?.docs as {},
         ).map(
           // @ts-ignore
@@ -254,7 +252,7 @@ export const useSchedulesKit = () => {
             schedule => new Date(schedule.start?.seconds * 1000),
           ),
           ...lastItem?.service.services.map(
-            service => service.start && new Date(service?.start),
+            (service: any) => service?.start && new Date(service?.start),
           ),
         ];
         setConfirmedSchedules(confirmedSchedules);
@@ -286,3 +284,5 @@ export const useSchedulesKit = () => {
     states: { date, hour, cart, confirmedSchedules, isSelectedFirstHour },
   };
 };
+
+export default useSchedulesKit;

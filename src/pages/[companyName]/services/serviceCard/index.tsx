@@ -8,11 +8,12 @@ interface ServiceProps {
   list: Array<Service>;
 }
 
-const ServiceCard: React.FC<ServiceProps> = () => {
+const ServiceCard: React.FC<ServiceProps> = ({ list }) => {
   const {
-    states: { services, company },
+    states: { company },
   } = useGlobal();
   const { push } = useRouter();
+
   const handleClickCard = (service: Service) => {
     push({
       query: { id: service.id, companyName: company?.app?.url },
@@ -22,7 +23,7 @@ const ServiceCard: React.FC<ServiceProps> = () => {
 
   return (
     <S.Container>
-      {services?.map((service, index) => (
+      {list?.map((service, index) => (
         <S.Content key={index} onClick={() => handleClickCard(service)}>
           <img src={service.images[0].url} alt="Paulo R." />
           <S.ServiceInformationContainer>

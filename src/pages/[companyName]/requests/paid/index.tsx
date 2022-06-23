@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { ArrowDownIcon } from '../../../../../public/assets';
 import * as S from './styles';
 
-export const Paid = () => {
+const Paid = () => {
   const [openCollapse, setOpenCollapse] = useState(false);
 
   const handleOpenCollapse = () => setOpenCollapse(!openCollapse);
@@ -32,3 +32,5 @@ export const Paid = () => {
     </S.Container>
   );
 };
+
+export default Paid;

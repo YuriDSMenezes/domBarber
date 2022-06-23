@@ -41,6 +41,7 @@ export const useAddCreditCard = () => {
       // @ts-ignore
       return window.PagSeguro;
     }
+    return null;
   }, []);
 
   const encriptCard = ({

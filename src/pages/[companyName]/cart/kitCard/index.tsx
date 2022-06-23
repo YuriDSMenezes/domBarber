@@ -9,10 +9,11 @@ import * as S from './styles';
 
 interface KitCardProps {
   item: any;
-  index: number;
+  index?: number;
+  noCollapse?: boolean;
 }
 
-export const KitCard = ({ index, item }: KitCardProps) => {
+const KitCard = ({ index, item, noCollapse }: KitCardProps) => {
   const { push } = useRouter();
   const {
     states: { company },
@@ -59,20 +60,27 @@ export const KitCard = ({ index, item }: KitCardProps) => {
           <S.MediumText>Profissionais</S.MediumText>
           <S.Row>
             {item?.service.services?.map(service => (
-              <div>
+              <div
+                style={{ textAlign: 'center', width: '90%', margin: '0 auto' }}
+              >
                 <S.Photo>
                   <img src={service?.professional?.image} />
                 </S.Photo>
-                <S.SmallText>{service?.professional?.name}</S.SmallText>
+                <S.SmallText style={{ width: '50px' }}>
+                  {service?.professional?.name}
+                </S.SmallText>
               </div>
             ))}
           </S.Row>
         </S.ItemPhoto>
-        <S.Arrow onClick={handleOpenCollapse} direction={openCollapse}>
-          <img src={ArrowDownIcon.src} alt="Mostrar serviços deste kit" />
-        </S.Arrow>
+        {!noCollapse && (
+          <S.Arrow onClick={handleOpenCollapse} direction={openCollapse}>
+            <img src={ArrowDownIcon.src} alt="Mostrar serviços deste kit" />
+          </S.Arrow>
+        )}
       </S.Row>
       {openCollapse &&
+        !noCollapse &&
         item?.service.services?.map((service: any, index: number) => (
           <div style={{ marginTop: '20px' }} key={index}>
             <CardSlide
@@ -98,3 +106,5 @@ export const KitCard = ({ index, item }: KitCardProps) => {
     </S.ItemContainer>
   );
 };
+
+export default KitCard;

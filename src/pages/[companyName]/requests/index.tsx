@@ -5,8 +5,8 @@ import BottomSheetFixedLayout from 'layouts/BottomSheetFixedLayout';
 import MainLayout from 'layouts/MainLayout';
 import Tabs from 'components/Tabs';
 import * as S from './styles';
-import { Open } from './open';
-import { Paid } from './paid';
+import Open from './open';
+import Paid from './paid';
 
 const Requests = () => {
   const {

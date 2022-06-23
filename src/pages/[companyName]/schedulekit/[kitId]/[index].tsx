@@ -9,7 +9,7 @@ import { useGlobal } from 'hooks/Global';
 import { DayPicker } from 'react-day-picker';
 import 'react-day-picker/dist/style.css';
 import * as S from '../styles';
-import { useSchedulesIndexKit } from './schedulekit.index.controller';
+import useSchedulesIndexKit from './schedulekit.index.controller';
 // import { getSchedulesByProfessionalId } from 'cases/schedule';
 
 const Schedule = () => {
@@ -45,8 +45,9 @@ const Schedule = () => {
   const { index, serviceIndex } = query;
   const handleNext = (date: Date) => {
     cart.splice(Number(index));
-    selectedKit.service.services[serviceIndex] = {
-      ...selectedKit?.service?.services[serviceIndex],
+
+    selectedKit.service.services[Number(serviceIndex)] = {
+      ...selectedKit?.service?.services[Number(serviceIndex)],
       start: date,
     };
 
@@ -192,7 +193,7 @@ const Schedule = () => {
               onClick={() => {
                 handleNext(date);
                 push(
-                  selectedKit?.service?.services?.length >= serviceIndex
+                  selectedKit?.service?.services?.length >= Number(serviceIndex)
                     ? {
                         pathname: `/[companyName]/choosekit/edit/[index]`,
                         query: { companyName: company?.app?.url, index },

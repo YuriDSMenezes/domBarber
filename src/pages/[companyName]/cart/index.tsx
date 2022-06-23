@@ -14,13 +14,12 @@ import { getUserTokenFromLocalStorage } from 'cases/user/getUserTokenFromLocalSt
 import CardSlide from 'components/CardSlide';
 import * as S from './styles';
 import { ItemCollapse } from '../../../components/itemCollapse';
-import { KitCard } from './kitCard';
+import KitCard from './kitCard';
 
 const Cart = () => {
   const { push } = useRouter();
   const {
     states: { company },
-    actions: { setCommandId },
   } = useGlobal();
   const [openModal, setOpenModal] = useState<boolean>(false);
   const [indexItem, setIndexItem] = useState<number | undefined>();
@@ -83,10 +82,6 @@ const Cart = () => {
       });
     }
     return null;
-  };
-
-  const handleClick = () => {
-    createSchedule({});
   };
 
   return (

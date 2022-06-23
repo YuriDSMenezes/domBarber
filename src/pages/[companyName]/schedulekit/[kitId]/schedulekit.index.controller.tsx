@@ -17,13 +17,13 @@ import { Schedule } from 'models/schedule';
 import { firestoreDb } from 'services/FirestoreDatabase';
 import { useRouter } from 'next/router';
 
-export const useSchedulesIndexKit = () => {
+const useSchedulesIndexKit = () => {
   const {
     states: { company },
   } = useGlobal();
   const { query } = useRouter();
   const [isSelectedFirstHour, setIsSelectedFirstHour] = useState(false);
-  const [selectedKit, setSelectedKit] = useState();
+  const [selectedKit, setSelectedKit] = useState<any>();
   const [date, setDate] = useState<Date>(new Date());
   const [hour, setHour] = useState<string>();
   const [cart, setCart] = useState(() => {
@@ -69,7 +69,7 @@ export const useSchedulesIndexKit = () => {
     });
 
   const cartProfessional = selectedKit?.service?.services.find(
-    (service: any) => service.id === query.kitId,
+    (service: any) => service?.id === query?.kitId,
   );
 
   const daysNotWork = useCallback(() => {
@@ -243,6 +243,7 @@ export const useSchedulesIndexKit = () => {
       ],
       callback: response => {
         const parsedSchedulesData = Object.entries(
+          // @ts-ignore
           response?.data?.docs as {},
         ).map(
           // @ts-ignore
@@ -253,8 +254,9 @@ export const useSchedulesIndexKit = () => {
             // @ts-ignore
             schedule => new Date(schedule.start?.seconds * 1000),
           ),
+          // @ts-ignore
           ...selectedKit?.service?.services.map(
-            service => service.start && new Date(service?.start),
+            (service: any) => service.start && new Date(service?.start),
           ),
         ];
         setConfirmedSchedules(confirmedSchedules);
@@ -294,3 +296,5 @@ export const useSchedulesIndexKit = () => {
     },
   };
 };
+
+export default useSchedulesIndexKit;

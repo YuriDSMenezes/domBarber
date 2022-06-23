@@ -1,11 +1,14 @@
 import Button from 'components/Button';
 import BottomSheetFixedLayout from 'layouts/BottomSheetFixedLayout';
 import MainLayout from 'layouts/MainLayout';
+import { GetServerSideProps } from 'next';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
+import api from 'services/api';
+import { getCookies } from 'cookies-next';
 import * as S from './styles';
 
-const ChooseProduct = () => {
+const ChooseProduct = ({ products }) => {
   const { query, push } = useRouter();
   const [quantity, setQuantity] = useState(1);
 
@@ -48,15 +51,17 @@ const ChooseProduct = () => {
     return null;
   };
 
+  const product = products.find(
+    product => product.id === cart[cart.length - 1]?.product?.id,
+  );
+
   return (
     <MainLayout>
       <BottomSheetFixedLayout theme="dark">
         <S.Content>
-          <S.Title>{cart[cart.length - 1]?.product?.name}</S.Title>
-          <S.Value>R$ {cart[cart.length - 1]?.product?.price}</S.Value>
-          <S.Description>
-            {cart[cart.length - 1]?.product?.description}
-          </S.Description>
+          <S.Title>{product?.name}</S.Title>
+          <S.Value>R$ {product?.price}</S.Value>
+          <S.Description>{product?.description}</S.Description>
 
           <S.Quantity>
             <S.More onClick={handleMore}> + </S.More>
@@ -70,6 +75,27 @@ const ChooseProduct = () => {
       </BottomSheetFixedLayout>
     </MainLayout>
   );
+};
+
+export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
+  const cookies = getCookies({ req, res });
+  const token = cookies['@domBarber:token'];
+  const client = cookies['@domBarber:client'];
+  const company = cookies['@domBarber:company'];
+  const parsedClient = JSON.parse(client);
+  const companyId = company.replace(/"/g, '');
+  const paramsGetAuth = new URLSearchParams([['companyId', companyId]]);
+  const products = await api.get(`product`, {
+    headers: {
+      Authoriazation: `Bearer ${token}`,
+      ProjectId: parsedClient?.projectId,
+    },
+    params: paramsGetAuth,
+  });
+
+  return {
+    props: { products: products.data },
+  };
 };
 
 export default ChooseProduct;

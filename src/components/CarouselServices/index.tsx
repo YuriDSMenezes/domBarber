@@ -5,8 +5,10 @@ import { useGlobal } from 'hooks/Global';
 import Button from 'components/Button';
 import { Service } from 'models/types/service';
 import { useRouter } from 'next/router';
+import { setCookies, getCookie } from 'cookies-next';
 import * as S from './styles';
 
+// eslint-disable-next-line import/no-unresolved
 import '@splidejs/react-splide/css';
 
 interface CarouselProps {
@@ -28,7 +30,6 @@ export const CarouselService: React.FC<CarouselProps> = ({
   const [cart, setCart] = useState<Array<{}>>(() => {
     if (typeof window !== 'undefined') {
       const cart = localStorage.getItem('@domBarber:cart');
-
       if (cart) {
         return JSON.parse(cart);
       }

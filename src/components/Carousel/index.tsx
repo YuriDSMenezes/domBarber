@@ -1,4 +1,5 @@
 import { Splide, SplideSlide } from '@splidejs/react-splide';
+// eslint-disable-next-line import/no-unresolved
 import '@splidejs/react-splide/css';
 import { useGlobal } from 'hooks/Global';
 import { Product } from 'models/types/product';
