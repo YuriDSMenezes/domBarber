@@ -25,18 +25,18 @@ const ServiceCard: React.FC<ServiceProps> = ({ list }) => {
     <S.Container>
       {list?.map((service, index) => (
         <S.Content key={index} onClick={() => handleClickCard(service)}>
-          <img src={service.images[0].url} alt="Paulo R." />
+          <img src={service?.images[0]?.url} alt="Paulo R." />
           <S.ServiceInformationContainer>
             <S.ServiceDescription>
-              <S.ServiceName>{service.name}</S.ServiceName>
-              <S.ServiceTime>Tempo: {service.runtime} min</S.ServiceTime>
+              <S.ServiceName>{service?.name}</S.ServiceName>
+              <S.ServiceTime>Tempo: {service?.runtime} min</S.ServiceTime>
               <S.ServicePoints>
-                Acumule {service.pointsGenerated} pontos
+                Acumule {service?.pointsGenerated} pontos
               </S.ServicePoints>
             </S.ServiceDescription>
             <S.ServicePrice>
               <S.SignMoney>R$</S.SignMoney>
-              <S.Price>{service.price}</S.Price>
+              <S.Price>{service?.price}</S.Price>
             </S.ServicePrice>
           </S.ServiceInformationContainer>
         </S.Content>

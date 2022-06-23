@@ -14,7 +14,7 @@ interface ServiceCardProps {
 
 const ServiceCard: ComponentType<ServiceCardProps> = ({ list, isKit }) => {
   const {
-    states: { company, services },
+    states: { company },
   } = useGlobal();
   const { push } = useRouter();
   const [hasProfessional, setHasProfessional] = useState(false);
@@ -92,16 +92,16 @@ const ServiceCard: ComponentType<ServiceCardProps> = ({ list, isKit }) => {
               width={170}
               height={130}
               placeholder="blur"
-              blurDataURL={item.images && item?.images[0]?.url}
+              blurDataURL={(item.images && item?.images[0]?.url) || ''}
             />
           </S.ImgContainer>
           <S.InformationContainer>
             <S.TitleAndPriceText>
-              <S.ServiceTitle>{item.description}</S.ServiceTitle>
-              <S.ServicePrice>{item.price}</S.ServicePrice>
+              <S.ServiceTitle>{item?.description}</S.ServiceTitle>
+              <S.ServicePrice>{item?.price}</S.ServicePrice>
             </S.TitleAndPriceText>
             <S.AddressText>São Miguel, São Paulo Rua 22</S.AddressText>
-            <S.TimeAndPointsText>{`Tempo: ${item.runtime} min  | Acumule ${item.pointsGenerated} pontos`}</S.TimeAndPointsText>
+            <S.TimeAndPointsText>{`Tempo: ${item?.runtime} min  | Acumule ${item?.pointsGenerated} pontos`}</S.TimeAndPointsText>
           </S.InformationContainer>
         </S.Container>
       ))}

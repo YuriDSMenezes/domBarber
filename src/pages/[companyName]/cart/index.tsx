@@ -22,8 +22,8 @@ const Cart = () => {
     states: { company },
   } = useGlobal();
   const [openModal, setOpenModal] = useState<boolean>(false);
-  const [indexItem, setIndexItem] = useState<number | undefined>();
-  const [selectedIndex, setSelectedIndex] = useState<number | undefined>();
+  const [indexItem, setIndexItem] = useState<number>();
+  const [selectedIndex, setSelectedIndex] = useState<number>();
   const [clientId, setClientId] = useState(() => {
     if (typeof window !== 'undefined') {
       const clientId = localStorage.getItem('@domBarber:client');
