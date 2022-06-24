@@ -4,7 +4,7 @@ import firebase from 'firebase/compat/app';
 import cookie from 'js-cookie';
 import Router from 'next/router';
 import 'firebase/compat/auth';
-import { setCookies } from 'cookies-next';
+import { setCookie } from 'nookies';
 import {
   getAuth,
   signInWithPopup,
@@ -80,20 +80,40 @@ export const signInWithGoogle = async () =>
           '@domBarber:token',
           JSON.stringify(responseLogin.data.token),
         );
-        setCookies(
+        setCookie(
+          null,
           '@domBarber:token',
           JSON.stringify(responseLogin.data.token),
+          {
+            maxAge: 60 * 60 * 24 * 30,
+            path: '/',
+          },
         );
 
         localStorage.setItem('@domBarber:user', JSON.stringify(user));
-        setCookies('@domBarber:user', JSON.stringify(user));
+        setCookie(null, '@domBarber:user', JSON.stringify(user), {
+          maxAge: 60 * 60 * 24 * 30,
+          path: '/',
+        });
 
         localStorage.setItem(
           '@domBarber:client',
           JSON.stringify(responseLogin.data),
         );
-        setCookies('@domBarber:client', responseLogin.data);
-        setCookies('@domBarber:company', JSON.stringify(company.id));
+        setCookie(
+          null,
+          '@domBarber:client',
+          JSON.stringify(responseLogin.data),
+          {
+            maxAge: 60 * 60 * 24 * 30,
+            path: '/',
+          },
+        );
+        setCookie(null, '@domBarber:company', JSON.stringify(company.id), {
+          maxAge: 60 * 60 * 24 * 30,
+          path: '/',
+        });
+        setCookie(null, '@domBarber:cart', '[]', { path: '/' });
       }
     })
     .catch(error => {

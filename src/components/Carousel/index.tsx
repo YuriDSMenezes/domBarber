@@ -2,6 +2,7 @@ import { Splide, SplideSlide } from '@splidejs/react-splide';
 // eslint-disable-next-line import/no-unresolved
 import '@splidejs/react-splide/css';
 import { useGlobal } from 'hooks/Global';
+import { useCart } from 'hooks/useCart';
 import { Product } from 'models/types/product';
 import { Professional } from 'models/types/professional';
 import { useRouter } from 'next/router';
@@ -20,42 +21,27 @@ export const Carousel = ({ items, size, professional }: CarouselProps) => {
   const {
     states: { company },
   } = useGlobal();
-  const [cart, setCart] = useState(() => {
-    if (typeof window !== 'undefined') {
-      const cart = localStorage.getItem('@domBarber:cart');
-
-      if (cart) {
-        return JSON.parse(cart);
-      }
-    }
-
-    return [];
-  });
+  const { addProfessional } = useCart();
 
   const handleClickCard = (item: Professional | Product) => {
     if (professional) {
-      const newCart = [...cart];
-      newCart.push({ professional: item, professionalId: item.id });
-      setCart(newCart);
-      if (typeof window !== 'undefined') {
-        localStorage.setItem('@domBarber:cart', JSON.stringify(newCart));
-      }
-      push({
-        pathname: `/[companyName]/newservice`,
-        query: { companyName: company?.app?.url },
-      });
+      addProfessional(item);
+      // push({
+      //   pathname: `/[companyName]/newservice`,
+      //   query: { companyName: company?.app?.url },
+      // });
     }
-    if (!professional) {
-      const newCart = [...cart];
-      newCart.push({ product: item, productId: item.id });
-      setCart(newCart);
-      if (typeof window !== 'undefined') {
-        localStorage.setItem('@domBarber:cart', JSON.stringify(newCart));
-      }
-      push({
-        pathname: `/ps1/cart`,
-      });
-    }
+    // if (!professional) {
+    //   const newCart = [...cart];
+    //   newCart.push({ product: item, productId: item.id });
+    //   setCart(newCart);
+    //   if (typeof window !== 'undefined') {
+    //     localStorage.setItem('@domBarber:cart', JSON.stringify(newCart));
+    //   }
+    //   push({
+    //     pathname: `/ps1/cart`,
+    //   });
+    // }
   };
 
   return (

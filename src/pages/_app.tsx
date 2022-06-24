@@ -6,6 +6,7 @@ import '../styles/react-day-picker-personalized.css';
 import { GlobalProvider } from 'hooks/Global';
 import { LoadingProvider } from 'hooks/Loading';
 import GlobalStyle from '../styles/global';
+import { CartProvider } from '../hooks/useCart';
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
@@ -27,7 +28,9 @@ function MyApp({ Component, pageProps }: AppProps) {
       </Helmet>
       <LoadingProvider>
         <GlobalProvider>
-          <Component {...pageProps} />
+          <CartProvider>
+            <Component {...pageProps} />
+          </CartProvider>
         </GlobalProvider>
       </LoadingProvider>
       <GlobalStyle />

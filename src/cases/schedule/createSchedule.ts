@@ -25,7 +25,9 @@ export const createSchedule = async ({
     const ScheduledServices: any = [];
     const ScheduledKits: any = [];
 
-    const verifySchedule = schedules?.filter(item => !item?.service?.services);
+    const verifySchedule = schedules?.filter(
+      item => !item?.service?.services || !item?.product,
+    );
     const schedulesFormatted = verifySchedule?.map(item => ({
       companyId,
       from,
@@ -75,8 +77,12 @@ export const createSchedule = async ({
         ScheduledKits.push(r.data);
       });
     }
+
+    const verifyScheduleProduct = schedules?.filter(item => item?.product);
+
     const waitSeconds =
       schedulesFormatted.length + schedulesKitFormatted.length;
+
     setTimeout(async () => {
       const response = await createCommandFromSchedule(
         companyId,
@@ -98,6 +104,12 @@ export const createSchedule = async ({
             type: 'kit',
             discount: 0,
             pointUsed: false,
+          })),
+          ...verifyScheduleProduct.map(item => ({
+            id: item.productId,
+            quantity: item.quantity,
+            type: 'product',
+            pointsUsed: false,
           })),
         ],
       );

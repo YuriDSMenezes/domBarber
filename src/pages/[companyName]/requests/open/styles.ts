@@ -5,12 +5,9 @@ export const Container = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-around;
-`;
-export const Content = styled.div`
-  height: 100%;
   overflow-y: scroll;
-  margin-bottom: 50px;
 `;
+export const Content = styled.div``;
 export const Command = styled.div`
   display: flex;
   align-items: center;
@@ -20,7 +17,6 @@ export const Command = styled.div`
   font-size: 10px;
   font-weight: 400;
   line-height: 11px;
-  margin: 30px 0;
   padding-bottom: 10px;
   border-bottom: 1px solid #ccc;
 `;
@@ -111,4 +107,13 @@ export const Arrow = styled.div<ArrowProps>`
 
 export const Button = styled.div`
   margin-bottom: 30px;
+`;
+
+export const SubItems = styled.div`
+  display: flex;
+  align-items: center;
+  color: #fff;
+  gap: 20px;
+  font-size: 12px;
+  border-bottom: 1px solid #ccc;
 `;

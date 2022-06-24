@@ -8,7 +8,7 @@ import api from 'services/api';
 import { getCookies } from 'cookies-next';
 import * as S from './styles';
 
-const ChooseProduct = ({ products }) => {
+const ChooseProduct = ({ products }: any) => {
   const { query, push } = useRouter();
   const [quantity, setQuantity] = useState(1);
 
@@ -52,7 +52,7 @@ const ChooseProduct = ({ products }) => {
   };
 
   const product = products.find(
-    product => product.id === cart[cart.length - 1]?.product?.id,
+    (product: any) => product.id === cart[cart.length - 1]?.product?.id,
   );
 
   return (
@@ -87,7 +87,7 @@ export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
   const paramsGetAuth = new URLSearchParams([['companyId', companyId]]);
   const products = await api.get(`product`, {
     headers: {
-      Authoriazation: `Bearer ${token}`,
+      Authorization: `Bearer ${token}`,
       ProjectId: parsedClient?.projectId,
     },
     params: paramsGetAuth,

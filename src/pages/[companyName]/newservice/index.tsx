@@ -2,11 +2,8 @@ import Tabs from 'components/Tabs';
 import BottomSheetFixedLayout from 'layouts/BottomSheetFixedLayout';
 import MainLayout from 'layouts/MainLayout';
 import React from 'react';
-import { PaginatedItems } from 'components/Pagination';
-import SEO from 'components/SEO';
 import { useGlobal } from 'hooks/Global';
 import BeardTabOption from './BeardTabOption';
-import HairTabOption from './HairTabOption';
 import KitsAndCombosTabOption from './KitsAndCombosTabOption';
 
 import * as S from './styles';
@@ -17,9 +14,6 @@ const newservice: React.FC = () => {
   const {
     state: { services, kits },
   } = NewServiceController();
-  const {
-    states: { company },
-  } = useGlobal();
 
   const tabs = [
     {

@@ -1,9 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useGlobal } from 'hooks/Global';
+import { useCart } from 'hooks/useCart';
 import { Service } from 'models/types/service';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
-import React, { ComponentType, useState } from 'react';
+import React, { ComponentType } from 'react';
 
 import * as S from './styles';
 
@@ -16,50 +17,11 @@ const ServiceCard: ComponentType<ServiceCardProps> = ({ list, isKit }) => {
   const {
     states: { company },
   } = useGlobal();
+  const { addService, hasProfessional } = useCart();
   const { push } = useRouter();
-  const [hasProfessional, setHasProfessional] = useState(false);
-  const [cart, setCart] = useState(() => {
-    if (typeof window !== 'undefined') {
-      const cart = localStorage.getItem('@domBarber:cart');
-      if (cart) {
-        const parsedCart = JSON.parse(cart);
-        const lastItemCart = parsedCart[parsedCart.length - 1];
-        lastItemCart?.professionalId &&
-          lastItemCart?.professional &&
-          !lastItemCart.serviceId &&
-          setHasProfessional(true);
-        return parsedCart;
-      }
-    }
-
-    return [];
-  });
 
   const handleClickCard = (service: Service) => {
-    if (!hasProfessional) {
-      const newService = {
-        service,
-        serviceId: service.id,
-      };
-      const newCart = [...cart, newService];
-      setCart(newCart);
-      if (typeof window !== 'undefined') {
-        localStorage.setItem('@domBarber:cart', JSON.stringify(newCart));
-      }
-    } else {
-      const lastItemCart = cart[cart.length - 1];
-      const newLastItemCart = {
-        ...lastItemCart,
-        service,
-        serviceId: service.id,
-      };
-      cart.pop();
-      const newCart = [...cart, newLastItemCart];
-      setCart(newCart);
-      if (typeof window !== 'undefined') {
-        localStorage.setItem('@domBarber:cart', JSON.stringify(newCart));
-      }
-    }
+    addService(service);
 
     if (isKit) {
       push({
