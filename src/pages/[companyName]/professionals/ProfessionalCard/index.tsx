@@ -10,7 +10,7 @@ interface ProfessionalsProps {
 }
 
 const ProfessionalCard: React.FC<ProfessionalsProps> = ({ list }) => {
-  const { push, isReady } = useRouter();
+  const { push } = useRouter();
   const {
     states: { company },
   } = useGlobal();
@@ -26,7 +26,7 @@ const ProfessionalCard: React.FC<ProfessionalsProps> = ({ list }) => {
     <S.Container>
       {list?.map((professional, index) => (
         <S.Content key={index} onClick={() => handleClickCard(professional)}>
-          <img src={professional.images[0].url} alt="Paulo R." />
+          <img src={professional.image} alt="Paulo R." />
           <S.ProfessionalInformationContainer>
             <S.ProfessionalName>{professional.name}</S.ProfessionalName>
             <S.ProfessionalRatingContainer>

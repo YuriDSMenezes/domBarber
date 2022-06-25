@@ -37,7 +37,7 @@ export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
   const parsedClient = JSON.parse(client);
   const companyId = company.replace(/"/g, '');
   const paramsGetAuth = new URLSearchParams([['companyId', companyId]]);
-  const professionals = await api.get(`service`, {
+  const professionals = await api.get('professional', {
     headers: {
       Authoriazation: `Bearer ${token}`,
       ProjectId: parsedClient?.projectId,

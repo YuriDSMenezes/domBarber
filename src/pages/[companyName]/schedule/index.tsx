@@ -1,16 +1,16 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { useCallback } from 'react';
-import MainLayout from 'layouts/MainLayout';
-import { YearView } from 'react-calendar';
 import { useRouter } from 'next/router';
+import { YearView } from 'react-calendar';
+import { DayPicker } from 'react-day-picker';
 import ptBR from 'date-fns/locale/pt-BR';
 import 'react-calendar/dist/Calendar.css';
-import { useGlobal } from 'hooks/Global';
-import { DayPicker } from 'react-day-picker';
 import 'react-day-picker/dist/style.css';
+
+import { useCallback } from 'react';
+import { useGlobal } from 'hooks/Global';
+import MainLayout from 'layouts/MainLayout';
 import * as S from './styles';
 import { useSchedules } from './schedules.controller';
-// import { getSchedulesByProfessionalId } from 'cases/schedule';
 
 const Schedule = () => {
   const { push } = useRouter();
@@ -19,14 +19,14 @@ const Schedule = () => {
   } = useGlobal();
   const {
     states: {
-      cart,
       date,
       hour: selectedHour,
       confirmedSchedules,
       isSelectedFirstHour,
+      getLastItemCart,
     },
     actions: {
-      setCart,
+      addSchedule,
       setDate,
       handleSelectDate,
       handleSelectHour,
@@ -42,12 +42,7 @@ const Schedule = () => {
   } = useSchedules();
 
   const handleNext = (date: Date) => {
-    const lastItem = cart[cart.length - 1];
-    const newItem = { ...lastItem, start: date };
-    cart.pop();
-    const newCart = [...cart, newItem];
-    setCart(newCart);
-    localStorage.setItem('@domBarber:cart', JSON.stringify(newCart));
+    addSchedule(date);
   };
 
   const YearCalendarComponent = () => (
@@ -82,7 +77,7 @@ const Schedule = () => {
 
   const HoursComponent = useCallback(
     (): any =>
-      TimesOfDayBasedInTimeService(cart[cart.length - 1]?.service?.runtime).map(
+      TimesOfDayBasedInTimeService(getLastItemCart?.service?.runtime || 0).map(
         (hour: Date) =>
           verifyOpeningCompanyTime(hour) ? (
             <S.Hour
@@ -91,11 +86,11 @@ const Schedule = () => {
                   !itsScheduled(hour) &&
                   verifyWorkTime(
                     hour,
-                    cart[cart.length - 1]?.service?.runtime,
+                    getLastItemCart?.service?.runtime || 0,
                   ) &&
                   verifyIntervalTime(
                     hour,
-                    cart[cart.length - 1]?.service?.runtime,
+                    getLastItemCart?.service?.runtime || 0,
                   )
                 ) {
                   handleSelectHour(hour.toISOString());
@@ -106,22 +101,16 @@ const Schedule = () => {
               active={
                 selectedHour === hour.toISOString() &&
                 !itsScheduled(hour) &&
-                verifyWorkTime(hour, cart[cart.length - 1]?.service?.runtime) &&
-                verifyIntervalTime(
-                  hour,
-                  cart[cart.length - 1]?.service?.runtime,
-                )
+                verifyWorkTime(hour, getLastItemCart?.service?.runtime || 0) &&
+                verifyIntervalTime(hour, getLastItemCart?.service?.runtime || 0)
               }
               disabled={
                 itsScheduled(hour) ||
                 !verifyOpeningCompanyTime(hour) ||
-                !verifyWorkTime(
-                  hour,
-                  cart[cart.length - 1]?.service?.runtime,
-                ) ||
+                !verifyWorkTime(hour, getLastItemCart?.service?.runtime || 0) ||
                 !verifyIntervalTime(
                   hour,
-                  cart[cart.length - 1]?.service?.runtime,
+                  getLastItemCart?.service?.runtime || 0,
                 )
               }
             >
@@ -133,7 +122,7 @@ const Schedule = () => {
   );
 
   const imageService = services.find(
-    service => cart[cart.length - 1]?.service?.id === service.id,
+    service => getLastItemCart?.service?.id === service.id,
   );
 
   return (
@@ -164,14 +153,14 @@ const Schedule = () => {
               </S.Image>
               <S.ServiceDescription>
                 <S.ServiceTitle>
-                  {cart[cart.length - 1]?.service?.description}
+                  {getLastItemCart?.service?.description}
                 </S.ServiceTitle>
                 <S.ServiceDescription>
-                  R$ {cart[cart.length - 1]?.service?.price}
+                  R$ {getLastItemCart?.service?.price}
                 </S.ServiceDescription>
                 <S.ServiceText>
-                  {cart[cart.length - 1]?.service?.pointsGenerated} Pontos
-                  Tempo: {cart[cart.length - 1]?.service?.runtime}
+                  {getLastItemCart?.service?.pointsGenerated} Pontos Tempo:{' '}
+                  {getLastItemCart?.service?.runtime}
                 </S.ServiceText>
               </S.ServiceDescription>
             </S.Service>
@@ -179,7 +168,7 @@ const Schedule = () => {
               <S.Image>
                 <img
                   src={
-                    cart[cart.length - 1]?.professional?.image ||
+                    getLastItemCart?.professional?.image ||
                     'https://cdn.neemo.com.br/uploads/settings_webdelivery/logo/3957/image-not-found.jpg'
                   }
                   alt="logo"
@@ -190,7 +179,7 @@ const Schedule = () => {
                   Profissional
                 </S.ServiceDescription>
                 <S.ServiceText>
-                  {cart[cart.length - 1]?.professional?.name}
+                  {getLastItemCart?.professional?.name}
                 </S.ServiceText>
               </S.ServiceDescription>
             </S.Service>

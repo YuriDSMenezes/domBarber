@@ -3,11 +3,9 @@ import { getClientFromLocalStorage } from 'cases/client/getClientFromLocalStorag
 import { updateClientByClientId } from 'cases/client/updateClientByClientId';
 import { getCompanyFromLocalStorage } from 'cases/company/getCompanyFromLocalStorage';
 import { getUserTokenFromLocalStorage } from 'cases/user/getUserTokenFromLocalStorage';
-import { environment } from 'environments/environment.prod';
 import { useGlobal } from 'hooks/Global';
 import { useRouter } from 'next/router';
 import { useCallback, useEffect, useState } from 'react';
-import api from 'services/api';
 
 interface CreditCardData {
   number: string;
@@ -30,13 +28,11 @@ interface iEncryptCard {
 export const useAddCreditCard = () => {
   const {
     states: { company },
-    actions: { setCardInfos },
   } = useGlobal();
   const { push } = useRouter();
   const [client, setClient] = useState();
-  const [cards, setCards] = useState([]);
 
-  const PagSeguro = useCallback((): any => {
+  const PagSeguro = useCallback(() => {
     if (typeof window !== 'undefined') {
       // @ts-ignore
       return window.PagSeguro;
@@ -123,12 +119,12 @@ export const useAddCreditCard = () => {
         { ...client, cards: [...client.cards, creditCard] },
         company.id,
       );
-      push({
+      return push({
         pathname: `/[companyName]/methodpayment`,
         query: { companyName: company?.app?.url },
       });
     } catch (error) {
-      console.error(error);
+      return null;
     }
   };
 
@@ -139,7 +135,6 @@ export const useAddCreditCard = () => {
       getUserTokenFromLocalStorage(),
     );
     setClient(client);
-    setCards(client.cards);
   };
 
   useEffect(() => {

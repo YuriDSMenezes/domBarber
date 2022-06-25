@@ -1,3 +1,5 @@
+import { Company } from 'models/types/company';
+
 export const getCompanyFromLocalStorage = () => {
   let company;
   if (typeof window !== 'undefined') {
@@ -6,5 +8,5 @@ export const getCompanyFromLocalStorage = () => {
       company = JSON.parse(localCompany);
     }
   }
-  return company;
+  return company as Company;
 };

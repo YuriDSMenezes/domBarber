@@ -9,7 +9,8 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@splidejs/react-splide": "^0.7.6",
+    "@splidejs/react-splide": "^0.7.8",
+    "@types/": "splidejs/react-splide",
     "@types/firebase": "^3.2.1",
     "@types/js-cookie": "^3.0.1",
     "@types/react-calendar": "^3.5.0",

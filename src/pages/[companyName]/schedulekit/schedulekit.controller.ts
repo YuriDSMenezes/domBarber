@@ -12,30 +12,25 @@ import {
   subMinutes,
 } from 'date-fns';
 import { WorkDay } from 'models/types/company';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useReducer, useState } from 'react';
 import { Schedule } from 'models/schedule';
 import { firestoreDb } from 'services/FirestoreDatabase';
+import { useCart } from 'hooks/UseCart';
+import { useRouter } from 'next/router';
 
 const useSchedulesKit = () => {
   const {
     states: { company },
   } = useGlobal();
+  const { query } = useRouter();
+  const { getLastItemCart, addScheduleKit, cart } = useCart();
 
   const [isSelectedFirstHour, setIsSelectedFirstHour] = useState(false);
   const [date, setDate] = useState<Date>(new Date());
   const [hour, setHour] = useState<string>();
-  const [cart, setCart] = useState(() => {
-    if (typeof window !== 'undefined') {
-      const cart = localStorage.getItem('@domBarber:cart');
-      if (cart) {
-        return JSON.parse(cart);
-      }
-    }
-
-    return [];
-  });
 
   const [confirmedSchedules, setConfirmedSchedules] = useState<Date[]>([]);
+
   const handleSelectDate = (getMonth: Date) => {
     setDate(getMonth);
   };
@@ -53,6 +48,10 @@ const useSchedulesKit = () => {
     setDate(newDate);
   };
 
+  const cartProfessional = getLastItemCart?.service?.services.find(
+    (service: any) => service.id === query.kitId,
+  );
+
   const days =
     date &&
     eachDayOfInterval({
@@ -64,7 +63,8 @@ const useSchedulesKit = () => {
     const daysNW: Array<Date> = [];
     days?.forEach(day => {
       if (new Date(day) < new Date()) daysNW.push(day);
-      cart[cart.length - 1]?.professional?.days?.forEach((dw: WorkDay) => {
+      // @ts-ignore
+      cartProfessional.professional?.days?.forEach((dw: WorkDay) => {
         if (dw.weekId === new Date(day).getDay()) daysNW.push(day);
       });
     });
@@ -81,7 +81,8 @@ const useSchedulesKit = () => {
     const daysNW: Array<Date> = [];
     days?.forEach(day => {
       if (new Date(day) < new Date()) daysNW.push(day);
-      cart[cart.length - 1]?.professional?.days?.forEach((dw: WorkDay) => {
+      // @ts-ignore
+      cartProfessional.professional?.days?.forEach((dw: WorkDay) => {
         if (dw.weekId === new Date(day).getDay()) daysNW.push(day);
       });
     });
@@ -144,9 +145,11 @@ const useSchedulesKit = () => {
 
   const verifyWorkTime = useCallback(
     (date: Date, workTime: number) => {
-      const rulesOfDay = cart[cart.length - 1]?.professional?.days?.filter(
-        (d: WorkDay) => d.weekId === date?.getDay(),
-      )[0];
+      const rulesOfDay =
+        // @ts-ignore
+        cartProfessional.professional?.days?.filter(
+          (d: WorkDay) => d.weekId === date?.getDay(),
+        )[0];
       const initWork = new Date(
         date?.getFullYear(),
         date?.getMonth(),
@@ -174,9 +177,11 @@ const useSchedulesKit = () => {
   const verifyIntervalTime = useCallback(
     (date: Date, workTime: number) => {
       let isIntervalTime = true;
-      const rulesOfDay = cart[cart.length - 1]?.professional?.days?.filter(
-        (d: WorkDay) => d.weekId === date?.getDay(),
-      )[0];
+      const rulesOfDay =
+        // @ts-ignore
+        cartProfessional.professional?.days?.filter(
+          (d: WorkDay) => d.weekId === date?.getDay(),
+        )[0];
       const intervalsOfDay = rulesOfDay?.intervals?.map(
         (i: { init: string; end: string }) => ({
           init: new Date(
@@ -208,23 +213,6 @@ const useSchedulesKit = () => {
     [hour],
   );
 
-  // const getScheduledTimes = async () => {
-  //   const response = await getSchedulesByProfessionalIdAndServiceId(
-  //     cart?.professionalId,
-  //     cart?.serviceId,
-  //   );
-  //   const parsedSchedulesData = Object.entries(response as {}).map(
-  //     // @ts-ignore
-  //     ([id, data]) => Schedule({ ...data, id }),
-  //   );
-  //   const confirmedSchedules = parsedSchedulesData.map(
-  //     // @ts-ignore
-  //     schedule => new Date(schedule.start.seconds * 1000),
-  //   );
-  //   setConfirmedSchedules(confirmedSchedules);
-  //   return confirmedSchedules;
-  // };
-
   const itsScheduled = useCallback(
     (date: Date) => {
       let isScheduled = false;
@@ -239,28 +227,50 @@ const useSchedulesKit = () => {
   );
 
   useEffect(() => {
-    // getScheduledTimes();
-    firestoreDb.companySchedules.getSyncWhere({
-      wheres: [
-        // @ts-ignore
-        ['professionalId', '==', cart[cart.length - 1]?.professionalId],
-        // @ts-ignore
-        ['serviceIds', 'array-contains', cart[cart.length - 1]?.serviceId],
-      ],
-      callback: response => {
-        const parsedSchedulesData = Object.entries(
-          response?.data?.docs as {},
-        ).map(
+    if (getLastItemCart) {
+      // @ts-ignore
+      const professionalsHasIds = getLastItemCart?.service?.services.filter(
+        (item: any) => item.professionalId,
+      );
+      const professionalsIds = professionalsHasIds.map(
+        (item: any) => item.professionalId,
+      );
+      firestoreDb.companySchedules.getSyncWhere({
+        wheres: [
+          [
+            // @ts-ignore
+            'professionalId',
+            // @ts-ignore
+            '==',
+            // @ts-ignore
+            professionalsIds,
+          ],
           // @ts-ignore
-          ([id, data]) => Schedule({ ...data, id }),
-        );
-        const confirmedSchedules = parsedSchedulesData.map(
-          // @ts-ignore
-          schedule => new Date(schedule.start?.seconds * 1000),
-        );
-        setConfirmedSchedules(confirmedSchedules);
-      },
-    });
+          [
+            // @ts-ignore
+            'serviceIds',
+            // @ts-ignore
+            'array-contains',
+            // @ts-ignore
+            getLastItemCart?.service?.serviceIds,
+          ],
+        ],
+        callback: (response: any) => {
+          const parsedSchedulesData = Object.entries(
+            response?.data?.docs as {},
+          ).map(
+            // @ts-ignore
+            ([id, data]) => Schedule({ ...data, id }),
+          );
+          const confirmedSchedules = parsedSchedulesData.map(
+            // @ts-ignore
+            schedule => new Date(schedule.start?.seconds * 1000),
+          );
+          console.log(parsedSchedulesData);
+          setConfirmedSchedules(confirmedSchedules);
+        },
+      });
+    }
   }, []);
 
   useEffect(() => {
@@ -271,7 +281,6 @@ const useSchedulesKit = () => {
     actions: {
       setDate,
       setHour,
-      setCart,
       handleSelectDate,
       handleSelectHour,
       daysNotWork,
@@ -283,13 +292,15 @@ const useSchedulesKit = () => {
       itsScheduled,
       verifyOpeningCompanyTime,
       setIsSelectedFirstHour,
+      addScheduleKit,
     },
     states: {
+      cart,
       date,
       hour,
-      cart,
       confirmedSchedules,
       isSelectedFirstHour,
+      getLastItemCart,
     },
   };
 };

@@ -1,7 +1,6 @@
 import { createPayment } from 'cases/pagseguro/createPayment';
 import Button from 'components/Button';
 import { currencyFormat } from 'helpers';
-import { encryptCard } from 'helpers/encriptCard';
 import { useGlobal } from 'hooks/Global';
 import BottomSheetFixedLayout from 'layouts/BottomSheetFixedLayout';
 import MainLayout from 'layouts/MainLayout';

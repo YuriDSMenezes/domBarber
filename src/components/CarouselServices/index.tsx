@@ -4,7 +4,7 @@ import { useGlobal } from 'hooks/Global';
 import Button from 'components/Button';
 import { Service } from 'models/types/service';
 import { useRouter } from 'next/router';
-import { useCart } from 'hooks/useCart';
+import { useCart } from 'hooks/UseCart';
 import * as S from './styles';
 
 // eslint-disable-next-line import/no-unresolved

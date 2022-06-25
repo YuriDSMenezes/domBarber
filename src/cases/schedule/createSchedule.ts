@@ -3,8 +3,6 @@
 import { environment } from 'environments/environment.prod';
 import api from 'services/api';
 import { createCommandFromSchedule } from 'cases/command/createCommandFromSchedule';
-import { useGlobal } from 'hooks/Global';
-import { ScheduleCanceled } from '../../models/types/schedule/canceled.d';
 
 interface scheduleCreateProps {
   companyId: string;

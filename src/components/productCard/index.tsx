@@ -2,7 +2,7 @@
 import { useGlobal } from 'hooks/Global';
 import { Product } from 'models/types/product';
 import { useRouter } from 'next/router';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 
 import * as S from './styles';
 

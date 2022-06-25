@@ -15,7 +15,7 @@ import { setTheme } from 'hooks/Theme';
 import { ManifestConfig } from 'hooks/ManifestConfig';
 import { getAllServiceCategories } from 'cases/service/getAllCategorys';
 import { getUserTokenFromLocalStorage } from 'cases/user/getUserTokenFromLocalStorage';
-import { setCookies, removeCookies } from 'cookies-next';
+import { setCookies } from 'cookies-next';
 import { getAllProfessionalsByCompanyId } from '../../../cases/professional/getProfessionalsByCompanyId';
 import { getAllKitsByCompanyId } from '../../../cases/kit/getAllKitByService';
 import { getCompanyByUrl } from '../../../cases/company/getCompanyByUrl';
@@ -67,7 +67,6 @@ export const useAppController = () => {
         );
       }
       setCookies('@domBarber:company', JSON.stringify(parsedCompanyData));
-      setCookies('@domBarber:company', parsedCompanyData);
       globalStates.company && loadingActions.deactiveLoading();
       return parsedCompanyData;
     }

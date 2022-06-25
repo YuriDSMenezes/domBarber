@@ -1713,17 +1713,17 @@
   resolved "https://registry.yarnpkg.com/@sindresorhus/is/-/is-0.14.0.tgz#9fb3a3cf3132328151f353de4632e01e52102bea"
   integrity sha512-9NET910DNaIPngYnLLPeg+Ogzqsi9uM4mSboU5y6p8S5DzMTVEsJZrawi+BoDNUVBa2DhJqQYUFvMDfgU062LQ==
 
-"@splidejs/react-splide@^0.7.6":
-  version "0.7.6"
-  resolved "https://registry.yarnpkg.com/@splidejs/react-splide/-/react-splide-0.7.6.tgz#38afe053cd2389af078506e7d8a85b90cc091123"
-  integrity sha512-urjKQkMdcUStlv+ujghN6X91IZRcxyG1kGqf3eQcLfSSXMPJmytImLSzzuMoPnfDx0tNE13metPsnBpMWpMiwg==
+"@splidejs/react-splide@^0.7.8":
+  version "0.7.8"
+  resolved "https://registry.yarnpkg.com/@splidejs/react-splide/-/react-splide-0.7.8.tgz#f74484a6906da427c1c73397cd4d56b7a40d489c"
+  integrity sha512-zXBIsa8v3h9iv8KKxEdbN+RveJKQU/VE7Iev9GoXiFxnCzN/luyySsF1FZz/lYw9B+eWiLXehOBcWLzLo+05ng==
   dependencies:
-    "@splidejs/splide" "^4.0.3"
+    "@splidejs/splide" "^4.0.7"
 
-"@splidejs/splide@^4.0.3":
-  version "4.0.3"
-  resolved "https://registry.yarnpkg.com/@splidejs/splide/-/splide-4.0.3.tgz#0c0820c084c8b22b6f269c02f2236798889580dc"
-  integrity sha512-VaiUVIU5zaWI5Mrj4w1UqURVMD6oOZgvVllSB7Aae3ARGR6UBvhYPCgYOwUTdLnoxBNaAh2Fr4AeL70UAdA1Qw==
+"@splidejs/splide@^4.0.7":
+  version "4.0.7"
+  resolved "https://registry.yarnpkg.com/@splidejs/splide/-/splide-4.0.7.tgz#f442b7c5fc99df472c6f989787e1fb331cf177c6"
+  integrity sha512-aJAOGJN2lwjwou3mxQofc3uhe+RXpw9in0WfysFX7AMT/mj7wSqoetfm41s7J8jU6FJ3ZWaLYgSJIpBAQ5wyqw==
 
 "@surma/rollup-plugin-off-main-thread@^2.2.3":
   version "2.2.3"
@@ -1746,6 +1746,12 @@
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/@tootallnate/once/-/once-1.1.2.tgz#ccb91445360179a04e7fe6aff78c00ffc1eeaf82"
   integrity sha512-RbzJvlNzmRq5c3O09UipeuXno4tA1FE6ikOjxZK0tuxVv3412l64l5t1W5pj4+rJq9vpkm/kwiR07aZXnsKPxw==
+
+"@types/@splidejs/react-splide":
+  version "0.7.8"
+  resolved "https://codeload.github.com/splidejs/react-splide/tar.gz/ebe26c819bad3dbacb86b5dffa480f1a8eb94c91"
+  dependencies:
+    "@splidejs/splide" "^4.0.7"
 
 "@types/axios@^0.14.0":
   version "0.14.0"

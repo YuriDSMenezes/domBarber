@@ -5,8 +5,12 @@ import * as S from './styles';
 interface CardSlideProps extends HTMLAttributes<HTMLDivElement> {
   swiped?: boolean;
   handleSwipe?: (state: boolean) => void;
-  firstAction?: (props: any) => void;
-  secondAction?: (props: any) => void;
+  firstAction?: (
+    props: React.MouseEvent<HTMLButtonElement, MouseEvent>,
+  ) => void;
+  secondAction?: (
+    props: React.MouseEvent<HTMLButtonElement, MouseEvent>,
+  ) => void;
 }
 
 const CardSlide: React.FC<CardSlideProps> = ({

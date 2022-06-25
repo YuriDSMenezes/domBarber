@@ -1,5 +1,6 @@
 import Button from 'components/Button';
 import { useGlobal } from 'hooks/Global';
+import { useCart } from 'hooks/UseCart';
 import BottomSheetFixedLayout from 'layouts/BottomSheetFixedLayout';
 import MainLayout from 'layouts/MainLayout';
 import { KitService } from 'models/types/kit';
@@ -13,33 +14,20 @@ const choosekit: React.FC = () => {
   const {
     states: { company },
   } = useGlobal();
-  const [kit, setKit] = useState<[]>();
+  const { getLastItemCart } = useCart();
 
   const { push } = useRouter();
 
-  const [cart, setCart] = useState(() => {
-    if (typeof window !== 'undefined') {
-      const cart = localStorage.getItem('@domBarber:cart');
-
-      if (cart) {
-        const cartParsed = JSON.parse(cart);
-        setKit(cartParsed[cartParsed.length - 1]);
-        return cartParsed;
-      }
-    }
-
-    return [];
-  });
-
   const canSchedule = useCallback(() => {
     let isScheduled = true;
-    kit?.service?.services?.forEach(service => {
+    // @ts-ignore
+    getLastItemCart?.service?.services?.forEach((service: any) => {
       if (!service.start) {
         isScheduled = false;
       }
     });
     return isScheduled;
-  }, [kit]);
+  }, [getLastItemCart]);
 
   return (
     <MainLayout>
@@ -50,7 +38,7 @@ const choosekit: React.FC = () => {
             Defina a data e hora para cada serviço do seu Kit
           </S.Description>
           <S.KitsContainer>
-            {kit?.service?.services?.map(
+            {getLastItemCart?.service?.services?.map(
               (service: KitService, index: number) => (
                 <KitCard service={service} />
               ),

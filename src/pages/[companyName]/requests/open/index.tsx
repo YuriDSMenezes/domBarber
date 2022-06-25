@@ -13,24 +13,17 @@ interface OpenProps {
 
 const Open = ({ requests }: OpenProps) => {
   const [openCollapse, setOpenCollapse] = useState(false);
-  const [commandsSelected, setCommandsSelected] = useState<Array<string>>(['']);
 
   const handleOpenCollapse = () => setOpenCollapse(!openCollapse);
 
-  const handleSelect = (e: string) => console.log('aqui');
-
   return (
     <S.Container>
-      {requests.map(request => {
+      {requests?.map(request => {
         const formattedDate = new Date(request.start);
         return (
           <S.Content>
             <S.Command>
-              <S.Check
-                type="checkbox"
-                value={request.id}
-                onChange={e => handleSelect(e.target.value)}
-              />
+              <S.Check type="checkbox" value={request.id} />
               <S.Date>
                 <S.DateText>Data</S.DateText>
                 <S.DayWeekly>{stringDays[formattedDate.getDay()]}</S.DayWeekly>

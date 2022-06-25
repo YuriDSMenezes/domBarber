@@ -1,48 +1,36 @@
 import Button from 'components/Button';
 import TagButton from 'components/TagButton';
+import { createHeaders } from 'helpers';
+import { getCookies } from 'helpers/getCookies';
 import { useGlobal } from 'hooks/Global';
+import { useCart } from 'hooks/UseCart';
 import BottomSheetFixedLayout from 'layouts/BottomSheetFixedLayout';
 import MainLayout from 'layouts/MainLayout';
 import { Professional, ProfessionalService } from 'models/types/professional';
 import { Service } from 'models/types/service';
+import { GetServerSideProps } from 'next';
 import { useRouter } from 'next/router';
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import StarRatingComponent from 'react-star-rating-component';
+import api from 'services/api';
 
 import * as S from './styles';
 
-const confirmprofessional: React.FC = () => {
+interface ConfirmProfessionalProps {
+  professional: Professional;
+  services: Array<Service>;
+}
+
+const confirmprofessional: React.FC<ConfirmProfessionalProps> = ({
+  professional,
+  services,
+}) => {
   const {
-    states: { professionals, services, company },
+    states: { company },
   } = useGlobal();
-  const {
-    isReady,
-    query: { id },
-    push,
-  } = useRouter();
-  const [professional, setProfessional] = useState<Professional>();
-  const [selectedService, setSelectedService] = useState<Service>(services[0]);
-
-  useEffect(() => {
-    if (isReady) {
-      const getProfessional = professionals.find(
-        (professional: Professional) => professional.id === id,
-      );
-      setProfessional(getProfessional);
-    }
-  }, [isReady]);
-
-  const [cart, setCart] = useState(() => {
-    if (typeof window !== 'undefined') {
-      const cart = localStorage.getItem('@domBarber:cart');
-
-      if (cart) {
-        return JSON.parse(cart);
-      }
-    }
-
-    return [];
-  });
+  const { push } = useRouter();
+  const { addProfessionalWithService } = useCart();
+  const [selectedService, setSelectedService] = useState<Service>();
 
   const handleGetService = (value: ProfessionalService) => {
     const getService = services.find(
@@ -52,16 +40,8 @@ const confirmprofessional: React.FC = () => {
   };
 
   const handleClickCard = () => {
-    const newProfessional = {
-      professional,
-      professionalId: professional?.id,
-      service: selectedService,
-      serviceId: selectedService?.id,
-    };
-    const newCart = [...cart, newProfessional];
-    setCart(newCart);
-    if (typeof window !== 'undefined') {
-      localStorage.setItem('@domBarber:cart', JSON.stringify(newCart));
+    if (selectedService) {
+      addProfessionalWithService(professional, selectedService);
     }
     push({
       pathname: `/[companyName]/schedule`,
@@ -105,6 +85,26 @@ const confirmprofessional: React.FC = () => {
       </BottomSheetFixedLayout>
     </MainLayout>
   );
+};
+
+export const getServerSideProps: GetServerSideProps = async context => {
+  const { tokenWithoutQuotes, parsedClient, paramsGetAuth } =
+    getCookies(context);
+  const headers = createHeaders(tokenWithoutQuotes, parsedClient);
+  const professional = await api.get(`professional/${context.query.id}`, {
+    headers,
+    params: paramsGetAuth,
+  });
+  const services = await api.get(`service`, {
+    headers,
+    params: paramsGetAuth,
+  });
+  return {
+    props: {
+      professional: professional.data,
+      services: services.data,
+    },
+  };
 };
 
 export default confirmprofessional;

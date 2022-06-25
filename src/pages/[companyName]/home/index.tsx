@@ -1,4 +1,5 @@
-import { Carousel } from 'components/Carousel';
+import { CarouselProduct } from 'components/CarouselProduct';
+import { CarouselProfessional } from 'components/CarouselProfessional';
 import { HorizontalList } from 'components/HorizontalList';
 import Input from 'components/Input';
 import MainLayout from 'layouts/MainLayout';
@@ -63,11 +64,7 @@ const Home: NextPage = () => {
         </S.ServiceContainer>
         <S.Professional>
           <S.Description>Profissionais</S.Description>
-          <Carousel
-            items={globalStates?.professionals}
-            size="sm"
-            professional
-          />
+          <CarouselProfessional items={globalStates?.professionals} size="sm" />
           <S.SeeMore
             onClick={() =>
               push({
@@ -87,7 +84,7 @@ const Home: NextPage = () => {
         </S.Professional>
         <S.Products>
           <S.Description>Produtos</S.Description>
-          <Carousel items={globalStates.products} size="md" />
+          <CarouselProduct items={globalStates.products} size="md" />
           <S.SeeMore
             onClick={() =>
               push({

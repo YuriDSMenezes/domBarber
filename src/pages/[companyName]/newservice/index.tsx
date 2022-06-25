@@ -2,7 +2,6 @@ import Tabs from 'components/Tabs';
 import BottomSheetFixedLayout from 'layouts/BottomSheetFixedLayout';
 import MainLayout from 'layouts/MainLayout';
 import React from 'react';
-import { useGlobal } from 'hooks/Global';
 import BeardTabOption from './BeardTabOption';
 import KitsAndCombosTabOption from './KitsAndCombosTabOption';
 

@@ -1,5 +1,5 @@
 import { ConvertToRem } from 'helpers';
-import styled, { css, keyframes } from 'styled-components';
+import styled, { css } from 'styled-components';
 
 export const ItemContainer = styled.div`
   position: relative;

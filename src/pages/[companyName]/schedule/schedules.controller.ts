@@ -15,25 +15,17 @@ import { WorkDay } from 'models/types/company';
 import { useCallback, useEffect, useState } from 'react';
 import { Schedule } from 'models/schedule';
 import { firestoreDb } from 'services/FirestoreDatabase';
+import { useCart } from 'hooks/UseCart';
 
 export const useSchedules = () => {
   const {
     states: { company },
   } = useGlobal();
+  const { cart, getLastItemCart, addSchedule } = useCart();
 
   const [isSelectedFirstHour, setIsSelectedFirstHour] = useState(false);
   const [date, setDate] = useState<Date>(new Date());
   const [hour, setHour] = useState<string>();
-  const [cart, setCart] = useState(() => {
-    if (typeof window !== 'undefined') {
-      const cart = localStorage.getItem('@domBarber:cart');
-      if (cart) {
-        return JSON.parse(cart);
-      }
-    }
-
-    return [];
-  });
 
   const [confirmedSchedules, setConfirmedSchedules] = useState<Date[]>([]);
   const handleSelectDate = (getMonth: Date) => {
@@ -64,7 +56,7 @@ export const useSchedules = () => {
     const daysNW: Array<Date> = [];
     days?.forEach(day => {
       if (new Date(day) < new Date()) daysNW.push(day);
-      cart[cart.length - 1]?.professional?.days?.forEach((dw: WorkDay) => {
+      getLastItemCart?.professional?.days?.forEach((dw: WorkDay) => {
         if (dw.weekId === new Date(day).getDay()) daysNW.push(day);
       });
     });
@@ -81,7 +73,7 @@ export const useSchedules = () => {
     const daysNW: Array<Date> = [];
     days?.forEach(day => {
       if (new Date(day) < new Date()) daysNW.push(day);
-      cart[cart.length - 1]?.professional?.days?.forEach((dw: WorkDay) => {
+      getLastItemCart?.professional?.days?.forEach((dw: WorkDay) => {
         if (dw.weekId === new Date(day).getDay()) daysNW.push(day);
       });
     });
@@ -144,7 +136,7 @@ export const useSchedules = () => {
 
   const verifyWorkTime = useCallback(
     (date: Date, workTime: number) => {
-      const rulesOfDay = cart[cart.length - 1]?.professional?.days?.filter(
+      const rulesOfDay = getLastItemCart?.professional?.days?.filter(
         (d: WorkDay) => d.weekId === date?.getDay(),
       )[0];
       const initWork = new Date(
@@ -174,7 +166,7 @@ export const useSchedules = () => {
   const verifyIntervalTime = useCallback(
     (date: Date, workTime: number) => {
       let isIntervalTime = true;
-      const rulesOfDay = cart[cart.length - 1]?.professional?.days?.filter(
+      const rulesOfDay = getLastItemCart?.professional?.days?.filter(
         (d: WorkDay) => d.weekId === date?.getDay(),
       )[0];
       const intervalsOfDay = rulesOfDay?.intervals?.map(
@@ -208,23 +200,6 @@ export const useSchedules = () => {
     [hour],
   );
 
-  // const getScheduledTimes = async () => {
-  //   const response = await getSchedulesByProfessionalIdAndServiceId(
-  //     cart?.professionalId,
-  //     cart?.serviceId,
-  //   );
-  //   const parsedSchedulesData = Object.entries(response as {}).map(
-  //     // @ts-ignore
-  //     ([id, data]) => Schedule({ ...data, id }),
-  //   );
-  //   const confirmedSchedules = parsedSchedulesData.map(
-  //     // @ts-ignore
-  //     schedule => new Date(schedule.start.seconds * 1000),
-  //   );
-  //   setConfirmedSchedules(confirmedSchedules);
-  //   return confirmedSchedules;
-  // };
-
   const itsScheduled = useCallback(
     (date: Date) => {
       let isScheduled = false;
@@ -243,9 +218,9 @@ export const useSchedules = () => {
     firestoreDb.companySchedules.getSyncWhere({
       wheres: [
         // @ts-ignore
-        ['professionalId', '==', cart[cart.length - 1]?.professionalId],
+        ['professionalId', '==', getLastItemCart?.professionalId],
         // @ts-ignore
-        ['serviceIds', 'array-contains', cart[cart.length - 1]?.serviceId],
+        ['serviceIds', 'array-contains', getLastItemCart?.serviceId],
       ],
       callback: response => {
         const parsedSchedulesData = Object.entries(
@@ -271,7 +246,7 @@ export const useSchedules = () => {
     actions: {
       setDate,
       setHour,
-      setCart,
+      addSchedule,
       handleSelectDate,
       handleSelectHour,
       daysNotWork,
@@ -290,6 +265,7 @@ export const useSchedules = () => {
       cart,
       confirmedSchedules,
       isSelectedFirstHour,
+      getLastItemCart,
     },
   };
 };

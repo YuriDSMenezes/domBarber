@@ -6,7 +6,7 @@ import React from 'react';
 
 import * as S from './styles';
 
-const KitCard = ({ service, edit, index, serviceIndex }) => {
+const KitCard = ({ service, edit, index, serviceIndex }: any) => {
   const { push } = useRouter();
   const {
     states: { company },

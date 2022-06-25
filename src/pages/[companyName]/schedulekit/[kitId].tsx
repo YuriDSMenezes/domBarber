@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { useCallback } from 'react';
+import { useCallback, useEffect } from 'react';
 import MainLayout from 'layouts/MainLayout';
 import { YearView } from 'react-calendar';
 import { useRouter } from 'next/router';
@@ -10,7 +10,6 @@ import { DayPicker } from 'react-day-picker';
 import 'react-day-picker/dist/style.css';
 import * as S from './styles';
 import useSchedulesKit from './schedulekit.controller';
-// import { getSchedulesByProfessionalId } from 'cases/schedule';
 
 const Schedule = () => {
   const { push, query } = useRouter();
@@ -24,10 +23,11 @@ const Schedule = () => {
       hour: selectedHour,
       confirmedSchedules,
       isSelectedFirstHour,
+      getLastItemCart,
     },
     actions: {
-      setCart,
       setDate,
+      addScheduleKit,
       handleSelectDate,
       handleSelectHour,
       daysNotWork,
@@ -42,26 +42,18 @@ const Schedule = () => {
   } = useSchedulesKit();
 
   const handleNext = (date: Date) => {
-    const lastItem = cart.pop();
-    const serviceIndex = lastItem?.service.services.findIndex(
-      (service: any) => service.id === query.kitId && !service.start,
-    );
-
-    lastItem.service.services[serviceIndex] = {
-      ...lastItem?.service.services[serviceIndex],
-      start: date,
-    };
-
-    const newCart = [...cart, lastItem];
-    setCart(newCart);
-    if (typeof window !== 'undefined') {
-      localStorage.setItem('@domBarber:cart', JSON.stringify(newCart));
+    if (typeof query.kitId === 'string') {
+      addScheduleKit(date, query.kitId);
     }
   };
 
-  const hasProfessional = cart.map(item =>
-    item?.service?.services?.find(sItem => sItem?.professional),
-  );
+  const hasProfessional = cart.map(item => {
+    // @ts-ignore
+    if (item.service.services) {
+      item?.service?.services?.find((sItem: any) => sItem?.professional);
+    }
+    return [];
+  });
 
   const YearCalendarComponent = () => (
     <YearView
@@ -92,51 +84,49 @@ const Schedule = () => {
     ),
     [date, confirmedSchedules],
   );
-  const runTimeService =
-    cart.length > 0
-      ? cart[cart.length - 1]?.service?.services?.find(
-          (service: any) => service.id === query.kitId,
-        )
-      : 0;
+
+  // @ts-ignore
+  const runTimeService = getLastItemCart?.service?.services?.find(
+    (service: any) => service.id === query.kitId,
+  );
 
   const HoursComponent = useCallback(
     (): any =>
-      TimesOfDayBasedInTimeService(
-        cart.length > 0 && cart[cart.length - 1]?.service?.runtime,
-      ).map((hour: Date) =>
-        verifyOpeningCompanyTime(hour) ? (
-          <S.Hour
-            onClick={() => {
-              if (
+      TimesOfDayBasedInTimeService(getLastItemCart?.service?.runtime || 0).map(
+        (hour: Date) =>
+          verifyOpeningCompanyTime(hour) ? (
+            <S.Hour
+              onClick={() => {
+                if (
+                  !itsScheduled(hour) &&
+                  verifyWorkTime(hour, runTimeService?.defaultRuntime) &&
+                  verifyIntervalTime(hour, runTimeService?.defaultRuntime)
+                ) {
+                  handleSelectHour(hour.toISOString());
+                  setIsSelectedFirstHour(true);
+                }
+              }}
+              key={hour.getTime()}
+              active={
+                selectedHour === hour.toISOString() &&
                 !itsScheduled(hour) &&
-                verifyWorkTime(hour, runTimeService?.customRuntime) &&
-                verifyIntervalTime(hour, runTimeService?.customRuntime)
-              ) {
-                handleSelectHour(hour.toISOString());
-                setIsSelectedFirstHour(true);
+                verifyWorkTime(hour, runTimeService?.defaultRuntime) &&
+                verifyIntervalTime(hour, runTimeService?.defaultRuntime)
               }
-            }}
-            key={hour.getTime()}
-            active={
-              selectedHour === hour.toISOString() &&
-              !itsScheduled(hour) &&
-              verifyWorkTime(hour, runTimeService?.customRuntime) &&
-              verifyIntervalTime(hour, runTimeService?.customRuntime)
-            }
-            disabled={
-              itsScheduled(hour) ||
-              !verifyOpeningCompanyTime(hour) ||
-              !verifyWorkTime(hour, runTimeService?.customRuntime) ||
-              !verifyIntervalTime(hour, runTimeService?.customRuntime)
-            }
-          >
-            <p>{hour.toLocaleTimeString('pt-br', { timeStyle: 'short' })}</p>
-          </S.Hour>
-        ) : null,
+              disabled={
+                itsScheduled(hour) ||
+                !verifyOpeningCompanyTime(hour) ||
+                !verifyWorkTime(hour, runTimeService?.defaultRuntime) ||
+                !verifyIntervalTime(hour, runTimeService?.defaultRuntime)
+              }
+            >
+              <p>{hour.toLocaleTimeString('pt-br', { timeStyle: 'short' })}</p>
+            </S.Hour>
+          ) : null,
       ),
-    [selectedHour, date, confirmedSchedules],
+    [selectedHour, date, confirmedSchedules, getLastItemCart],
   );
-  console.log(runTimeService);
+
   return (
     <MainLayout>
       <S.Title>Agendamento</S.Title>
@@ -165,10 +155,10 @@ const Schedule = () => {
               <S.ServiceDescription>
                 <S.ServiceTitle>{runTimeService?.name}</S.ServiceTitle>
                 <S.ServiceDescription>
-                  R$ {runTimeService?.customPrice}
+                  R$ {runTimeService?.defaultPrice}
                 </S.ServiceDescription>
                 <S.ServiceText>
-                  Tempo: {runTimeService?.customRuntime}
+                  Tempo: {runTimeService?.defaultRuntime}
                 </S.ServiceText>
               </S.ServiceDescription>
             </S.Service>

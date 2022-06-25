@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useGlobal } from 'hooks/Global';
-import { useCart } from 'hooks/useCart';
+import { useCart } from 'hooks/UseCart';
 import { Service } from 'models/types/service';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
@@ -17,12 +17,12 @@ const ServiceCard: ComponentType<ServiceCardProps> = ({ list, isKit }) => {
   const {
     states: { company },
   } = useGlobal();
-  const { addService, hasProfessional } = useCart();
-  const { push } = useRouter();
+  const { addService } = useCart();
+  const { push, query } = useRouter();
+  const { professionalId = {} } = query;
 
   const handleClickCard = (service: Service) => {
     addService(service);
-
     if (isKit) {
       push({
         pathname: `/[companyName]/choosekit`,
@@ -30,7 +30,7 @@ const ServiceCard: ComponentType<ServiceCardProps> = ({ list, isKit }) => {
       });
     } else {
       push(
-        hasProfessional
+        professionalId
           ? {
               pathname: `/[companyName]/schedule`,
               query: { companyName: company?.app?.url },

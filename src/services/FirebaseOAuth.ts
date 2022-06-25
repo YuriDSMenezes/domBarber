@@ -2,7 +2,7 @@ import { useGlobal } from 'hooks/Global';
 /* eslint-disable no-return-assign */
 import firebase from 'firebase/compat/app';
 import cookie from 'js-cookie';
-import Router from 'next/router';
+import Router, { useRouter } from 'next/router';
 import 'firebase/compat/auth';
 import { setCookie } from 'nookies';
 import {
@@ -22,6 +22,8 @@ export const fireAuth = firebase.auth();
 const googleProvider = new GoogleAuthProvider();
 const facebookProvider = new FacebookAuthProvider();
 const auth = getAuth();
+
+const isBrowser = () => typeof window !== 'undefined';
 
 export const signInWithGoogle = async () =>
   signInWithPopup(auth, googleProvider)
@@ -62,7 +64,7 @@ export const signInWithGoogle = async () =>
           client = Client({ ...client, ...res });
         })
         .catch(async (_: any) => {
-          const response = await api.post('client', {
+          await api.post('client', {
             ...client,
             authType: 'google',
             authId: user.uid,
@@ -110,10 +112,17 @@ export const signInWithGoogle = async () =>
           },
         );
         setCookie(null, '@domBarber:company', JSON.stringify(company.id), {
-          maxAge: 60 * 60 * 24 * 30,
           path: '/',
         });
         setCookie(null, '@domBarber:cart', '[]', { path: '/' });
+
+        if (isBrowser()) {
+          const { push } = useRouter();
+          push({
+            pathname: '[companyName]/home',
+            query: { companyName: company?.name },
+          });
+        }
       }
     })
     .catch(error => {
@@ -151,7 +160,24 @@ export const singIn = async (email: string, password: string) => {
     email,
     password,
   };
-  await api.post('user/auth/login', data);
+  await api.post('user/auth/login', data).then(res => {
+    setCookie(null, '@domBarber:token', JSON.stringify(res.data.token), {
+      maxAge: 60 * 60 * 24 * 30,
+      path: '/',
+    });
+    delete res.data.token;
+    setCookie(null, '@domBarber:client', JSON.stringify(res), {
+      maxAge: 60 * 60 * 24 * 30,
+      path: '/',
+    });
+  });
+  if (isBrowser()) {
+    const { push } = useRouter();
+    push({
+      pathname: '[companyName]/home',
+      query: { companyName: company?.name },
+    });
+  }
 };
 
 export const createUser = (

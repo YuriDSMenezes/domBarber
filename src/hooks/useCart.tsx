@@ -5,20 +5,21 @@ import {
   useEffect,
   useState,
 } from 'react';
-import { setCookie, parseCookies } from 'nookies';
 import { Service } from 'models/types/service';
 import { Professional } from 'models/types/professional';
+import { Product } from 'models/types/product';
+import { setToStorage } from 'helpers';
 
 interface CartProviderProps {
   children: ReactNode;
 }
 
-interface CartProps {
+export interface CartProps {
   service?: Service;
   serviceId?: string;
   professional?: Professional;
   professionalId?: string;
-  start?: string;
+  start?: Date;
 }
 
 interface CartContextData {
@@ -26,15 +27,26 @@ interface CartContextData {
   addService: (service: Service) => Promise<void>;
   addServiceNoCheckProfessional: (service: Service) => Promise<void>;
   addProfessional: (professional: Professional) => Promise<void>;
+  addProfessionalWithService: (
+    professional: Professional,
+    service: Service,
+  ) => Promise<void>;
+  addSchedule: (date: Date) => Promise<void>;
+  addProduct: (product: Product) => Promise<void>;
+  addScheduleKit: (data: Date, indexService: string) => Promise<void>;
+  addProfessionalKit: (
+    professional: Professional,
+    indexService: string,
+  ) => Promise<void>;
   hasProfessional?: boolean;
+  getLastItemCart?: CartProps;
 }
 
 const CartContext = createContext<CartContextData>({} as CartContextData);
 
 export function CartProvider({ children }: CartProviderProps) {
   useEffect(() => {
-    const cookies = parseCookies();
-    const cart = cookies['@domBarber:cart'];
+    const cart = localStorage.getItem('@domBarber:cart');
     if (cart) {
       setCart(JSON.parse(cart));
     }
@@ -43,6 +55,8 @@ export function CartProvider({ children }: CartProviderProps) {
   const [cart, setCart] = useState<CartProps[]>([]);
 
   const [hasProfessional, setHasProfessional] = useState<boolean>();
+
+  const getLastItemCart = cart[cart.length - 1];
 
   const addService = async (service: Service) => {
     try {
@@ -58,13 +72,10 @@ export function CartProvider({ children }: CartProviderProps) {
           service,
           serviceId: service.id,
         };
-        cart.pop();
         const newCart = [...cart, newItemCart];
+        cart.pop();
         setCart(newCart);
-        setCookie(null, '@domBarber:cart', JSON.stringify(newCart), {
-          maxAge: 60 * 60 * 24 * 30,
-          path: '/',
-        });
+        localStorage.setItem('@domBarber:cart', JSON.stringify(newCart));
       } else {
         const newService = {
           service,
@@ -72,10 +83,7 @@ export function CartProvider({ children }: CartProviderProps) {
         };
         const newCart = [...cart, newService];
         setCart(newCart);
-        setCookie(null, '@domBarber:cart', JSON.stringify(newCart), {
-          maxAge: 60 * 60 * 24 * 30,
-          path: '/',
-        });
+        localStorage.setItem('@domBarber:cart', JSON.stringify(newCart));
       }
     } catch (error) {
       console.log(error);
@@ -90,28 +98,111 @@ export function CartProvider({ children }: CartProviderProps) {
       };
       const newCart = [...cart, newService];
       setCart(newCart);
-      setCookie(null, '@domBarber:cart', JSON.stringify(newCart), {
-        maxAge: 60 * 60 * 24 * 30,
-        path: '/',
-      });
+      localStorage.setItem('@domBarber:cart', JSON.stringify(newCart));
     } catch (error) {
       console.log(error);
     }
   };
+
   const addProfessional = async (professional: Professional) => {
     try {
-      const lastItem = cart.pop();
+      const lastItem = cart[cart.length - 1];
       const newProfessional = {
         ...lastItem,
         professional,
         professionalId: professional.id,
       };
+      cart.pop();
       const newCart = [...cart, newProfessional];
       setCart(newCart);
-      setCookie(null, '@domBarber:cart', JSON.stringify(newCart), {
-        maxAge: 60 * 60 * 24 * 30,
-        path: '/',
-      });
+      localStorage.setItem('@domBarber:cart', JSON.stringify(newCart));
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const addProfessionalWithService = async (
+    professional: Professional,
+    service: Service,
+  ) => {
+    const newProfessional = {
+      professional,
+      professionalId: professional?.id,
+      service,
+      serviceId: service?.id,
+    };
+    const newCart = [...cart, newProfessional];
+    setCart(newCart);
+    setToStorage('@domBarber:cart', JSON.stringify(newCart));
+  };
+
+  const addProduct = async (product: Product) => {
+    try {
+      const newService = {
+        product,
+        serviceId: product.id,
+      };
+      const newCart = [...cart, newService];
+      setCart(newCart);
+      localStorage.setItem('@domBarber:cart', JSON.stringify(newCart));
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const addSchedule = async (date: Date) => {
+    try {
+      const lastItem = cart.pop();
+      const newItem = { ...lastItem, start: date };
+      const newCart = [...cart, newItem];
+      setCart(newCart);
+      localStorage.setItem('@domBarber:cart', JSON.stringify(newCart));
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const addScheduleKit = async (date: Date, indexService: string) => {
+    try {
+      // @ts-ignore
+      const serviceIndex = getLastItemCart?.service?.services.findIndex(
+        (service: any) => service.id === indexService && !service.start,
+      );
+      // @ts-ignore
+      getLastItemCart.service.services[serviceIndex] = {
+        // @ts-ignore
+        ...getLastItemCart?.service.services[serviceIndex],
+        start: date,
+      };
+      cart.pop();
+      const newCart = [...cart, getLastItemCart];
+      setCart(newCart);
+      localStorage.setItem('@domBarber:cart', JSON.stringify(newCart));
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const addProfessionalKit = async (
+    professional: Professional,
+    indexService: string,
+  ) => {
+    try {
+      // @ts-ignore
+      const serviceIndex = getLastItemCart?.service?.services.findIndex(
+        (service: any) => service.id === indexService && !service.start,
+      );
+      // @ts-ignore
+      getLastItemCart.service.services[serviceIndex] = {
+        // @ts-ignore
+        ...getLastItemCart?.service.services[serviceIndex],
+        professional,
+        professionalId: professional.id,
+      };
+      cart.pop();
+      const newCart = [...cart, getLastItemCart];
+      setCart(newCart);
+      localStorage.setItem('@domBarber:cart', JSON.stringify(newCart));
     } catch (error) {
       console.log(error);
     }
@@ -125,6 +216,12 @@ export function CartProvider({ children }: CartProviderProps) {
         addServiceNoCheckProfessional,
         hasProfessional,
         addProfessional,
+        addSchedule,
+        getLastItemCart,
+        addProduct,
+        addScheduleKit,
+        addProfessionalKit,
+        addProfessionalWithService,
       }}
     >
       {children}
