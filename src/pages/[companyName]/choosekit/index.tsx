@@ -5,7 +5,7 @@ import BottomSheetFixedLayout from 'layouts/BottomSheetFixedLayout';
 import MainLayout from 'layouts/MainLayout';
 import { KitService } from 'models/types/kit';
 import { useRouter } from 'next/router';
-import React, { useState, useCallback } from 'react';
+import React, { useCallback } from 'react';
 import KitCard from './KitCard';
 
 import * as S from './styles';
