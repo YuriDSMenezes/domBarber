@@ -15,7 +15,6 @@
     "jsx": "preserve",
     "incremental": true,
     "baseUrl": "src",
-
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "src", "public/assets"],
   "exclude": ["node_modules"]

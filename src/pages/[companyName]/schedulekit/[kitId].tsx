@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { useCallback, useEffect } from 'react';
+import { useCallback } from 'react';
 import MainLayout from 'layouts/MainLayout';
 import { YearView } from 'react-calendar';
 import { useRouter } from 'next/router';
@@ -49,7 +49,7 @@ const Schedule = () => {
 
   const hasProfessional = cart.map(item => {
     // @ts-ignore
-    if (item.service.services) {
+    if (item?.service?.services) {
       item?.service?.services?.find((sItem: any) => sItem?.professional);
     }
     return [];
@@ -82,16 +82,18 @@ const Schedule = () => {
         disabled={daysNotWork()}
       />
     ),
-    [date, confirmedSchedules],
+    [],
   );
 
   // @ts-ignore
-  const runTimeService = getLastItemCart?.service?.services?.find(
-    (service: any) => service.id === query.kitId,
-  );
+  const runTimeService = getLastItemCart?.service?.services
+    ? getLastItemCart?.service?.services?.find(
+        (service: any) => service.id === query.kitId,
+      )
+    : [];
 
-  const HoursComponent = useCallback(
-    (): any =>
+  const HoursComponent = useCallback((): any => {
+    if (getLastItemCart?.service) {
       TimesOfDayBasedInTimeService(getLastItemCart?.service?.runtime || 0).map(
         (hour: Date) =>
           verifyOpeningCompanyTime(hour) ? (
@@ -123,9 +125,9 @@ const Schedule = () => {
               <p>{hour.toLocaleTimeString('pt-br', { timeStyle: 'short' })}</p>
             </S.Hour>
           ) : null,
-      ),
-    [selectedHour, date, confirmedSchedules, getLastItemCart],
-  );
+      );
+    }
+  }, [getLastItemCart]);
 
   return (
     <MainLayout>
@@ -177,7 +179,7 @@ const Schedule = () => {
                   Profissional
                 </S.ServiceDescription>
                 <S.ServiceText>
-                  {runTimeService?.professional?.name}
+                  {runTimeService?.professional?.name || ''}
                 </S.ServiceText>
               </S.ServiceDescription>
             </S.Service>

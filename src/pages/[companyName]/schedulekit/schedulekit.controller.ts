@@ -12,7 +12,7 @@ import {
   subMinutes,
 } from 'date-fns';
 import { WorkDay } from 'models/types/company';
-import { useCallback, useEffect, useReducer, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { Schedule } from 'models/schedule';
 import { firestoreDb } from 'services/FirestoreDatabase';
 import { useCart } from 'hooks/UseCart';
@@ -48,7 +48,7 @@ const useSchedulesKit = () => {
     setDate(newDate);
   };
 
-  const cartProfessional = getLastItemCart?.service?.services.find(
+  const cartProfessional = getLastItemCart?.service?.services?.find(
     (service: any) => service.id === query.kitId,
   );
 
@@ -64,7 +64,7 @@ const useSchedulesKit = () => {
     days?.forEach(day => {
       if (new Date(day) < new Date()) daysNW.push(day);
       // @ts-ignore
-      cartProfessional.professional?.days?.forEach((dw: WorkDay) => {
+      cartProfessional?.professional?.days?.forEach((dw: WorkDay) => {
         if (dw.weekId === new Date(day).getDay()) daysNW.push(day);
       });
     });
@@ -82,7 +82,7 @@ const useSchedulesKit = () => {
     days?.forEach(day => {
       if (new Date(day) < new Date()) daysNW.push(day);
       // @ts-ignore
-      cartProfessional.professional?.days?.forEach((dw: WorkDay) => {
+      cartProfessional?.professional?.days?.forEach((dw: WorkDay) => {
         if (dw.weekId === new Date(day).getDay()) daysNW.push(day);
       });
     });
@@ -147,7 +147,7 @@ const useSchedulesKit = () => {
     (date: Date, workTime: number) => {
       const rulesOfDay =
         // @ts-ignore
-        cartProfessional.professional?.days?.filter(
+        cartProfessional?.professional?.days?.filter(
           (d: WorkDay) => d.weekId === date?.getDay(),
         )[0];
       const initWork = new Date(
@@ -179,7 +179,7 @@ const useSchedulesKit = () => {
       let isIntervalTime = true;
       const rulesOfDay =
         // @ts-ignore
-        cartProfessional.professional?.days?.filter(
+        cartProfessional?.professional?.days?.filter(
           (d: WorkDay) => d.weekId === date?.getDay(),
         )[0];
       const intervalsOfDay = rulesOfDay?.intervals?.map(
@@ -200,14 +200,16 @@ const useSchedulesKit = () => {
           ),
         }),
       );
-      intervalsOfDay.forEach((iD: { init: Date; end: Date }) => {
-        if (
-          isAfter(date, subMinutes(iD.init, workTime)) &&
-          isBefore(date, iD.end)
-        ) {
-          isIntervalTime = false;
-        }
-      });
+      if (intervalsOfDay) {
+        intervalsOfDay.forEach((iD: { init: Date; end: Date }) => {
+          if (
+            isAfter(date, subMinutes(iD.init, workTime)) &&
+            isBefore(date, iD.end)
+          ) {
+            isIntervalTime = false;
+          }
+        });
+      }
       return isIntervalTime;
     },
     [hour],
@@ -226,52 +228,51 @@ const useSchedulesKit = () => {
     [confirmedSchedules],
   );
 
-  useEffect(() => {
-    if (getLastItemCart) {
-      // @ts-ignore
-      const professionalsHasIds = getLastItemCart?.service?.services.filter(
-        (item: any) => item.professionalId,
-      );
-      const professionalsIds = professionalsHasIds.map(
-        (item: any) => item.professionalId,
-      );
-      firestoreDb.companySchedules.getSyncWhere({
-        wheres: [
-          [
-            // @ts-ignore
-            'professionalId',
-            // @ts-ignore
-            '==',
-            // @ts-ignore
-            professionalsIds,
-          ],
+  // const professionalsHasIds = getLastItemCart?.service?.services?.filter(
+  //   (item: any) => item?.professionalId,
+  // );
+  // const professionalsIds = professionalsHasIds?.map(
+  //   (item: any) => item?.professionalId,
+  // );
+
+  if (getLastItemCart) {
+    firestoreDb.companySchedules.getSyncWhere({
+      wheres: [
+        [
           // @ts-ignore
-          [
-            // @ts-ignore
-            'serviceIds',
-            // @ts-ignore
-            'array-contains',
-            // @ts-ignore
-            getLastItemCart?.service?.serviceIds,
-          ],
+          'professionalId',
+          // @ts-ignore
+          '==',
+          // @ts-ignore
+          professionalsIds,
         ],
-        callback: (response: any) => {
-          const parsedSchedulesData = Object.entries(
-            response?.data?.docs as {},
-          ).map(
+        // @ts-ignore
+        [
+          // @ts-ignore
+          'serviceIds',
+          // @ts-ignore
+          'array-contains',
+          // @ts-ignore
+          getLastItemCart?.service?.serviceIds,
+        ],
+      ],
+      callback: (response: any) => {
+        const parsedSchedulesData = Object.entries(
+          response?.data?.docs as {},
+        ).map(
+          // @ts-ignore
+          ([id, data]) => Schedule({ ...data, id }),
+        );
+        if (parsedSchedulesData) {
+          const confirmedSchedules = parsedSchedulesData?.map(
             // @ts-ignore
-            ([id, data]) => Schedule({ ...data, id }),
+            schedule => new Date(schedule?.start?.seconds * 1000),
           );
-          const confirmedSchedules = parsedSchedulesData.map(
-            // @ts-ignore
-            schedule => new Date(schedule.start?.seconds * 1000),
-          );
-          console.log(parsedSchedulesData);
           setConfirmedSchedules(confirmedSchedules);
-        },
-      });
-    }
-  }, []);
+        }
+      },
+    });
+  }
 
   useEffect(() => {
     return () => setInitalDateWork();

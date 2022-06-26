@@ -69,7 +69,7 @@ export const useSchedules = () => {
     return [];
   }, [date]);
 
-  const setInitalDateWork = () => {
+  const setInitialDateWork = () => {
     const daysNW: Array<Date> = [];
     days?.forEach(day => {
       if (new Date(day) < new Date()) daysNW.push(day);
@@ -187,14 +187,16 @@ export const useSchedules = () => {
           ),
         }),
       );
-      intervalsOfDay.forEach((iD: { init: Date; end: Date }) => {
-        if (
-          isAfter(date, subMinutes(iD.init, workTime)) &&
-          isBefore(date, iD.end)
-        ) {
-          isIntervalTime = false;
-        }
-      });
+      if (intervalsOfDay) {
+        intervalsOfDay.forEach((iD: { init: Date; end: Date }) => {
+          if (
+            isAfter(date, subMinutes(iD.init, workTime)) &&
+            isBefore(date, iD.end)
+          ) {
+            isIntervalTime = false;
+          }
+        });
+      }
       return isIntervalTime;
     },
     [hour],
@@ -214,32 +216,35 @@ export const useSchedules = () => {
   );
 
   useEffect(() => {
-    // getScheduledTimes();
-    firestoreDb.companySchedules.getSyncWhere({
-      wheres: [
-        // @ts-ignore
-        ['professionalId', '==', getLastItemCart?.professionalId],
-        // @ts-ignore
-        ['serviceIds', 'array-contains', getLastItemCart?.serviceId],
-      ],
-      callback: response => {
-        const parsedSchedulesData = Object.entries(
-          response?.data?.docs as {},
-        ).map(
+    if (getLastItemCart) {
+      firestoreDb.companySchedules.getSyncWhere({
+        wheres: [
           // @ts-ignore
-          ([id, data]) => Schedule({ ...data, id }),
-        );
-        const confirmedSchedules = parsedSchedulesData.map(
+          ['professionalId', '==', getLastItemCart?.professionalId],
           // @ts-ignore
-          schedule => new Date(schedule.start?.seconds * 1000),
-        );
-        setConfirmedSchedules(confirmedSchedules);
-      },
-    });
+          ['serviceIds', 'array-contains', getLastItemCart?.serviceId],
+        ],
+        callback: response => {
+          const parsedSchedulesData = Object.entries(
+            response?.data?.docs as {},
+          ).map(
+            // @ts-ignore
+            ([id, data]) => Schedule({ ...data, id }),
+          );
+          if (parsedSchedulesData) {
+            const confirmedSchedules = parsedSchedulesData?.map(
+              // @ts-ignore
+              schedule => new Date(schedule?.start?.seconds * 1000),
+            );
+            setConfirmedSchedules(confirmedSchedules);
+          }
+        },
+      });
+    }
   }, []);
 
   useEffect(() => {
-    return () => setInitalDateWork();
+    return () => setInitialDateWork();
   }, []);
 
   return {
@@ -250,7 +255,6 @@ export const useSchedules = () => {
       handleSelectDate,
       handleSelectHour,
       daysNotWork,
-      setInitalDateWork,
       formatExibitionDate,
       TimesOfDayBasedInTimeService,
       verifyWorkTime,

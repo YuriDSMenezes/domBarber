@@ -18,6 +18,7 @@ module.exports = withPlugins([
     images: {
       domains: ['www.montarumnegocio.com','firebasestorage.googleapis.com']
     },
+    staticPageGenerationTimeout: 1000,
     distDir: 'build',
     future: {webpack5:true},
     typescript: {
