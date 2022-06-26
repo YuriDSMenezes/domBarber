@@ -228,14 +228,14 @@ const useSchedulesKit = () => {
     [confirmedSchedules],
   );
 
-  // const professionalsHasIds = getLastItemCart?.service?.services?.filter(
-  //   (item: any) => item?.professionalId,
-  // );
-  // const professionalsIds = professionalsHasIds?.map(
-  //   (item: any) => item?.professionalId,
-  // );
-
   if (getLastItemCart) {
+    const professionalsHasIds = getLastItemCart?.service?.services?.filter(
+      (item: any) => item?.professionalId,
+    );
+    const professionalsIds = professionalsHasIds?.map(
+      (item: any) => item?.professionalId,
+    );
+
     firestoreDb.companySchedules.getSyncWhere({
       wheres: [
         [

@@ -26,8 +26,8 @@ const Schedule = () => {
       getLastItemCart,
     },
     actions: {
-      addSchedule,
       setDate,
+      addSchedule,
       handleSelectDate,
       handleSelectHour,
       daysNotWork,
@@ -69,7 +69,7 @@ const Schedule = () => {
         month={date}
         selected={date}
         // @ts-ignore
-        // onSelect={setDate}
+        onSelect={setDate}
         locale={ptBR}
         disabled={daysNotWork()}
       />
@@ -77,8 +77,8 @@ const Schedule = () => {
     [date, confirmedSchedules],
   );
 
-  const HoursComponent = useCallback((): any => {
-    if (getLastItemCart) {
+  const HoursComponent = useCallback(
+    () =>
       TimesOfDayBasedInTimeService(getLastItemCart?.service?.runtime || 0).map(
         (hour: Date) =>
           verifyOpeningCompanyTime(hour) ? (
@@ -119,9 +119,9 @@ const Schedule = () => {
               <p>{hour.toLocaleTimeString('pt-br', { timeStyle: 'short' })}</p>
             </S.Hour>
           ) : null,
-      );
-    }
-  }, [selectedHour, date, confirmedSchedules, getLastItemCart]);
+      ),
+    [selectedHour, date, confirmedSchedules, getLastItemCart],
+  );
 
   const imageService = services.find(
     service => getLastItemCart?.service?.id === service.id,
