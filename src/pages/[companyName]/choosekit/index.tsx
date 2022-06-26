@@ -40,7 +40,7 @@ const choosekit: React.FC = () => {
           <S.KitsContainer>
             {getLastItemCart?.service?.services?.map(
               (service: KitService, index: number) => (
-                <KitCard service={service} />
+                <KitCard service={service} key={index} />
               ),
             )}
           </S.KitsContainer>
