@@ -9,7 +9,7 @@ import { Company } from 'models/company';
 import { useRouter } from 'next/router';
 import { Category } from 'models/category';
 import { ClientCard } from 'models/types/client';
-import { setTheme } from './Theme';
+import { setTheme } from 'hooks';
 
 interface GlobalContextProps {
   states: {
