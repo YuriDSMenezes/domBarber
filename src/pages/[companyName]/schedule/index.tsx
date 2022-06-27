@@ -79,7 +79,7 @@ const Schedule = () => {
 
   const HoursComponent = useCallback(
     (): any =>
-      TimesOfDayBasedInTimeService(getLastItemCart?.service?.runtime || 0).map(
+      TimesOfDayBasedInTimeService(getLastItemCart?.service?.runtime || 1).map(
         (hour: Date) =>
           verifyOpeningCompanyTime(hour) ? (
             <S.Hour
@@ -88,11 +88,11 @@ const Schedule = () => {
                   !itsScheduled(hour) &&
                   verifyWorkTime(
                     hour,
-                    getLastItemCart?.service?.runtime || 0,
+                    getLastItemCart?.service?.runtime || 1,
                   ) &&
                   verifyIntervalTime(
                     hour,
-                    getLastItemCart?.service?.runtime || 0,
+                    getLastItemCart?.service?.runtime || 1,
                   )
                 ) {
                   handleSelectHour(hour.toISOString());
@@ -103,16 +103,16 @@ const Schedule = () => {
               active={
                 selectedHour === hour.toISOString() &&
                 !itsScheduled(hour) &&
-                verifyWorkTime(hour, getLastItemCart?.service?.runtime || 0) &&
-                verifyIntervalTime(hour, getLastItemCart?.service?.runtime || 0)
+                verifyWorkTime(hour, getLastItemCart?.service?.runtime || 1) &&
+                verifyIntervalTime(hour, getLastItemCart?.service?.runtime || 1)
               }
               disabled={
                 itsScheduled(hour) ||
                 !verifyOpeningCompanyTime(hour) ||
-                !verifyWorkTime(hour, getLastItemCart?.service?.runtime || 0) ||
+                !verifyWorkTime(hour, getLastItemCart?.service?.runtime || 1) ||
                 !verifyIntervalTime(
                   hour,
-                  getLastItemCart?.service?.runtime || 0,
+                  getLastItemCart?.service?.runtime || 1,
                 )
               }
             >

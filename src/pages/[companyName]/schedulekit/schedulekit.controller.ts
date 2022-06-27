@@ -98,9 +98,9 @@ const useSchedulesKit = () => {
     ];
     const startDay = startOfDay(addDays(times[0], 1));
 
-    // while (isBefore(times[times.length - 1], startDay)) {
-    //   times.push(addMinutes(times[times.length - 1], serviceMinutes));
-    // }
+    while (isBefore(times[times.length - 1], startDay)) {
+      times.push(addMinutes(times[times.length - 1], serviceMinutes));
+    }
     times.pop();
     if (
       isAfter(addMinutes(times[times.length - 1], serviceMinutes), startDay)

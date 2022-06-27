@@ -87,12 +87,12 @@ export const useSchedules = () => {
     const times: Date[] = [
       new Date(date?.getFullYear(), date?.getMonth(), date?.getDate(), 0, 0),
     ];
-    // while (
-    //   isBefore(times[times.length - 1], startOfDay(addDays(times[0], 1))) ===
-    //   true
-    // ) {
-    //   times.push(addMinutes(times[times.length - 1], serviceMinutes));
-    // }
+    while (
+      isBefore(times[times.length - 1], startOfDay(addDays(times[0], 1))) ===
+      true
+    ) {
+      times.push(addMinutes(times[times.length - 1], serviceMinutes));
+    }
     times.pop();
     if (
       isAfter(
