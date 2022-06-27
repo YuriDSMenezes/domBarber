@@ -1,1 +1,1 @@
-export { useCart } from './UseCart';
+export { useCart, CartProvider } from './UseCart';
