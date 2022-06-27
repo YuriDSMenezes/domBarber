@@ -86,7 +86,7 @@ const LoadingProvider: React.FC = ({ children }) => {
       {isLoading && (
         <LoadingContainer>
           <Loader />
-          <img src={DomBarberLogo.src} alt="Dombarber Logo" />
+          <img src={DomBarberLogo.src} alt="DomBarber Logo" />
         </LoadingContainer>
       )}
       {children}
