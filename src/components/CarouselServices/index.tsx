@@ -4,7 +4,7 @@ import { useGlobal } from 'hooks/Global';
 import Button from 'components/Button';
 import { Service } from 'models/types/service';
 import { useRouter } from 'next/router';
-import { useCart } from 'hooks/UseCart';
+import { useCart } from 'hooks';
 import * as S from './styles';
 
 // eslint-disable-next-line import/no-unresolved
@@ -41,10 +41,13 @@ export const CarouselService: React.FC<CarouselProps> = ({
         focus: 'center',
         snap: true,
         gap: 20,
-        perPage: 5,
+        perPage: services.length,
         breakpoints: {
-          400: {
+          500: {
             perPage: 3,
+          },
+          1250: {
+            perPage: 4,
           },
         },
         type: 'loop',

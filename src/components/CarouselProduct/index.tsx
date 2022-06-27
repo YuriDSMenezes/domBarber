@@ -3,7 +3,7 @@ import { Splide, SplideSlide } from '@splidejs/react-splide';
 import '@splidejs/react-splide/css';
 import { useRouter } from 'next/router';
 
-import { useCart } from 'hooks/UseCart';
+import { useCart } from 'hooks';
 import { Product } from 'models/types/product';
 import * as S from './styles';
 

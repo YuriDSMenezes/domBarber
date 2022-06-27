@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useGlobal } from 'hooks/Global';
-import { useCart } from 'hooks/UseCart';
+import { useCart } from 'hooks';
 import { Service } from 'models/types/service';
 import Image from 'next/image';
 import { useRouter } from 'next/router';

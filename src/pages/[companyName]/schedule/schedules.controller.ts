@@ -15,7 +15,7 @@ import { WorkDay } from 'models/types/company';
 import { useCallback, useEffect, useState } from 'react';
 import { Schedule } from 'models/schedule';
 import { firestoreDb } from 'services/FirestoreDatabase';
-import { useCart } from 'hooks/UseCart';
+import { useCart } from 'hooks';
 
 export const useSchedules = () => {
   const {
@@ -88,12 +88,12 @@ export const useSchedules = () => {
     const times: Date[] = [
       new Date(date?.getFullYear(), date?.getMonth(), date?.getDate(), 0, 0),
     ];
-    while (
-      isBefore(times[times.length - 1], startOfDay(addDays(times[0], 1))) ===
-      true
-    ) {
-      times.push(addMinutes(times[times.length - 1], serviceMinutes));
-    }
+    // while (
+    //   isBefore(times[times.length - 1], startOfDay(addDays(times[0], 1))) ===
+    //   true
+    // ) {
+    //   times.push(addMinutes(times[times.length - 1], serviceMinutes));
+    // }
     times.pop();
     if (
       isAfter(

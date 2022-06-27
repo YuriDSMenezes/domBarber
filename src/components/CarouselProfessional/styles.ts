@@ -8,21 +8,15 @@ export const Container = styled.div`
 
 interface ItemProps {
   srcImage?: string;
-  size: 'lg' | 'md' | 'sm';
   animate?: boolean;
   active?: boolean;
 }
 
 export const Item = styled.div<ItemProps>`
-  background-image: ${props =>
-    props.srcImage
-      ? `url('${props.srcImage}')`
-      : `url('https://cdn.neemo.com.br/uploads/settings_webdelivery/logo/3957/image-not-found.jpg')`};
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
-  height: ${props =>
-    props.size === 'lg' ? '219px' : props.size === 'md' ? '155px' : '120px'};
+  height: 120px;
   font-weight: 500;
   border-radius: 14px;
   padding: 6px;
@@ -32,10 +26,8 @@ export const Item = styled.div<ItemProps>`
   position: relative;
 
   @media (min-width: 768px) {
-    height: ${props =>
-      props.size === 'lg' ? '424px' : props.size === 'md' ? '398px' : '247px'};
-    min-width: ${props =>
-      props.size === 'lg' ? '293px' : props.size === 'md' ? '306px' : '326px'};
+    height: 247px;
+    min-width: 326px;
   }
 
   img {
@@ -63,10 +55,10 @@ export const BlurContainer = styled.div`
 export const Texts = styled.div`
   position: absolute;
   bottom: 10px;
-  width: 90%;
+  width: 100%;
   z-index: 2;
   @media (min-width: 768px) {
-    bottom: 110px;
+    bottom: 10px;
   }
   p {
     font-weight: 500;

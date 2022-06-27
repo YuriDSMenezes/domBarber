@@ -71,17 +71,15 @@ export const Input = styled.div`
 export const BannerContainer = styled.div<StyleProps>`
   width: 100%;
   height: 157px;
-  ${props =>
-    props.bannerUrl
-      ? css`
-          background: url(${props.bannerUrl}) no-repeat;
-        `
-      : css`
-          background: url(${'https://images.unsplash.com/photo-1536520002442-39764a41e987?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=987&q=80'})
-            no-repeat;
-        `}
-  background-size: cover;
-  background-position: center;
+  position: relative;
+
+  img {
+    background-size: cover;
+    width: 100%;
+    height: 100%;
+    background-position: center;
+  }
+
   border-radius: 17px;
   grid-area: banner;
   @media (min-width: 768px) {
@@ -131,7 +129,7 @@ export const ServiceContainer = styled.div`
     margin: 0px 20px !important;
 
     @media (min-width: 768px) {
-      height: 420px !important;
+      height: 430px !important;
     }
 
     .showText {

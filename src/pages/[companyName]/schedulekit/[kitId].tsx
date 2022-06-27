@@ -31,7 +31,7 @@ const Schedule = () => {
       handleSelectDate,
       handleSelectHour,
       daysNotWork,
-      formatExibitionDate,
+      formatExhibitionnDate,
       TimesOfDayBasedInTimeService,
       verifyOpeningCompanyTime,
       verifyWorkTime,
@@ -101,8 +101,14 @@ const Schedule = () => {
               onClick={() => {
                 if (
                   !itsScheduled(hour) &&
-                  verifyWorkTime(hour, runTimeService?.defaultRuntime) &&
-                  verifyIntervalTime(hour, runTimeService?.defaultRuntime)
+                  verifyWorkTime(
+                    hour,
+                    getLastItemCart?.service?.runtime || 0,
+                  ) &&
+                  verifyIntervalTime(
+                    hour,
+                    getLastItemCart?.service?.runtime || 0,
+                  )
                 ) {
                   handleSelectHour(hour.toISOString());
                   setIsSelectedFirstHour(true);
@@ -112,21 +118,24 @@ const Schedule = () => {
               active={
                 selectedHour === hour.toISOString() &&
                 !itsScheduled(hour) &&
-                verifyWorkTime(hour, runTimeService?.defaultRuntime) &&
-                verifyIntervalTime(hour, runTimeService?.defaultRuntime)
+                verifyWorkTime(hour, getLastItemCart?.service?.runtime || 0) &&
+                verifyIntervalTime(hour, getLastItemCart?.service?.runtime || 0)
               }
               disabled={
                 itsScheduled(hour) ||
                 !verifyOpeningCompanyTime(hour) ||
-                !verifyWorkTime(hour, runTimeService?.defaultRuntime) ||
-                !verifyIntervalTime(hour, runTimeService?.defaultRuntime)
+                !verifyWorkTime(hour, getLastItemCart?.service?.runtime || 0) ||
+                !verifyIntervalTime(
+                  hour,
+                  getLastItemCart?.service?.runtime || 0,
+                )
               }
             >
               <p>{hour.toLocaleTimeString('pt-br', { timeStyle: 'short' })}</p>
             </S.Hour>
           ) : null,
       ),
-    [selectedHour, date, confirmedSchedules, getLastItemCart],
+    [date],
   );
 
   return (
@@ -186,7 +195,7 @@ const Schedule = () => {
           </S.ServiceContainer>
           <S.NextContainer>
             <S.Date>
-              {isSelectedFirstHour && formatExibitionDate(date, ptBR)}
+              {isSelectedFirstHour && formatExhibitionnDate(date, ptBR)}
             </S.Date>
             <S.NextButton
               onClick={() => {

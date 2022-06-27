@@ -78,7 +78,7 @@ const Schedule = () => {
   );
 
   const HoursComponent = useCallback(
-    () =>
+    (): any =>
       TimesOfDayBasedInTimeService(getLastItemCart?.service?.runtime || 0).map(
         (hour: Date) =>
           verifyOpeningCompanyTime(hour) ? (

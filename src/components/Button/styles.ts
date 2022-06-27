@@ -26,6 +26,10 @@ export const Container = styled.button<StyleProps>`
     color: black;
   }
 
+  @media (min-width: 768px) {
+    height: 30px;
+  }
+
   ${props =>
     props.smallSize &&
     css`

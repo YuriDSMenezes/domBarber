@@ -8,7 +8,7 @@ import React from 'react';
 import nookies from 'nookies';
 import { GetServerSideProps } from 'next';
 import api from 'services/api';
-import { useCart } from 'hooks/UseCart';
+import { useCart } from 'hooks';
 import ChooseProfessionalCard from '../../../components/ChooseProfessionalCard';
 
 import * as S from './styles';

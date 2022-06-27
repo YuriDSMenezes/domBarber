@@ -8,6 +8,7 @@ import { useGlobal } from 'hooks/Global';
 import { useRouter } from 'next/router';
 import { CarouselService } from 'components/CarouselServices';
 import SEO from 'components/SEO';
+import Image from 'next/image';
 import { RightIcon } from '../../../../public/assets';
 import * as S from './styles';
 import { useAppController } from './home.controller';
@@ -33,12 +34,18 @@ const Home: NextPage = () => {
         <S.InputContainer>
           <Input search secondary />
         </S.InputContainer>
-        <S.BannerContainer
-          bannerUrl={
-            globalStates.company?.image?.cover?.desktop ||
-            globalStates?.company?.image?.cover?.app
-          }
-        />
+        <S.BannerContainer>
+          {globalStates.company.image && (
+            <Image
+              src={
+                globalStates?.company?.image?.cover?.app ||
+                globalStates?.company?.image?.cover?.desktop
+              }
+              layout="fill"
+              objectFit="cover"
+            />
+          )}
+        </S.BannerContainer>
         <S.HorizontalListContainer>
           <HorizontalList />
         </S.HorizontalListContainer>

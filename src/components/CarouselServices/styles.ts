@@ -30,7 +30,6 @@ export const Item = styled.div<ItemProps>`
   height: ${props =>
     props.size === 'lg' ? '219px' : props.size === 'md' ? '155px' : '120px'};
   font-weight: 500;
-  border-radius: 14px;
   padding: 6px;
   font-size: ${ConvertToRem(12)};
   border-radius: 17px;
@@ -38,9 +37,9 @@ export const Item = styled.div<ItemProps>`
 
   @media (min-width: 768px) {
     height: ${props =>
-      props.size === 'lg' ? '424px' : props.size === 'md' ? '398px' : '247px'};
+      props.size === 'lg' ? '324px' : props.size === 'md' ? '398px' : '247px'};
     min-width: ${props =>
-      props.size === 'lg' ? '293px' : props.size === 'md' ? '306px' : '326px'};
+      props.size === 'lg' ? '100px' : props.size === 'md' ? '306px' : '326px'};
   }
 
   img {
@@ -79,7 +78,7 @@ export const Texts = styled.div`
   transform: translate(-50%, 0%);
 
   @media (min-width: 768px) {
-    bottom: 110px;
+    bottom: 140px;
   }
   p {
     font-weight: 500;
@@ -135,7 +134,7 @@ export const ButtonContainer = styled.div`
   @media (min-width: 768px) {
     left: 50%;
     transform: translate(-50%, 0%);
-    bottom: 60px;
-    width: 150px;
+    bottom: 100px;
+    width: 110px;
   }
 `;

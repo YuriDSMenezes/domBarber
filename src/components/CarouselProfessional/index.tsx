@@ -3,9 +3,10 @@ import '@splidejs/react-splide/css';
 import { Splide, SplideSlide } from '@splidejs/react-splide';
 import { useRouter } from 'next/router';
 
-import { useCart } from 'hooks/UseCart';
+import { useCart } from 'hooks';
 import { Professional } from 'models/types/professional';
 import { useGlobal } from 'hooks/Global';
+import Image from 'next/image';
 import * as S from './styles';
 
 interface CarouselProps {
@@ -32,17 +33,14 @@ export const CarouselProfessional = ({ items, size }: CarouselProps) => {
     <Splide options={{ perPage: 3, pagination: false, slideFocus: true }}>
       {items.map((item, index) => (
         <SplideSlide key={index}>
-          <S.Item
-            size={size}
-            key={index}
-            srcImage={item?.image || item?.image}
-            onClick={() => handleClickCard(item)}
-          >
-            <S.Texts>
-              <p>{item.name}</p>
-              <span>{` ${item.nick}`}</span>
-            </S.Texts>
+          <S.Item key={index} onClick={() => handleClickCard(item)}>
+            {item.image && (
+              <Image src={item.image} objectFit="cover" layout="fill" />
+            )}
           </S.Item>
+          <S.Texts>
+            <p>{item.name}</p>
+          </S.Texts>
         </SplideSlide>
       ))}
     </Splide>

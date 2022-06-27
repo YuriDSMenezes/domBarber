@@ -3,7 +3,7 @@ import TagButton from 'components/TagButton';
 import { createHeaders } from 'helpers';
 import { getCookies } from 'helpers/getCookies';
 import { useGlobal } from 'hooks/Global';
-import { useCart } from 'hooks/UseCart';
+import { useCart } from 'hooks';
 import BottomSheetFixedLayout from 'layouts/BottomSheetFixedLayout';
 import MainLayout from 'layouts/MainLayout';
 import { Professional, ProfessionalService } from 'models/types/professional';
