@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 import { useEffect, useCallback } from 'react';
 import { useRouter } from 'next/router';
-import { useGlobal, useLoading, setTheme, ManifestConfig } from 'hooks';
+import { useGlobal, useLoading, setTheme, manifestConfig } from 'hooks';
 import { Company } from 'models/company';
 import { Professional } from 'models/professional';
 import { Kits } from 'models/kits';
@@ -129,7 +129,7 @@ export const useAppController = () => {
     const companyResponse = await getCompanyData();
     if (companyResponse) {
       companyResponse.app.theme && setTheme(companyResponse.app.theme);
-      ManifestConfig(companyResponse);
+      manifestConfig(companyResponse);
       await getServicesCompany(companyResponse.id);
       await getProfessionalsCompany(companyResponse.id);
       await getProductsCompany(companyResponse.id);

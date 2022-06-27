@@ -1,7 +1,7 @@
 import { environment } from 'environments/environment.prod';
 import { Company } from 'models/types/company';
 
-export const ManifestConfig = (company: Company) => {
+export const manifestConfig = (company: Company) => {
   const companyId = company.id;
   const manifestUrl = `${environment.hostApi}/company/${companyId}/manifest?projectId=${environment.projectId}`;
 
