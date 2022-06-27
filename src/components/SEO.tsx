@@ -6,7 +6,7 @@ interface SEOProps {
   company: Company;
 }
 
-export default function SEO({ company }: SEOProps) {
+const SEO = ({ company }: SEOProps) => {
   if (company && company.app) {
     const pageTitle = `${company.app.name} | DomBarber'}`;
 
@@ -53,4 +53,7 @@ export default function SEO({ company }: SEOProps) {
       </Head>
     );
   }
-}
+  return null;
+};
+
+export default SEO;

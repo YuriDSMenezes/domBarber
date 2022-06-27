@@ -5,6 +5,7 @@ import Input from 'components/Input';
 import SocialConnectionActionButton from 'components/SocialConnectionActionButton';
 import Button from 'components/Button';
 import SEO from 'components/SEO';
+import { useGlobal } from 'hooks';
 import { LogoBlackIcon } from '../../../../public/assets';
 import * as S from './styles';
 import { LoginController } from './login.controller';
@@ -19,10 +20,13 @@ const Login: NextPage = () => {
       handleLoginWithEmail,
     },
   } = LoginController();
+  const {
+    states: { company },
+  } = useGlobal();
 
   return (
     <S.Container>
-      <SEO title="Login" />
+      <SEO company={company} />
       <S.Form>
         <S.Content>
           <S.LogoContainer>

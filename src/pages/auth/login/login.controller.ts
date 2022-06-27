@@ -7,10 +7,8 @@ import {
 } from 'services/FirebaseOAuth';
 
 export const LoginController = () => {
-  const [email, setEmail] = useState<string>('asd');
+  const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
-  const [error, setError] = useState<boolean>(false);
-  const [loading, setLoading] = useState<boolean>(false);
 
   const handleLoginWithGoogle = async () => {
     await signInWithGoogle();
@@ -24,15 +22,15 @@ export const LoginController = () => {
     await singIn(email, password);
   };
 
-  const handleEmail = e => setEmail(e.target.value);
-  const handlePassword = e => setPassword(e.target.value);
+  const handleEmail = (e: React.ChangeEvent<HTMLInputElement>) =>
+    setEmail(e.target.value);
+  const handlePassword = (e: React.ChangeEvent<HTMLInputElement>) =>
+    setPassword(e.target.value);
 
   return {
     state: {
       email,
       password,
-      error,
-      loading,
     },
     actions: {
       handleEmail,

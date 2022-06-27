@@ -17,8 +17,6 @@ import { getAllProfessionalsByCompanyId } from '../../../cases/professional/getP
 import { getAllKitsByCompanyId } from '../../../cases/kit/getAllKitByService';
 import { getCompanyByUrl } from '../../../cases/company/getCompanyByUrl';
 
-// type ObjEntriesCompanyData = [id: string, data: CompanyType][];
-
 export const useAppController = () => {
   const { states: globalStates, actions: globalActions } = useGlobal();
   const {
