@@ -44,11 +44,11 @@ const GlobalProvider: React.FC = ({ children }) => {
   const [kits, setKits] = useState<KitType[]>([] as KitType[]);
   const [products, setProducts] = useState<ProductType[]>([] as ProductType[]);
   const [categories, setCategories] = useState<Category[]>([] as Category[]);
-  const [cardInfos, setCardInfos] = useState();
+  const [cardInfos, setCardInfos] = useState<any>();
   const [professionals, setProfessionals] = useState<ProfessionalType[]>(
     [] as ProfessionalType[],
   );
-  const [selectedCardPayment, setSelectedCardPayment] = useState<ClientCard>();
+  const [selectedCardPayment, setSelectedCardPayment] = useState<any>();
   const {
     query: { companyName },
     isReady,
@@ -65,6 +65,7 @@ const GlobalProvider: React.FC = ({ children }) => {
         ['projectId', '==', 'dombarber'],
       ],
       callback: res => {
+        // @ts-ignore
         const parsedCompanyData = Object.entries(res?.data?.docs as {}).map(
           // @ts-ignore
           ([id, data]) => Company({ ...data, id, companyId: id }),
