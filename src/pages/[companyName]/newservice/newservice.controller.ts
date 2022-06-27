@@ -1,4 +1,4 @@
-import { useGlobal } from 'hooks/Global';
+import { useGlobal } from 'hooks';
 
 export const NewServiceController = () => {
   const {

@@ -1,4 +1,4 @@
-import { useGlobal } from 'hooks/Global';
+import { useGlobal, useCart } from 'hooks';
 import {
   addDays,
   addMinutes,
@@ -15,7 +15,6 @@ import { WorkDay } from 'models/types/company';
 import { useCallback, useEffect, useState } from 'react';
 import { Schedule } from 'models/schedule';
 import { firestoreDb } from 'services/FirestoreDatabase';
-import { useCart } from 'hooks';
 
 export const useSchedules = () => {
   const {

@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { NextPage } from 'next';
 import { useRouter } from 'next/router';
-import { useLoading } from 'hooks/Loading';
+import { useLoading } from 'hooks';
 
 const CompanyName: NextPage = () => {
   const { actions: loadingActions } = useLoading();

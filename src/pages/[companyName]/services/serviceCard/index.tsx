@@ -1,7 +1,7 @@
 import React from 'react';
 import { useRouter } from 'next/router';
 import { Service } from 'models/types/service';
-import { useGlobal } from 'hooks/Global';
+import { useGlobal } from 'hooks';
 import * as S from './styles';
 
 interface ServiceProps {

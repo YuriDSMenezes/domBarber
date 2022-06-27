@@ -7,7 +7,7 @@ import 'react-calendar/dist/Calendar.css';
 import 'react-day-picker/dist/style.css';
 
 import { useCallback } from 'react';
-import { useGlobal } from 'hooks/Global';
+import { useGlobal } from 'hooks';
 import MainLayout from 'layouts/MainLayout';
 import * as S from './styles';
 import { useSchedules } from './schedules.controller';

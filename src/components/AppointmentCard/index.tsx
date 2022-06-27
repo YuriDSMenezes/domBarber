@@ -1,9 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { getProfessionalById } from 'cases/professional/getProfessionalById';
-import { deleteScheduledByScheduleId } from 'cases/schedule/deleteScheduledByScheduleId';
 import { getServiceByServiceId } from 'cases/service/getServiceByServiceId';
 import { getUserTokenFromLocalStorage } from 'cases/user/getUserTokenFromLocalStorage';
-import { useGlobal } from 'hooks/Global';
+import { useGlobal } from 'hooks';
 import React, { useEffect, useState } from 'react';
 import * as S from './styles';
 

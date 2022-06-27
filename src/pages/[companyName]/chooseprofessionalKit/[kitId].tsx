@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { useGlobal } from 'hooks/Global';
-import { useCart } from 'hooks';
+import { useGlobal, useCart } from 'hooks';
 import BottomSheetFixedLayout from 'layouts/BottomSheetFixedLayout';
 import MainLayout from 'layouts/MainLayout';
 import { Professional } from 'models/types/professional';

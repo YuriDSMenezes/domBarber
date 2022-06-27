@@ -1,6 +1,3 @@
-import { useEffect, useState } from 'react';
-import { getCommandsOpen } from 'cases/command/getCommandsOpen';
-import { useGlobal } from 'hooks/Global';
 import BottomSheetFixedLayout from 'layouts/BottomSheetFixedLayout';
 import MainLayout from 'layouts/MainLayout';
 import Tabs from 'components/Tabs';
@@ -11,46 +8,7 @@ import * as S from './styles';
 import Open from './open';
 import Paid from './paid';
 
-const Requests = ({ requests }) => {
-  const {
-    states: { company },
-  } = useGlobal();
-  const [openCommands, setOpenCommands] = useState();
-  const [client, setClient] = useState(() => {
-    if (typeof window !== 'undefined') {
-      const client = localStorage.getItem('@domBarber:client');
-
-      if (client) {
-        return JSON.parse(client);
-      }
-    }
-    return null;
-  });
-
-  const [token, setToken] = useState(() => {
-    if (typeof window !== 'undefined') {
-      const clientId = localStorage.getItem('@domBarber:token');
-
-      if (clientId) {
-        return JSON.parse(clientId);
-      }
-    }
-    return null;
-  });
-
-  const getOpenCommands = async () => {
-    const commandsOpen = await getCommandsOpen(
-      company?.companyId,
-      client?.id,
-      token,
-    );
-    setOpenCommands(commandsOpen);
-  };
-
-  useEffect(() => {
-    getOpenCommands();
-  }, []);
-
+const Requests = ({ requests }: any) => {
   const tabs = [
     {
       key: 'Comandas abertas',

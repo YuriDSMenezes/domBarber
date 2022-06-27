@@ -1,5 +1,4 @@
-import { useGlobal } from 'hooks/Global';
-import { getSchedulesByProfessionalId } from 'cases/schedule';
+import { useGlobal } from 'hooks';
 import {
   addDays,
   addMinutes,
@@ -8,7 +7,6 @@ import {
   format,
   isAfter,
   isBefore,
-  isSameMinute,
   startOfDay,
   startOfMonth,
   subMinutes,
@@ -16,7 +14,6 @@ import {
 import { WorkDay } from 'models/types/company';
 import { useCallback, useEffect, useState } from 'react';
 import { Schedule } from 'models/schedule';
-import { getSchedulesByProfessionalIdAndServiceId } from 'cases/schedule/getSchedulesByProfessionalIdAndServiceId';
 import { firestoreDb } from 'services/FirestoreDatabase';
 import { getClientScheduleByScheduleId } from 'cases/schedule/getClientSchedulesByScheduleId';
 import { getProfessionalById } from 'cases/professional/getProfessionalById';
@@ -28,7 +25,6 @@ export const useScheduleEdit = () => {
     states: { company },
   } = useGlobal();
   const {
-    push,
     query: { scheduleId },
   } = useRouter();
   const [isSelectedFirstHour, setIsSelectedFirstHour] = useState(false);
@@ -54,7 +50,7 @@ export const useScheduleEdit = () => {
 
     const professional = await getProfessionalById(professionalId);
     const service = professional.services.find(
-      service => service.serviceId === serviceIds[0],
+      (service: any) => service.serviceId === serviceIds[0],
     );
     setCart([
       {
@@ -246,23 +242,6 @@ export const useScheduleEdit = () => {
     },
     [hour, cart],
   );
-
-  // const getScheduledTimes = async () => {
-  //   const response = await getSchedulesByProfessionalIdAndServiceId(
-  //     cart[cart.length - 1]?.professionalId,
-  //     cart[cart.length - 1]?.serviceId,
-  //   );
-  //   const parsedSchedulesData = Object.entries(response as {}).map(
-  //     // @ts-ignore
-  //     ([id, data]) => Schedule({ ...data, id }),
-  //   );
-  //   const confirmedSchedules = parsedSchedulesData.map(
-  //     // @ts-ignore
-  //     schedule => new Date(schedule.start.seconds * 1000),
-  //   );
-  //   setConfirmedSchedules(confirmedSchedules);
-  //   return confirmedSchedules;
-  // };
 
   const itsScheduled = useCallback(
     (date: Date) => {

@@ -1,4 +1,4 @@
-import { useGlobal } from 'hooks/Global';
+import { useGlobal } from 'hooks';
 import {
   addDays,
   addMinutes,
@@ -214,23 +214,6 @@ const useSchedulesKitIndex = () => {
     },
     [hour],
   );
-
-  // const getScheduledTimes = async () => {
-  //   const response = await getSchedulesByProfessionalIdAndServiceId(
-  //     cart?.professionalId,
-  //     cart?.serviceId,
-  //   );
-  //   const parsedSchedulesData = Object.entries(response as {}).map(
-  //     // @ts-ignore
-  //     ([id, data]) => Schedule({ ...data, id }),
-  //   );
-  //   const confirmedSchedules = parsedSchedulesData.map(
-  //     // @ts-ignore
-  //     schedule => new Date(schedule.start.seconds * 1000),
-  //   );
-  //   setConfirmedSchedules(confirmedSchedules);
-  //   return confirmedSchedules;
-  // };
 
   const itsScheduled = useCallback(
     (date: Date) => {

@@ -1,7 +1,7 @@
 import { stringDays } from 'constants/stringDays';
 import { stringMonths } from 'constants/stringMonths';
 import { currencyFormat } from 'helpers';
-import { useGlobal } from 'hooks/Global';
+import { useGlobal } from 'hooks';
 import { useRouter } from 'next/router';
 import * as S from './styles';
 

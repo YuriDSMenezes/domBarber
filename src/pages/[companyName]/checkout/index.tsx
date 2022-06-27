@@ -1,7 +1,7 @@
 import { createPayment } from 'cases/pagseguro/createPayment';
 import Button from 'components/Button';
 import { currencyFormat } from 'helpers';
-import { useGlobal } from 'hooks/Global';
+import { useGlobal } from 'hooks';
 import BottomSheetFixedLayout from 'layouts/BottomSheetFixedLayout';
 import MainLayout from 'layouts/MainLayout';
 import { useRouter } from 'next/router';

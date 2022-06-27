@@ -3,7 +3,7 @@ import { getClientFromLocalStorage } from 'cases/client/getClientFromLocalStorag
 import { getInstallments } from 'cases/installments/getInstallments';
 import { getUserTokenFromLocalStorage } from 'cases/user/getUserTokenFromLocalStorage';
 import Button from 'components/Button';
-import { useGlobal } from 'hooks/Global';
+import { useGlobal } from 'hooks';
 import BottomSheetFixedLayout from 'layouts/BottomSheetFixedLayout';
 import MainLayout from 'layouts/MainLayout';
 import { useRouter } from 'next/router';

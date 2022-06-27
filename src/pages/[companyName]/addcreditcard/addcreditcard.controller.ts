@@ -3,7 +3,7 @@ import { getClientFromLocalStorage } from 'cases/client/getClientFromLocalStorag
 import { updateClientByClientId } from 'cases/client/updateClientByClientId';
 import { getCompanyFromLocalStorage } from 'cases/company/getCompanyFromLocalStorage';
 import { getUserTokenFromLocalStorage } from 'cases/user/getUserTokenFromLocalStorage';
-import { useGlobal } from 'hooks/Global';
+import { useGlobal } from 'hooks';
 import { useRouter } from 'next/router';
 import { useCallback, useEffect, useState } from 'react';
 

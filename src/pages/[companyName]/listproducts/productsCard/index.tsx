@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useRouter } from 'next/router';
 import { Product } from 'models/types/product';
-import { useGlobal } from 'hooks/Global';
+import { useGlobal } from 'hooks';
 import * as S from './styles';
 
 interface ProductsProps {

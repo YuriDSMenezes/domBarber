@@ -1,7 +1,7 @@
 import CardSlide from 'components/CardSlide';
 import { ItemCollapse } from 'components/itemCollapse';
 import { currencyFormat } from 'helpers';
-import { useGlobal } from 'hooks/Global';
+import { useGlobal } from 'hooks';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
 import { ArrowDownIcon } from '../../../../../public/assets';

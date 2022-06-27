@@ -1,7 +1,7 @@
 import AppointmentCard from 'components/AppointmentCard';
 import Button from 'components/Button';
 import { currencyFormat } from 'helpers';
-import { useGlobal } from 'hooks/Global';
+import { useGlobal } from 'hooks';
 import BottomSheetFixedLayout from 'layouts/BottomSheetFixedLayout';
 import MainLayout from 'layouts/MainLayout';
 import { useRouter } from 'next/router';
@@ -14,7 +14,7 @@ import * as S from './styles';
 const scheduleconfirmed: React.FC = () => {
   const { push } = useRouter();
   const {
-    states: { company, commandId },
+    states: { company },
   } = useGlobal();
 
   const [cart, setCart] = useState(() => {

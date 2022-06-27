@@ -4,7 +4,7 @@ import Button from 'components/Button';
 import { Modal } from 'components/Modal';
 import { TextArea } from 'components/TextArea/styles';
 import { currencyFormat } from 'helpers';
-import { useGlobal } from 'hooks/Global';
+import { useGlobal } from 'hooks';
 import BottomSheetFixedLayout from 'layouts/BottomSheetFixedLayout';
 import MainLayout from 'layouts/MainLayout';
 import { useRouter } from 'next/router';

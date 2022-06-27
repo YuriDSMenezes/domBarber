@@ -1,18 +1,15 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 import { useEffect, useCallback } from 'react';
 import { useRouter } from 'next/router';
-import { useGlobal } from 'hooks/Global';
+import { useGlobal, useLoading, setTheme, ManifestConfig } from 'hooks';
 import { Company } from 'models/company';
 import { Professional } from 'models/professional';
 import { Kits } from 'models/kits';
 import { Product } from 'models/product';
-import { useLoading } from 'hooks/Loading';
 import { getAllServicesByCompanyId } from 'cases/service';
 import { Company as CompanyType } from 'models/types/company';
 import { Service } from 'models/service';
 import { getProductsByCompanyId } from 'cases/product';
-import { setTheme } from 'hooks/Theme';
-import { ManifestConfig } from 'hooks/ManifestConfig';
 import { getAllServiceCategories } from 'cases/service/getAllCategorys';
 import { getUserTokenFromLocalStorage } from 'cases/user/getUserTokenFromLocalStorage';
 import { setCookies } from 'cookies-next';

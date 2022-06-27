@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { useGlobal } from 'hooks/Global';
+import { useGlobal } from 'hooks';
 import { Product } from 'models/types/product';
 import { useRouter } from 'next/router';
 import React, { useState } from 'react';

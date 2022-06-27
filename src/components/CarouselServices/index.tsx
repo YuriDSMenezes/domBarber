@@ -1,10 +1,9 @@
 import { Splide, SplideSlide } from '@splidejs/react-splide';
-import { useGlobal } from 'hooks/Global';
+import { useGlobal, useCart } from 'hooks';
 
 import Button from 'components/Button';
 import { Service } from 'models/types/service';
 import { useRouter } from 'next/router';
-import { useCart } from 'hooks';
 import * as S from './styles';
 
 // eslint-disable-next-line import/no-unresolved

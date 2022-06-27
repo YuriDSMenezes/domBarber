@@ -1,12 +1,11 @@
 import 'services/firebase';
 import type { AppProps } from 'next/app';
 import { Helmet, HelmetProvider } from 'react-helmet-async';
+import { GlobalProvider, CartProvider, LoadingProvider } from 'hooks';
+import GlobalStyle from '../styles/global';
+
 import 'react-credit-cards/es/styles-compiled.css';
 import '../styles/react-day-picker-personalized.css';
-import { GlobalProvider } from 'hooks/Global';
-import { LoadingProvider } from 'hooks/Loading';
-import { CartProvider } from 'hooks';
-import GlobalStyle from '../styles/global';
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (

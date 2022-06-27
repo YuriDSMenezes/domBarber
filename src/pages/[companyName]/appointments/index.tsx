@@ -7,7 +7,7 @@ import AppointmentCard from 'components/AppointmentCard';
 import CardSlide from 'components/CardSlide';
 import { getClientSchedulesByClientId } from 'cases/schedule/getClientSchedulesByClientId';
 import { getUserTokenFromLocalStorage } from 'cases/user/getUserTokenFromLocalStorage';
-import { useGlobal } from 'hooks/Global';
+import { useGlobal } from 'hooks';
 import { deleteScheduledByScheduleId } from 'cases/schedule/deleteScheduledByScheduleId';
 import { useRouter } from 'next/router';
 import { getUserIdFromLocalStorage } from 'cases/user/getUserIdFromLocalStorage';

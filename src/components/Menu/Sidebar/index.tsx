@@ -1,4 +1,4 @@
-import { useGlobal } from 'hooks/Global';
+import { useGlobal } from 'hooks';
 import { useRouter } from 'next/router';
 import { singOut } from 'services/FirebaseOAuth';
 import {

@@ -1,5 +1,3 @@
-import { useGlobal } from 'hooks/Global';
-/* eslint-disable no-return-assign */
 import firebase from 'firebase/compat/app';
 import cookie from 'js-cookie';
 import Router, { useRouter } from 'next/router';
@@ -12,7 +10,6 @@ import {
   FacebookAuthProvider,
 } from 'firebase/auth';
 import 'firebase/compat/firestore';
-import { userLoginOnInternalApi } from 'cases/user/userLoginOnInternalApi';
 import { Client } from 'models/client';
 import { getCompanyFromLocalStorage } from '../cases/company/getCompanyFromLocalStorage';
 import api from './api';
@@ -28,8 +25,6 @@ const isBrowser = () => typeof window !== 'undefined';
 export const signInWithGoogle = async () =>
   signInWithPopup(auth, googleProvider)
     .then(async result => {
-      const credential = GoogleAuthProvider.credentialFromResult(result);
-      const token = credential?.accessToken;
       const { user } = result;
       const company = getCompanyFromLocalStorage();
 
@@ -126,11 +121,10 @@ export const signInWithGoogle = async () =>
       }
     })
     .catch(error => {
-      const errorCode = error.code;
-      const errorMessage = error.message;
-      const { email } = error;
-      const credential = GoogleAuthProvider.credentialFromError(error);
-      cookie.remove('user-cookie');
+      // const errorCode = error.code;
+      // const errorMessage = error.message;
+      // const { email } = error;
+      // const credential = GoogleAuthProvider.credentialFromError(error);
       Router.push('/');
     });
 
@@ -146,10 +140,10 @@ export const signInWithFacebook = () =>
       }
     })
     .catch(error => {
-      const errorCode = error.code;
-      const errorMessage = error.message;
-      const { email } = error;
-      const credential = GoogleAuthProvider.credentialFromError(error);
+      // const errorCode = error.code;
+      // const errorMessage = error.message;
+      // const { email } = error;
+      // const credential = GoogleAuthProvider.credentialFromError(error);
     });
 
 export const singIn = async (email: string, password: string) => {
@@ -192,12 +186,3 @@ export const singOut = async () => {
   Router.push('/');
   await firebase.auth().signOut();
 };
-
-// const service = (collection: string) => ({});
-
-// export const myDB = {
-//   user: service('users'),
-//   pitch: service('pitches'),
-//   match: service('matches'),
-//   notification: service('notifications'),
-// };

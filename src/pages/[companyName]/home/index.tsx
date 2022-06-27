@@ -4,7 +4,7 @@ import { HorizontalList } from 'components/HorizontalList';
 import Input from 'components/Input';
 import MainLayout from 'layouts/MainLayout';
 import { NextPage } from 'next';
-import { useGlobal } from 'hooks/Global';
+import { useGlobal } from 'hooks';
 import { useRouter } from 'next/router';
 import { CarouselService } from 'components/CarouselServices';
 import SEO from 'components/SEO';

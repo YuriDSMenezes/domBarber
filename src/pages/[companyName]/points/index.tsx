@@ -1,10 +1,9 @@
 import { getClientFromLocalStorage } from 'cases/client/getClientFromLocalStorage';
 import { getUserTokenFromLocalStorage } from 'cases/user/getUserTokenFromLocalStorage';
 import { environment } from 'environments/environment.prod';
-import { useGlobal } from 'hooks/Global';
+import { useGlobal } from 'hooks';
 import BottomSheetFixedLayout from 'layouts/BottomSheetFixedLayout';
 import MainLayout from 'layouts/MainLayout';
-import { Client } from 'models/client';
 import React, { useEffect, useState } from 'react';
 import api from 'services/api';
 import RegisterPointCard from './RegisterPointCard';
@@ -29,9 +28,9 @@ const points: React.FC = () => {
           Authorization: `Bearer ${getUserTokenFromLocalStorage()}`,
         },
       });
-      setPoints(response.data.total);
+      return setPoints(response.data.total);
     } catch (error) {
-      console.error(error);
+      return null;
     }
   };
 

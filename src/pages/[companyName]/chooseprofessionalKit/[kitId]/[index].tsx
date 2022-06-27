@@ -1,10 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { useGlobal } from 'hooks/Global';
+import { useGlobal } from 'hooks';
 import BottomSheetFixedLayout from 'layouts/BottomSheetFixedLayout';
 import MainLayout from 'layouts/MainLayout';
-import { Company } from 'models/company';
 import { Professional } from 'models/types/professional';
-import { Service } from 'models/types/service';
 import { useRouter } from 'next/router';
 import React, { useState } from 'react';
 import ChooseProfessionalCard from '../../../../components/ChooseProfessionalCard';

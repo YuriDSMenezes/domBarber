@@ -2,7 +2,7 @@ import React from 'react';
 import { Professional } from 'models/types/professional';
 import { useRouter } from 'next/router';
 import StarRatingComponent from 'react-star-rating-component';
-import { useGlobal } from 'hooks/Global';
+import { useGlobal } from 'hooks';
 import * as S from './styles';
 
 interface ProfessionalsProps {

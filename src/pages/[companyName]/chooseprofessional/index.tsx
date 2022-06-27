@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { useGlobal } from 'hooks/Global';
 import BottomSheetFixedLayout from 'layouts/BottomSheetFixedLayout';
 import MainLayout from 'layouts/MainLayout';
 import { Professional } from 'models/types/professional';
@@ -8,7 +7,7 @@ import React from 'react';
 import nookies from 'nookies';
 import { GetServerSideProps } from 'next';
 import api from 'services/api';
-import { useCart } from 'hooks';
+import { useCart, useGlobal } from 'hooks';
 import ChooseProfessionalCard from '../../../components/ChooseProfessionalCard';
 
 import * as S from './styles';

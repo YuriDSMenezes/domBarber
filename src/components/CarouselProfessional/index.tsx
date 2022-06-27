@@ -3,9 +3,8 @@ import '@splidejs/react-splide/css';
 import { Splide, SplideSlide } from '@splidejs/react-splide';
 import { useRouter } from 'next/router';
 
-import { useCart } from 'hooks';
+import { useCart, useGlobal } from 'hooks';
 import { Professional } from 'models/types/professional';
-import { useGlobal } from 'hooks/Global';
 import Image from 'next/image';
 import * as S from './styles';
 

@@ -5,12 +5,11 @@ import { YearView } from 'react-calendar';
 import { useRouter } from 'next/router';
 import ptBR from 'date-fns/locale/pt-BR';
 import 'react-calendar/dist/Calendar.css';
-import { useGlobal } from 'hooks/Global';
+import { useGlobal } from 'hooks';
 import { DayPicker } from 'react-day-picker';
 import 'react-day-picker/dist/style.css';
 import * as S from '../styles';
 import { useEditSchedules } from './editschedule.controller';
-// import { getSchedulesByProfessionalId } from 'cases/schedule';
 
 const Schedule = () => {
   const { push } = useRouter();

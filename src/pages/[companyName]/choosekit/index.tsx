@@ -1,6 +1,5 @@
 import Button from 'components/Button';
-import { useGlobal } from 'hooks/Global';
-import { useCart } from 'hooks';
+import { useGlobal, useCart } from 'hooks';
 import BottomSheetFixedLayout from 'layouts/BottomSheetFixedLayout';
 import MainLayout from 'layouts/MainLayout';
 import { KitService } from 'models/types/kit';
