@@ -1,5 +1,5 @@
-export { useCart, CartProvider } from './UseCart';
-export { setTheme } from './Theme';
-export { ManifestConfig } from './ManifestConfig';
+export { useCart, CartProvider } from './useCart';
+export { setTheme } from './theme';
+export { ManifestConfig } from './manifestConfig';
 export { useLoading, LoadingProvider } from './Loading';
-export { useGlobal, GlobalProvider } from './Global';
+export { useGlobal, GlobalProvider } from './global';
