@@ -8,7 +8,7 @@ interface LoadingContextProps {
   };
   actions: {
     activeLoading: () => void;
-    deactiveLoading: () => void;
+    disableLoading: () => void;
   };
 }
 
@@ -72,7 +72,7 @@ const LoadingProvider: React.FC = ({ children }) => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const activeLoading = () => setIsLoading(true);
-  const deactiveLoading = () => {
+  const disableLoading = () => {
     setTimeout(() => setIsLoading(false), 1000);
   };
 
@@ -80,7 +80,7 @@ const LoadingProvider: React.FC = ({ children }) => {
     <LoadingContext.Provider
       value={{
         states: { isLoading },
-        actions: { activeLoading, deactiveLoading },
+        actions: { activeLoading, disableLoading },
       }}
     >
       {isLoading && (

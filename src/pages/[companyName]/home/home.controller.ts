@@ -21,7 +21,9 @@ import { getCompanyByUrl } from '../../../cases/company/getCompanyByUrl';
 
 export const useAppController = () => {
   const { states: globalStates, actions: globalActions } = useGlobal();
-  const { actions: loadingActions } = useLoading();
+  const {
+    actions: { activeLoading, disableLoading },
+  } = useLoading();
   const token = getUserTokenFromLocalStorage();
   const {
     query: { companyName },
@@ -31,7 +33,7 @@ export const useAppController = () => {
   const getCompanyData = useCallback(async (): Promise<
     CompanyType | undefined
   > => {
-    loadingActions.activeLoading();
+    activeLoading();
     let localCompany = null;
     if (typeof window !== 'undefined') {
       localCompany = localStorage.getItem('@domBarber:company');
@@ -46,7 +48,7 @@ export const useAppController = () => {
       }
       if (localCompany && JSON.parse(localCompany).app.url === companyUrl) {
         globalActions.setCompany(JSON.parse(localCompany));
-        globalStates.company && loadingActions.deactiveLoading();
+        globalStates.company && disableLoading();
         return JSON.parse(localCompany);
       }
       const companyData = await getCompanyByUrl(companyUrl || '');
@@ -64,7 +66,7 @@ export const useAppController = () => {
         );
       }
       setCookies('@domBarber:company', JSON.stringify(parsedCompanyData));
-      globalStates.company && loadingActions.deactiveLoading();
+      globalStates.company && disableLoading();
       return parsedCompanyData;
     }
     return undefined;

@@ -4,14 +4,16 @@ import { useRouter } from 'next/router';
 import { useLoading } from 'hooks';
 
 const CompanyName: NextPage = () => {
-  const { actions: loadingActions } = useLoading();
+  const {
+    actions: { activeLoading, disableLoading },
+  } = useLoading();
   const {
     push,
     query: { companyName },
     isReady,
   } = useRouter();
   useEffect(() => {
-    if (!isReady) loadingActions.activeLoading();
+    if (!isReady) activeLoading();
     if (isReady) {
       let localCompany = null;
       if (typeof window !== 'undefined') {
@@ -19,10 +21,10 @@ const CompanyName: NextPage = () => {
       }
       if (localCompany) {
         push(`${JSON.parse(localCompany).app.url}/home`);
-        loadingActions.deactiveLoading();
+        disableLoading();
         return;
       }
-      loadingActions.deactiveLoading();
+      disableLoading();
       push({
         pathname: `/[companyName]/home`,
         query: { companyName },
